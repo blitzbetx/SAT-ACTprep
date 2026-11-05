@@ -1,0 +1,1656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAT/ACT Prep Lab</title>
+<style>
+:root{
+  --bg:#f5f6fa; --surface:#ffffff; --surface2:#f0f2f8; --ink:#1b2133; --muted:#5d667b; --line:#e2e5ee;
+  --accent:#3b5bdb; --accent-ink:#ffffff; --accent-soft:#e7ecff;
+  --good:#2b8a3e; --good-soft:#e5f5e9; --bad:#c92a2a; --bad-soft:#fdeaea; --warn:#e67700;
+  --eng:#6741d9; --eng-soft:#efe9ff; --math:#0b7285; --math-soft:#e3f6f9;
+  --shadow:0 1px 2px rgba(20,30,60,.06),0 4px 16px rgba(20,30,60,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1320; --surface:#171c2b; --surface2:#1e2436; --ink:#e7eaf3; --muted:#9aa3b8; --line:#2a3146;
+    --accent:#7b93ff; --accent-ink:#0f1320; --accent-soft:#232c4d;
+    --good:#5fd47a; --good-soft:#163020; --bad:#ff7b7b; --bad-soft:#3a1c20; --warn:#ffb347;
+    --eng:#a98bff; --eng-soft:#2a2347; --math:#4fd1e3; --math-soft:#14313a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1320; --surface:#171c2b; --surface2:#1e2436; --ink:#e7eaf3; --muted:#9aa3b8; --line:#2a3146;
+  --accent:#7b93ff; --accent-ink:#0f1320; --accent-soft:#232c4d;
+  --good:#5fd47a; --good-soft:#163020; --bad:#ff7b7b; --bad-soft:#3a1c20; --warn:#ffb347;
+  --eng:#a98bff; --eng-soft:#2a2347; --math:#4fd1e3; --math-soft:#14313a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3{line-height:1.25;margin:0 0 .5rem}
+h2{font-size:1.45rem} h3{font-size:1.05rem;margin-top:1.4rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+p{margin:.4rem 0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topin{display:flex;align-items:center;gap:14px;height:60px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:750;font-size:1.08rem;white-space:nowrap}
+.brand small{font-weight:600;color:var(--muted);font-size:.75rem;letter-spacing:.05em}
+.logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--eng));display:grid;place-items:center;color:#fff;font-weight:800}
+nav{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{background:none;border:0;padding:8px 12px;border-radius:9px;color:var(--muted);font-weight:600;font-size:.93rem;white-space:nowrap;position:relative}
+nav button:hover{background:var(--surface2);color:var(--ink)}
+nav button.on{background:var(--accent-soft);color:var(--accent)}
+.badge{display:inline-block;min-width:18px;padding:0 5px;margin-left:5px;border-radius:9px;background:var(--bad);color:#fff;font-size:.7rem;line-height:18px;text-align:center}
+.iconbtn{border:1px solid var(--line);background:var(--surface);width:36px;height:36px;border-radius:10px;flex:none}
+main{padding:24px 16px 60px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+.muted{color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line);background:var(--surface);padding:10px 16px;border-radius:11px;font-weight:650;transition:transform .05s,background .15s}
+.btn:hover{background:var(--surface2)}
+.btn:active{transform:translateY(1px)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.pri:hover{filter:brightness(1.07)}
+.btn.good{background:var(--good-soft);border-color:transparent;color:var(--good)}
+.btn.bad{background:var(--bad-soft);border-color:transparent;color:var(--bad)}
+.btn.sm{padding:6px 11px;font-size:.88rem;border-radius:9px}
+.btn:disabled{opacity:.45;cursor:default}
+.ghost{background:none;border:0;color:var(--muted);font-weight:600;padding:6px 4px}
+.ghost:hover{color:var(--ink)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.tile .k{font-size:.8rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.tile .v{font-size:1.9rem;font-weight:780;margin-top:2px}
+.tile .s{font-size:.85rem;color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:6px}
+.qk{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.qk:hover{border-color:var(--accent)}
+.qk b{display:block;font-size:1.02rem;margin-bottom:3px}
+.qk span{color:var(--muted);font-size:.9rem}
+.mixrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.topic{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;border-left:4px solid var(--eng)}
+.topic.m{border-left-color:var(--math)}
+.topic:hover{background:var(--surface2)}
+.topic b{display:block;font-size:.97rem}
+.topic .meta{font-size:.8rem;color:var(--muted)}
+.bar{height:6px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-top:7px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.bar i.g{background:var(--good)} .bar i.w{background:var(--warn)} .bar i.r{background:var(--bad)}
+.qtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.score{font-weight:650;color:var(--muted);font-size:.93rem}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tag{font-size:.75rem;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--eng-soft);color:var(--eng)}
+.tag.m{background:var(--math-soft);color:var(--math)}
+.tag.soft{background:var(--surface2);color:var(--muted)}
+.passage{background:var(--surface2);border-radius:12px;padding:16px 18px;margin-bottom:16px;font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.05rem;line-height:1.65}
+.passage ul{margin:.3rem 0;padding-left:1.2rem}
+.passage table{border-collapse:collapse;font-family:inherit;font-size:.95rem;margin:.3rem 0}
+.passage th,.passage td{border:1px solid var(--line);padding:5px 12px;text-align:center}
+.passage th{background:var(--surface)}
+.blank{display:inline-block;min-width:70px;border-bottom:2px solid var(--ink);margin:0 2px}
+.stem{font-weight:620;font-size:1.04rem;margin:0 0 14px}
+.choices{display:grid;gap:9px}
+.choice{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;transition:border-color .12s,background .12s}
+.choice:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.choice:disabled{cursor:default}
+.letter{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.85rem;color:var(--muted)}
+.choice.sel{border-color:var(--accent);background:var(--accent-soft)}
+.choice.sel .letter{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.choice.correct{border-color:var(--good);background:var(--good-soft)}
+.choice.correct .letter{background:var(--good);border-color:var(--good);color:#fff}
+.choice.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.choice.wrong .letter{background:var(--bad);border-color:var(--bad);color:#fff}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;border:1px solid var(--line);background:var(--surface2)}
+.fb .res{font-weight:780;margin-bottom:4px}
+.fb .res.ok{color:var(--good)} .fb .res.no{color:var(--bad)}
+.hint{color:var(--muted);font-size:.83rem;margin-top:14px}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:16px;flex-wrap:wrap}
+.testbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:12px;box-shadow:var(--shadow);position:sticky;top:70px;z-index:5}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.25rem}
+.timer.low{color:var(--bad)}
+.qnav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.qnav button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:.82rem;font-weight:650}
+.qnav button.ans{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.qnav button.cur{outline:2px solid var(--accent);outline-offset:1px}
+.qnav button.ok{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.qnav button.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.seg{display:inline-flex;background:var(--surface2);border-radius:11px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:7px 13px;border-radius:9px;font-weight:650;color:var(--muted);font-size:.92rem}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.field{margin:14px 0}
+.field label{display:block;font-weight:650;margin-bottom:6px;font-size:.92rem}
+.big{font-size:2.6rem;font-weight:800}
+details.rv{border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0;background:var(--surface)}
+details.rv summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:10px;align-items:center}
+details.rv summary::-webkit-details-marker{display:none}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--good)} .dot.no{background:var(--bad)} .dot.skip{background:var(--muted)}
+.rv .body{margin-top:10px}
+.mini{font-size:.9rem}
+/* flashcards */
+.fcwrap{max-width:640px;margin:0 auto}
+.card3d{perspective:1400px;height:330px;margin:14px 0;cursor:pointer;outline:none}
+.card3d .inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+.card3d.flipped .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;overflow:auto}
+.face.back{transform:rotateY(180deg);background:var(--surface)}
+.face .word{font-size:2.2rem;font-weight:800;letter-spacing:-.01em}
+.face .pos{color:var(--muted);font-style:italic;margin-top:4px}
+.face .lbl{position:absolute;top:14px;left:18px;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.face .st{position:absolute;top:12px;right:16px}
+.face .def{font-size:1.15rem;font-weight:600}
+.face .ex{color:var(--muted);font-style:italic;margin-top:10px;font-family:Georgia,serif}
+.face .fml{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1.12rem;background:var(--surface2);padding:10px 14px;border-radius:10px;margin-top:6px}
+.fcctl{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.pillst{font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:20px}
+.pillst.know{background:var(--good-soft);color:var(--good)} .pillst.learn{background:#fff3e0;color:#b35c00}
+:root[data-theme="dark"] .pillst.learn{background:#3a2a12;color:var(--warn)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pillst.learn{background:#3a2a12;color:var(--warn)}}
+table.prog{width:100%;border-collapse:collapse;font-size:.94rem}
+table.prog td,table.prog th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left}
+table.prog th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+table.prog td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.prog .bar{margin:0;min-width:80px}
+.chart{display:flex;align-items:flex-end;gap:6px;height:120px;padding-top:10px}
+.chart .c{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.chart .c i{display:block;width:100%;max-width:34px;background:var(--accent);border-radius:5px 5px 2px 2px;min-height:2px}
+.chart .c span{font-size:.68rem;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tip{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:10px}
+footer{color:var(--muted);font-size:.8rem;text-align:center;padding:0 16px 30px}
+kbd{font-family:inherit;font-size:.78rem;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--surface)}
+@media (max-width:720px){
+  .grid2{grid-template-columns:1fr}
+  .qcard,.panel{padding:16px;border-radius:14px}
+  .brand small{display:none}
+  .card3d{height:300px}
+  .face .word{font-size:1.8rem}
+  header.top{position:static}
+  .topin{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:6px;gap:8px}
+  .brand{flex:1}
+  nav{order:3;flex-basis:100%;margin:0 -6px;flex-wrap:wrap;overflow:visible}
+  nav button{padding:7px 10px;font-size:.88rem}
+  .testbar{top:8px}
+  main{padding:16px 16px 50px}
+  .hint,footer{display:none}
+  .big{font-size:2rem}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap topin">
+    <div class="brand"><span class="logo">P</span>Prep Lab <small>SAT · ACT</small></div>
+    <nav id="nav" aria-label="Main"></nav>
+    <button class="iconbtn" id="themeBtn" title="Toggle light/dark" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+<main class="wrap" id="app"></main>
+<footer>Progress is saved in this browser only. Keyboard: <kbd>1</kbd>–<kbd>4</kbd> or <kbd>A</kbd>–<kbd>D</kbd> to answer, <kbd>Enter</kbd> for next; flashcards: <kbd>Space</kbd> flip, <kbd>←</kbd>/<kbd>→</kbd> move, <kbd>K</kbd> know it, <kbd>L</kbd> still learning.</footer>
+
+<script>
+"use strict";
+/* =====================================================================
+   TOPICS
+   ===================================================================== */
+const TOPICS = {
+  punc:{n:"Punctuation & Boundaries",s:"E"}, sva:{n:"Subject–Verb Agreement",s:"E"}, pron:{n:"Pronouns",s:"E"},
+  mod:{n:"Modifiers",s:"E"}, para:{n:"Parallel Structure",s:"E"}, tense:{n:"Verb Tense",s:"E"},
+  trans:{n:"Transitions",s:"E"}, wic:{n:"Words in Context",s:"E"}, synth:{n:"Rhetorical Synthesis",s:"E"},
+  read:{n:"Main Idea & Inference",s:"E"}, conc:{n:"Concision & Style",s:"E"}, evid:{n:"Command of Evidence",s:"E"},
+  lin:{n:"Linear Equations",s:"M"}, sys:{n:"Systems of Equations",s:"M"}, quad:{n:"Quadratics",s:"M"},
+  func:{n:"Functions",s:"M"}, expo:{n:"Exponentials",s:"M"}, poly:{n:"Polynomials",s:"M"},
+  pct:{n:"Ratios & Percents",s:"M"}, stat:{n:"Statistics",s:"M"}, prob:{n:"Probability",s:"M"},
+  geo:{n:"Geometry",s:"M"}, trig:{n:"Trigonometry",s:"M"}, word:{n:"Word Problems",s:"M"}
+};
+const ETOP = Object.keys(TOPICS).filter(k=>TOPICS[k].s==="E");
+const MTOP = Object.keys(TOPICS).filter(k=>TOPICS[k].s==="M");
+const BL = '<span class="blank"></span>';
+const STD = "Which choice completes the text so that it conforms to the conventions of Standard English?";
+const WIC = "Which choice completes the text with the most logical and precise word or phrase?";
+const TRN = "Which choice completes the text with the most logical transition?";
+const SYN = "Which choice most effectively uses relevant information from the notes to accomplish this goal?";
+
+/* =====================================================================
+   HAND-WRITTEN QUESTION BANK  (correct answer is always listed first;
+   choices are shuffled when shown)
+   ===================================================================== */
+const BANK = [];
+function add(t,q,c,e,p){ BANK.push({id:"b"+BANK.length,t,s:TOPICS[t].s,q,c,a:0,e,p:p||""}); }
+function gq(t,sent,c,e){ add(t,STD,c,e,sent.replace("___",BL)); }
+
+/* ---- Punctuation & boundaries ---- */
+gq("punc","The Mariana Trench is the deepest known point in Earth’s ___ lowest region, the Challenger Deep, lies nearly 11,000 meters below sea level.",
+ ["oceans; its","oceans, its","oceans its","oceans, and, its"],
+ "Both halves are independent clauses (each could stand alone). A semicolon can join two independent clauses. A comma alone creates a comma splice, and no punctuation creates a run-on.");
+gq("punc","The recipe calls for three essential ___ coriander, and turmeric.",
+ ["spices: cumin,","spices; cumin,","spices, such as: cumin,","spices which cumin,"],
+ "A colon can follow a complete independent clause to introduce a list. A semicolon must be followed by an independent clause, and a colon should not come directly after “such as.”");
+gq("punc","Rosalind ___ produced the X-ray image that revealed the helical structure of DNA.",
+ ["Franklin, a British chemist,","Franklin, a British chemist","Franklin a British chemist,","Franklin; a British chemist,"],
+ "“A British chemist” is a nonessential appositive, so it needs a matching pair of commas around it—one before and one after.");
+gq("punc","After the flood, volunteers rebuilt all of the ___ along the riverbank.",
+ ["herons’ nests","heron’s nests","herons nests","herons’s nests"],
+ "“All of the” nests belong to many herons, so the plural possessive is needed: herons + apostrophe → herons’.");
+gq("punc","The novel that won this year’s ___ a family across four generations of change.",
+ ["prize follows","prize, follows","prize—follows","prize; follows"],
+ "The subject is “The novel that won this year’s prize” and the verb is “follows.” Never separate a subject from its verb with a single punctuation mark.");
+gq("punc","The city’s oldest bridge—built in 1874 and restored twice ___ open to pedestrians today.",
+ ["since—remains","since, remains","since; remains","since remains"],
+ "The interrupting phrase opened with a dash, so it must close with a dash. Mixing a dash with a comma is incorrect.");
+gq("punc","Jazz pianist Mary Lou Williams composed hundreds of ___ also mentored younger artists such as Thelonious Monk.",
+ ["pieces, and she","pieces and, she","pieces, she","pieces, and, she"],
+ "To join two independent clauses with a coordinating conjunction (FANBOYS), put a comma before the conjunction: “pieces, and she.” A comma alone is a comma splice.");
+gq("punc","The experiment’s first trial ___ the second trial produced the expected results.",
+ ["failed; however,","failed, however,","failed; however","failed however,"],
+ "“However” here links two independent clauses, so it needs a semicolon before it and a comma after it.");
+gq("punc","Many historians argue that the printing ___ European society more than any other invention of its era.",
+ ["press transformed","press, transformed","press—transformed","press; transformed"],
+ "“The printing press” is the subject of the clause and “transformed” is its verb; no punctuation should separate them.");
+gq("punc","The team’s goal was ___ the regional championship for the first time in school history.",
+ ["simple: win","simple; win","simple, win","simple: to, win"],
+ "A colon can follow an independent clause to introduce an explanation. A semicolon would require an independent clause after it, and a comma here creates an awkward splice.");
+gq("punc","Octavia Butler’s novel ___ published in 1979, blends science fiction with historical fiction.",
+ ["Kindred,","Kindred","Kindred;","Kindred:"],
+ "“Published in 1979” is a nonessential phrase. It is already closed by the comma after “1979,” so it must be opened by a comma after “Kindred.” (No comma goes between “novel” and “Kindred” because Butler wrote several novels, so the title is essential.)");
+gq("punc","The museum’s new exhibit ___ which opened last month, features artifacts from ancient Mesopotamia.",
+ ["hall,","hall","hall;","hall:"],
+ "“Which opened last month” is a nonessential clause. It is closed by a comma after “month,” so it must be opened by a comma after “hall.”");
+
+/* ---- Subject–verb agreement ---- */
+gq("sva","The collection of rare manuscripts, some dating to the twelfth century, ___ in a climate-controlled vault.",
+ ["is housed","are housed","were housed","have been housed"],
+ "The subject is the singular “collection,” not “manuscripts” (which is inside a prepositional phrase). A singular subject takes the singular verb “is.”");
+gq("sva","Neither the coach nor the players ___ satisfied with the referee’s decision.",
+ ["were","was","is","has been"],
+ "With “neither…nor,” the verb agrees with the subject closer to it. “Players” is plural, so the verb is “were.”");
+gq("sva","Each of the twenty volunteers ___ responsible for cleaning a single section of the trail.",
+ ["is","are","were","have been"],
+ "“Each” is the subject and is always singular. “Of the twenty volunteers” is a prepositional phrase and does not change the number.");
+gq("sva","Along the outer edge of the reef ___ several species of brightly colored fish.",
+ ["live","lives","is living","has lived"],
+ "This sentence is inverted: the subject “several species” comes after the verb. “Several species” is plural, so the verb is “live.”");
+gq("sva","The agency’s report, along with two independent studies, ___ that the new policy reduced traffic deaths.",
+ ["suggests","suggest","are suggesting","have suggested"],
+ "Phrases like “along with,” “as well as,” and “together with” do not make a subject plural. The subject is the singular “report.”");
+gq("sva","The number of students taking advanced math courses ___ risen steadily over the past decade.",
+ ["has","have","are","were"],
+ "“The number” is singular (while “a number of” is plural). The singular subject takes “has.”");
+gq("sva","Mathematics, despite its reputation for difficulty, ___ often the favorite subject of students who enjoy puzzles.",
+ ["is","are","were","have been"],
+ "“Mathematics” ends in -s but is a singular noun (like “physics” and “news”), so it takes “is.”");
+gq("sva","The flock of migrating geese that stops at the lake every autumn ___ the attention of birdwatchers from across the state.",
+ ["attracts","attract","are attracting","have attracted"],
+ "The subject is “flock,” a singular collective noun. Ignore the phrases between subject and verb.");
+
+/* ---- Pronouns ---- */
+gq("pron","After customers raised concerns, the company updated ___ privacy policy.",
+ ["its","it’s","their","its’"],
+ "“Company” is singular, so the possessive pronoun is “its” (no apostrophe). “It’s” means “it is,” and “its’” is never correct.");
+gq("pron","When Maya and ___ finished the experiment, we recorded our results in a shared notebook.",
+ ["I","me","myself","us"],
+ "Drop “Maya and” to test: “When I finished” is correct, not “When me finished.” Subject pronouns (I, he, she, we, they) are used as subjects.");
+gq("pron","The jury delivered ___ verdict after three days of deliberation.",
+ ["its","their","it’s","they’re"],
+ "A collective noun acting as one unit (“jury”) is singular and takes the singular possessive “its.”");
+gq("pron","The award was presented to Dr. Chen and ___ at the end of the ceremony.",
+ ["me","I","myself","mine"],
+ "Drop “Dr. Chen and”: “presented to me.” After a preposition, use an object pronoun (me, him, her, us, them).");
+gq("pron","The scientist ___ the committee honored has published more than forty papers on coral ecology.",
+ ["whom","who","which","whose"],
+ "The committee honored HIM/HER, an object, so use “whom.” (Use “who” where you would say he/she.)");
+gq("pron","Before the debate, each of the candidates submitted ___ opening statement to the moderator.",
+ ["his or her","their","its","they’re"],
+ "“Each” is singular, and the candidates are people, so formal Standard English uses “his or her.” (“Its” is for things.)");
+gq("pron","The researchers compared the new vaccine with older versions and found that ___ produced a stronger immune response.",
+ ["the new vaccine","it","they","this"],
+ "“It” could refer to the new vaccine or an older one, and “they” could refer to the researchers. Naming the noun removes the ambiguity.");
+
+/* ---- Modifiers ---- */
+add("mod",STD,["the visitors admired the ancient pottery","the ancient pottery impressed the visitors","admiration for the ancient pottery grew among visitors","the pottery, ancient and admired, impressed visitors"],
+ "The opening phrase “Walking through the museum” must describe the noun right after the comma. Only the visitors can walk, so “the visitors” must come first.",
+ "Walking through the museum, "+BL+".");
+add("mod",STD,["biologist Lena Ortiz predicted that the herds would arrive early","the herds were predicted by biologist Lena Ortiz to arrive early","the prediction by biologist Lena Ortiz was that the herds would arrive early","an early arrival of the herds was predicted by biologist Lena Ortiz"],
+ "The person who studied the patterns must immediately follow the comma. The herds and the prediction didn’t study anything.",
+ "Having studied caribou migration patterns for over a decade, "+BL+".");
+add("mod",STD,["the Musée d’Orsay now houses one of the world’s great collections of Impressionist art","visitors to the Musée d’Orsay can now see Impressionist art","Paris converted the Musée d’Orsay into an art museum","Impressionist art is now housed in the Musée d’Orsay"],
+ "The thing “originally built as a railway station” is the building itself, so the Musée d’Orsay must come right after the comma.",
+ "Originally built as a railway station in 1900, "+BL+".");
+add("mod",STD,["Annie Dillard won the Pulitzer Prize for her book Pilgrim at Tinker Creek","the Pulitzer Prize was awarded to Annie Dillard for Pilgrim at Tinker Creek","Pilgrim at Tinker Creek earned Annie Dillard the Pulitzer Prize","the book Pilgrim at Tinker Creek won Annie Dillard a Pulitzer Prize"],
+ "The modifier describes a person known for her descriptions, so the sentence must continue with “Annie Dillard.”",
+ "Known for her vivid descriptions of the natural world, "+BL+".");
+add("mod",STD,["the students found the final exam surprisingly easy","the final exam seemed surprisingly easy to the students","the final exam was surprisingly easy for the students","surprisingly, the final exam was easy for the students"],
+ "Who prepared for weeks? The students—so “the students” must directly follow the introductory phrase.",
+ "After preparing for weeks, "+BL+".");
+
+/* ---- Parallel structure ---- */
+gq("para","The renovated library offers quiet study rooms, free tutoring, and ___.",
+ ["a makerspace with 3D printers","students can use 3D printers","using the 3D printers","it has a makerspace"],
+ "Items in a list must share the same form. The first two items are noun phrases, so the third must be a noun phrase too.");
+gq("para","Good writers revise not only for clarity but also ___.",
+ ["for tone","they revise for tone","tone is considered","because of tone"],
+ "“Not only X but also Y” requires X and Y to match. “For clarity” pairs with “for tone.”");
+gq("para","She preferred hiking in the mountains to ___ on the beach.",
+ ["lounging","lounge","have lounged","the lounging of herself"],
+ "Compare like forms: “hiking” (a gerund) to “lounging” (a gerund).");
+gq("para","The coach told the team to stretch before practice, to drink plenty of water, and ___.",
+ ["to get enough sleep","getting enough sleep","that they should sleep enough","sleep should be enough"],
+ "The list uses infinitives (“to stretch,” “to drink”), so the last item should be “to get.”");
+gq("para","The documentary explains how bees pollinate crops, why colonies collapse, and ___.",
+ ["what farmers can do to protect them","the protection of bees by farmers","farmers protecting them","to protect bees as farmers"],
+ "Each item begins with a question word followed by a clause: how…, why…, what….");
+
+/* ---- Verb tense ---- */
+gq("tense","By the time the rescue team arrived, the stranded hikers ___ for nearly two days.",
+ ["had been waiting","have been waiting","will have waited","are waiting"],
+ "The waiting happened before another past event (the team arrived), so use the past perfect: “had been waiting.”");
+gq("tense","In July 1969, the Apollo 11 lunar module ___ on the Moon’s Sea of Tranquility.",
+ ["landed","lands","has landed","will land"],
+ "The sentence describes a completed event at a specific time in the past, so use the simple past.");
+gq("tense","Every summer since 2015, the festival ___ thousands of visitors to the small coastal town.",
+ ["has attracted","attract","will attract","had attracted"],
+ "“Since 2015” describes an action that began in the past and continues into the present, which calls for the present perfect “has attracted.”");
+gq("tense","If the city council ___ the proposal next week, construction on the new park will begin in the spring.",
+ ["approves","approved","would approve","had approved"],
+ "In a real future conditional, the “if” clause uses the present tense and the main clause uses “will.”");
+gq("tense","In her 1962 book Silent Spring, Rachel Carson ___ that pesticides were harming wildlife, and the book helped launch the modern environmental movement.",
+ ["argued","argues","will argue","is arguing"],
+ "The rest of the sentence is in the past (“were harming,” “helped”), so the verb should be consistent: “argued.”");
+
+/* ---- Transitions ---- */
+add("trans",TRN,["Nevertheless","Therefore","Similarly","For example"],
+ "Short lifespans might lead you to expect limited abilities, but octopuses show remarkable intelligence. That contrast calls for “Nevertheless.”",
+ "Octopuses have short lifespans, often living only one to two years. "+BL+", they display remarkable problem-solving abilities, such as unscrewing jar lids to reach food.");
+add("trans",TRN,["As a result","However","Likewise","In contrast"],
+ "Rising bread prices are an effect of the smaller harvest, so a cause-and-effect transition fits.",
+ "A severe drought reduced the region’s wheat harvest by nearly 40 percent. "+BL+", bread prices in local markets rose sharply.");
+add("trans",TRN,["For instance","Nonetheless","Consequently","Meanwhile"],
+ "The Gobi is an example of a cold desert, illustrating the previous sentence’s claim.",
+ "Not all deserts are hot. "+BL+", the Gobi Desert in Mongolia regularly sees winter temperatures below −30°C.");
+add("trans",TRN,["By contrast","Similarly","As a result","For example"],
+ "The text contrasts early gearless bicycles with modern bicycles that have many gears.",
+ "Early bicycles had no gears, which made steep hills difficult to climb. "+BL+", many modern bicycles offer more than twenty gear combinations.");
+add("trans",TRN,["Additionally","Instead","Nevertheless","Conversely"],
+ "The second sentence adds another energy-saving feature to the first, so an addition transition fits.",
+ "The architect designed the building to make maximum use of natural light. "+BL+", she installed rooftop solar panels to reduce its reliance on the electrical grid.");
+add("trans",TRN,["However","Accordingly","Furthermore","Specifically"],
+ "The results contradicted what researchers expected, so a contrast transition is needed.",
+ "Researchers expected the new fertilizer to increase crop yields. "+BL+", yields in the test fields were nearly identical to those in the control fields.");
+add("trans",TRN,["Specifically","Nevertheless","In contrast","Otherwise"],
+ "The second sentence gives a precise detail about how the waggle dance communicates location.",
+ "Honeybees communicate the location of food through a “waggle dance.” "+BL+", the angle of the dance indicates the direction of the food relative to the sun.");
+add("trans",TRN,["Ultimately","Previously","For instance","Similarly"],
+ "After describing years of setbacks, the final sentence gives the eventual outcome, so “Ultimately” fits.",
+ "The engineers spent six years redesigning the telescope’s mirrors after repeated test failures. "+BL+", the telescope launched successfully and began sending back images of distant galaxies.");
+
+/* ---- Words in context ---- */
+add("wic",WIC,["formulaic","innovative","ambiguous","profound"],
+ "If nearly every twist can be predicted, the plot follows a familiar formula: “formulaic.”",
+ "Although the critic praised the film’s cinematography, she found its plot "+BL+", noting that nearly every twist could be predicted from the opening scene.");
+add("wic",WIC,["equivocal","candid","vehement","succinct"],
+ "Remarks that avoid a clear position are “equivocal” (deliberately ambiguous). “Candid” would mean the opposite.",
+ "The senator’s "+BL+" remarks, which avoided taking any clear position, frustrated reporters seeking a direct answer.");
+add("wic",WIC,["tenacious","ambivalent","fleeting","superficial"],
+ "Spending years processing tons of ore by hand shows persistent, determined dedication: “tenacious.”",
+ "Marie Curie’s "+BL+" dedication to her research was evident in the years she spent processing tons of pitchblende by hand.");
+add("wic","As used in the text, what does the word “checked” most nearly mean?",["halted","examined","marked","verified"],
+ "Rain that turns roads to mud would stop or slow an army’s advance, so “checked” means “halted” here.",
+ "The general’s advance was checked by heavy rains that turned the roads to thick mud.");
+add("wic","As used in the text, what does the word “sound” most nearly mean?",["reliable","noisy","audible","deep"],
+ "A financially sound plan is solid and dependable.",
+ "Before approving the investment, the board demanded evidence that the plan was financially sound.");
+add("wic",WIC,["qualify","exaggerate","abandon","celebrate"],
+ "To “qualify” a claim is to limit or restrict it—exactly what stating “only what the data could support” means.",
+ "The scientist was careful to "+BL+" her claims, stating only what the data could directly support.");
+add("wic",WIC,["pivotal","peripheral","derivative","obscure"],
+ "The text says her work shaped later debates, so she is central and important: “pivotal.” The word “now” contrasts with her being dismissed earlier.",
+ "Long dismissed as a minor poet, Phillis Wheatley is now regarded as a "+BL+" figure in American literature whose work shaped later debates about race and authorship.");
+add("wic",WIC,["corroborated","contradicted","anticipated","obscured"],
+ "Independent measurements that match the original findings confirm (corroborate) them.",
+ "The team’s surprising findings were later "+BL+" by two independent laboratories that obtained nearly identical measurements.");
+
+/* ---- Rhetorical synthesis ---- */
+add("synth","The student wants to emphasize why scientists study axolotls. "+SYN,
+ ["Because axolotls can regenerate limbs, parts of the heart, and even portions of the brain, scientists study them to understand tissue regeneration.",
+  "The axolotl, a salamander native to lakes near Mexico City, keeps its external gills throughout its life.",
+  "Unlike most salamanders, axolotls retain larval features as adults.",
+  "Axolotls are salamanders that live in lakes near Mexico City."],
+ "The goal is a REASON scientists study axolotls. Only the correct choice connects their regenerative ability to scientific research.",
+ "While researching a topic, a student has taken the following notes:<ul><li>The axolotl is a salamander native to lakes near Mexico City.</li><li>Unlike most salamanders, it keeps larval features such as external gills its whole life.</li><li>Axolotls can regenerate limbs, parts of the heart, and portions of the brain.</li><li>Scientists study axolotls to understand tissue regeneration.</li></ul>");
+add("synth","The student wants to introduce Mules and Men to an audience unfamiliar with Zora Neale Hurston. "+SYN,
+ ["Mules and Men (1935) is a collection of African American folklore gathered by Zora Neale Hurston, an American writer and anthropologist.",
+  "Hurston published Their Eyes Were Watching God in 1937, two years after Mules and Men.",
+  "Mules and Men was published in 1935.",
+  "Zora Neale Hurston lived from 1891 to 1960."],
+ "An unfamiliar audience needs to know what the book is AND who Hurston was. Only the correct choice does both.",
+ "While researching a topic, a student has taken the following notes:<ul><li>Zora Neale Hurston (1891–1960) was an American writer and anthropologist.</li><li>Her novel Their Eyes Were Watching God was published in 1937.</li><li>She collected African American folklore in the American South.</li><li>Her folklore collection Mules and Men appeared in 1935.</li></ul>");
+add("synth","The student wants to contrast the shapes of the two volcanoes. "+SYN,
+ ["While Mauna Loa, a shield volcano, has gentle slopes, Mount Fuji, a stratovolcano, has steep slopes built from layers of lava and ash.",
+  "Mauna Loa and Mount Fuji are both well-known volcanoes.",
+  "Mount Fuji, located in Japan, is a stratovolcano.",
+  "Shield volcanoes like Mauna Loa are formed by runny lava flows."],
+ "A contrast must mention BOTH volcanoes and how their shapes differ. Only the correct choice does that.",
+ "While researching a topic, a student has taken the following notes:<ul><li>Mauna Loa in Hawaii is a shield volcano.</li><li>Shield volcanoes have gentle slopes formed by runny lava.</li><li>Mount Fuji in Japan is a stratovolcano.</li><li>Stratovolcanoes have steep slopes built from alternating layers of lava and ash.</li></ul>");
+add("synth","The student wants to emphasize the scale of the Great Barrier Reef. "+SYN,
+ ["Stretching more than 2,300 kilometers and visible from space, the Great Barrier Reef is the largest coral reef system on Earth.",
+  "The Great Barrier Reef, located off the coast of Queensland, Australia, faces threats from warming waters.",
+  "Coral bleaching, caused by rising ocean temperatures, threatens the Great Barrier Reef.",
+  "The Great Barrier Reef is located off the coast of Queensland, Australia."],
+ "“Scale” means size. Only the correct choice uses the size details: 2,300 km, visible from space, largest system.",
+ "While researching a topic, a student has taken the following notes:<ul><li>The Great Barrier Reef lies off the coast of Queensland, Australia.</li><li>It stretches more than 2,300 kilometers.</li><li>It is the largest coral reef system on Earth and is visible from space.</li><li>Rising ocean temperatures have caused widespread coral bleaching.</li></ul>");
+
+/* ---- Main idea & inference (passages) ---- */
+const P1="When the city replaced street parking on Elm Street with protected bike lanes, local shop owners protested, fearing that customers who could no longer park nearby would simply stop coming. A year later, however, sales records told a different story: most businesses along the corridor reported higher revenues than before, and pedestrian traffic had increased by nearly a quarter.";
+add("read","Which choice best states the main idea of the text?",
+ ["Contrary to shop owners’ fears, the bike lanes did not hurt—and may have helped—businesses on Elm Street.",
+  "Shop owners successfully convinced the city to remove the bike lanes.",
+  "A shortage of parking forced several Elm Street businesses to close.",
+  "Bike lanes increase revenue for businesses in every city."],
+ "The text sets up a fear (lost customers) and then reverses it with evidence (higher revenue, more foot traffic). Choice about “every city” overgeneralizes.",P1);
+const P2="Grandmother kept her garden the way other people kept diaries. Each row held a year: the fig tree planted the spring my mother was born, the roses added after the war, the crooked line of tomatoes she started the summer Grandfather died and never had the heart to straighten.";
+add("read","The narrator compares the garden to a diary mainly to suggest that the garden",
+ ["records important events in the grandmother’s life","was poorly maintained over many years","was the family’s main source of income","was designed to impress the neighbors"],
+ "Diaries record a life’s events; each planting in the garden marks a key moment (a birth, a war, a death).",P2);
+add("read","Based on the text, the “crooked line of tomatoes” most likely reflects the grandmother’s",
+ ["grief and wish to preserve a memory","lack of gardening skill","preference for unusual garden designs","impatience with gardening chores"],
+ "She started the row when her husband died and “never had the heart to straighten” it—she kept it unchanged out of grief and memory.",P2);
+const P3="Researchers studying a population of finches on a remote island found that after a severe drought, the average beak depth of surviving birds increased. The drought had killed most plants with small, soft seeds, leaving mainly large, hard seeds that only deep-beaked birds could crack open.";
+add("read","Which choice best describes the function of the second sentence in the overall structure of the text?",
+ ["It explains a cause of the change described in the first sentence.","It presents a counterargument to the researchers’ findings.","It introduces a new question for future research.","It describes the methods the researchers used."],
+ "The first sentence describes a change (deeper beaks); the second explains why it happened (only hard seeds remained).",P3);
+add("read","Based on the text, which finches were most likely to survive the drought?",
+ ["Those with deeper beaks that could crack large, hard seeds","Those with shallow beaks suited to small, soft seeds","Those that migrated to the mainland","Those that ate insects instead of seeds"],
+ "Only hard seeds remained, and only deep-beaked birds could open them, so those birds had a survival advantage.",P3);
+const P4="Some economists argue that raising the minimum wage reduces employment, since businesses facing higher labor costs may hire fewer workers. Others counter that higher wages reduce employee turnover—saving businesses the costs of recruiting and training—and put more money into the hands of consumers who will spend it at local businesses.";
+add("read","The text is mainly concerned with",
+ ["presenting two opposing views about the effects of raising the minimum wage","proving that raising the minimum wage reduces employment","explaining how businesses recruit and train workers","describing the history of minimum-wage laws"],
+ "“Some economists argue… Others counter…” signals two competing views. The text doesn’t take a side.",P4);
+const P5="In 1848, the Seneca Falls Convention issued the Declaration of Sentiments, a document deliberately modeled on the Declaration of Independence. By echoing the language of 1776—“We hold these truths to be self-evident: that all men and women are created equal”—its authors framed their demand for women’s rights as a fulfillment of the nation’s founding principles rather than a rejection of them.";
+add("read","According to the text, why did the authors model their document on the Declaration of Independence?",
+ ["To present women’s rights as consistent with America’s founding ideals","To argue that the Declaration of Independence should be replaced","To show that they had studied colonial history","To avoid writing an original document"],
+ "The text says they framed women’s rights as “a fulfillment of the nation’s founding principles rather than a rejection of them.”",P5);
+const P6="For decades, astronomers assumed that planets could form only around single stars, reasoning that the gravitational tug of a second star would scatter the dust needed to build planets. The discovery of Kepler-16b, a planet that orbits two stars at once, forced scientists to reconsider that assumption.";
+add("read","Which choice best states the main idea of the text?",
+ ["A discovery challenged a long-held belief about where planets can form.","Kepler-16b is the largest known planet.","Two-star systems contain more dust than single-star systems.","Astronomers have stopped searching for planets around single stars."],
+ "The text describes an old assumption and a discovery that “forced scientists to reconsider” it.",P6);
+
+/* ---- Concision & style ---- */
+add("conc","Which choice completes the text most concisely and effectively?",
+ ["tomorrow","tomorrow, on the following day,","tomorrow at a future time","on the next day, tomorrow,"],
+ "“Tomorrow” already means “the following day.” The other choices repeat the same idea (redundancy).",
+ "The committee will meet "+BL+" to finalize the budget.");
+add("conc","Which choice completes the text most concisely and effectively?",
+ ["fragile","fragile and easily damaged and breakable","fragile in a delicate, breakable way","very fragile and also delicate"],
+ "“Fragile” already means easily broken. The extra words add no new meaning.",
+ "Because the ancient scroll is so "+BL+", researchers handle it only with gloves.");
+add("conc","Which choice completes the text most concisely and effectively?",
+ ["The team analyzed the results.","The results were analyzed by the team, who did the analysis.","An analysis of the results was performed and done by the team.","The team, they analyzed the results."],
+ "Active voice with no repetition is clearest. The others are wordy, redundant, or contain a pronoun error.",
+ "After the experiment ended, "+BL);
+add("conc","Which choice completes the text most concisely and effectively?",
+ ["annually","annually every year","each year annually","once a year, annually,"],
+ "“Annually” means “every year,” so pairing them is redundant.",
+ "The town hosts its famous pumpkin festival "+BL+" in October.");
+
+/* ---- Command of evidence ---- */
+add("evid","Which choice most effectively uses data from the table to support the researcher’s claim?",
+ ["Transit users averaged 8,200 steps per day, compared with 4,900 for drivers.","Cyclists averaged 6,100 steps per day.","Drivers averaged 4,900 steps per day, fewer than cyclists.","Transit users and cyclists both averaged more than 6,000 steps per day."],
+ "The claim compares transit users with DRIVERS. Only the correct choice gives both of those numbers.",
+ "A researcher claims that city residents who commute by public transit walk more each day than residents who drive.<table><tr><th>Commute type</th><th>Average daily steps</th></tr><tr><td>Public transit</td><td>8,200</td></tr><tr><td>Bicycle</td><td>6,100</td></tr><tr><td>Car</td><td>4,900</td></tr></table>");
+add("evid","Which quotation from the novel most effectively illustrates the claim?",
+ ["“I never raise my voice,” I shouted, slamming the door so hard the windows rattled.","“The morning was gray and cold, and I walked slowly to the station.”","“My sister had always loved the old house more than I did.”","“I decided, at last, to write down everything that had happened.”"],
+ "An unreliable narrator says things the story shows to be false. Claiming to never raise his voice while shouting shows that contradiction.",
+ "A literary scholar argues that the narrator of a novel is unreliable, often describing himself in ways that his own actions contradict.");
+add("evid","Which finding, if true, would most directly support the hypothesis?",
+ ["Plots planted with clover had significantly more pollinator visits than plots without clover.","Clover grows well in many types of soil.","Some pollinators prefer flowers other than clover.","The farm’s soil quality improved after five years."],
+ "The hypothesis is about clover attracting pollinators. Only the correct choice measures pollinator visits with and without clover.",
+ "An agricultural scientist hypothesizes that planting clover between crop rows increases the number of pollinators that visit a farm.");
+
+/* ---- MATH BANK ---- */
+add("lin","If 3(x − 4) + 2 = 5x − 18, what is the value of x?",["4","2","7","−4"],
+ "Distribute: 3x − 12 + 2 = 5x − 18 → 3x − 10 = 5x − 18 → 8 = 2x → x = 4.");
+add("lin","Line ℓ passes through (−2, 5) and (4, −7). What is the slope of line ℓ?",["−2","2","−1/2","−6"],
+ "Slope = (−7 − 5)/(4 − (−2)) = −12/6 = −2.");
+add("lin","A line passes through (0, 3) and is parallel to y = −(2/3)x + 7. Which is an equation of the line?",
+ ["y = −(2/3)x + 3","y = (3/2)x + 3","y = −(2/3)x + 7","y = (2/3)x + 3"],
+ "Parallel lines have equal slopes (−2/3). The y-intercept is 3 because the line passes through (0, 3).");
+add("lin","For what value of k does the equation 4(x + k) = 4x + 12 have infinitely many solutions?",["3","12","4","There is no such value."],
+ "4x + 4k = 4x + 12 is true for every x exactly when 4k = 12, so k = 3.");
+add("lin","For what value of a does the equation 2x + 3 = ax − 5 have no solution?",["2","−2","3","−5"],
+ "No solution happens when the x-coefficients match but the constants don’t. If a = 2: 2x + 3 = 2x − 5 → 3 = −5, which is never true.");
+add("lin","Which line is perpendicular to y = 4x − 1?",["y = −(1/4)x + 6","y = 4x + 6","y = −4x + 6","y = (1/4)x − 1"],
+ "Perpendicular slopes are negative reciprocals. The negative reciprocal of 4 is −1/4.");
+add("sys","2x + y = 11 and x − y = 1. If (x, y) is the solution, what is x?",["4","3","5","7"],
+ "Add the equations: 3x = 12, so x = 4 (and y = 3).");
+add("sys","For what value of c does the system 3x − 2y = 7 and 6x − 4y = c have infinitely many solutions?",["14","7","−14","3.5"],
+ "The second equation must be a multiple of the first. Multiplying the first by 2 gives 6x − 4y = 14, so c = 14.");
+add("sys","A theater sold 50 tickets for a total of $520. Adult tickets cost $12 and student tickets cost $8. How many adult tickets were sold?",["30","20","25","35"],
+ "a + s = 50 and 12a + 8s = 520. Substitute s = 50 − a: 12a + 400 − 8a = 520 → 4a = 120 → a = 30.");
+add("sys","How many solutions does the system y = 3x + 2 and y = 3x − 5 have?",["Zero","Exactly one","Exactly two","Infinitely many"],
+ "Same slope (3) but different y-intercepts means the lines are parallel and never meet.");
+add("quad","What are the solutions of x² − 5x − 14 = 0?",["x = 7 and x = −2","x = −7 and x = 2","x = 14 and x = −1","x = 5 and x = −14"],
+ "Factor: (x − 7)(x + 2) = 0, so x = 7 or x = −2.");
+add("quad","What is the vertex of the graph of y = 2(x − 3)² + 5?",["(3, 5)","(−3, 5)","(3, −5)","(5, 3)"],
+ "Vertex form y = a(x − h)² + k has vertex (h, k) = (3, 5).");
+add("quad","For what positive value of b does x² + bx + 16 = 0 have exactly one real solution?",["8","4","16","32"],
+ "Exactly one solution means the discriminant is 0: b² − 4(1)(16) = 0 → b² = 64 → b = 8.");
+add("quad","What is the sum of the solutions of 3x² − 12x + 7 = 0?",["4","−4","7/3","12"],
+ "For ax² + bx + c = 0, the sum of the solutions is −b/a = −(−12)/3 = 4.");
+add("quad","A ball’s height is h(t) = −16t² + 64t + 5 feet after t seconds. What is the maximum height?",["69 feet","64 feet","2 feet","133 feet"],
+ "The maximum occurs at t = −b/(2a) = −64/(−32) = 2. Then h(2) = −64 + 128 + 5 = 69 feet.");
+add("func","If f(x) = 2x² − 3x + 1, what is f(−2)?",["15","3","−1","11"],
+ "f(−2) = 2(4) − 3(−2) + 1 = 8 + 6 + 1 = 15.");
+add("func","If f(x) = 3x − 2 and g(x) = x² + 1, what is f(g(2))?",["13","17","10","25"],
+ "Work inside out: g(2) = 5, then f(5) = 15 − 2 = 13. (17 is g(f(2)), the reverse order.)");
+add("func","For what value of x is f(x) = (x + 1)/(x − 3) undefined?",["3","−1","1","−3"],
+ "A fraction is undefined when its denominator is 0: x − 3 = 0 → x = 3.");
+add("func","The graph of y = f(x) is shifted 4 units right and 2 units down. Which equation describes the new graph?",
+ ["y = f(x − 4) − 2","y = f(x + 4) − 2","y = f(x − 4) + 2","y = f(x + 2) − 4"],
+ "Shifting right by 4 replaces x with (x − 4); shifting down by 2 subtracts 2 from the output.");
+add("func","If f(x) = 5x + b and f(3) = 11, what is f(−1)?",["−9","−1","1","9"],
+ "15 + b = 11 → b = −4. Then f(−1) = −5 − 4 = −9.");
+add("expo","A population of 500 bacteria doubles every 3 hours. Which function gives the population t hours from now?",
+ ["P(t) = 500·2<sup>t/3</sup>","P(t) = 500·2<sup>3t</sup>","P(t) = 500·3<sup>t/2</sup>","P(t) = 500 + 2<sup>t/3</sup>"],
+ "The population multiplies by 2 once every 3 hours, so the number of doublings after t hours is t/3.");
+add("expo","A car worth $24,000 loses 15% of its value each year. Which expression gives its value after t years?",
+ ["24,000(0.85)<sup>t</sup>","24,000(0.15)<sup>t</sup>","24,000(1.15)<sup>t</sup>","24,000 − 0.15t"],
+ "Losing 15% means keeping 85%, so multiply by 0.85 each year.");
+add("expo","If 2<sup>x + 1</sup> = 32, what is the value of x?",["4","5","16","3"],
+ "32 = 2⁵, so x + 1 = 5 and x = 4.");
+add("expo","Which expression is equivalent to (x³)² · x⁴?",["x¹⁰","x⁹","x²⁴","x¹⁴"],
+ "Power of a power multiplies: (x³)² = x⁶. Then x⁶ · x⁴ = x¹⁰ (add exponents when multiplying).");
+add("expo","In the model y = 3(1.04)<sup>t</sup>, what does 1.04 represent?",["A 4% increase per time period","A 4% decrease per time period","A 104% decrease per time period","An increase of 1.04 units per time period"],
+ "A growth factor of 1 + r means the quantity grows by r each period; here r = 0.04 = 4%.");
+add("expo","Which expression is equivalent to 8<sup>2/3</sup>?",["4","16/3","2","√8"],
+ "8<sup>2/3</sup> = (∛8)² = 2² = 4.");
+add("poly","Which expression is equivalent to (2x + 3)(x − 5)?",["2x² − 7x − 15","2x² − 13x − 15","2x² + 7x − 15","2x² − 7x + 15"],
+ "FOIL: 2x² − 10x + 3x − 15 = 2x² − 7x − 15.");
+add("poly","If p(x) = x³ − 2x² + kx − 6 and p(2) = 0, what is k?",["3","−3","6","2"],
+ "p(2) = 8 − 8 + 2k − 6 = 0 → 2k = 6 → k = 3.");
+add("poly","What is the remainder when x³ + 4x − 1 is divided by x − 2?",["15","−17","11","1"],
+ "Remainder Theorem: the remainder equals p(2) = 8 + 8 − 1 = 15.");
+add("poly","Which is a factor of x² − 9x + 20?",["x − 4","x + 4","x − 2","x + 5"],
+ "x² − 9x + 20 = (x − 4)(x − 5).");
+add("poly","For x ≠ −4, which expression is equivalent to (x² − 16)/(x + 4)?",["x − 4","x + 4","x − 16","x² − 4"],
+ "Difference of squares: x² − 16 = (x + 4)(x − 4). Cancel (x + 4).");
+add("pct","A price of $80 is increased by 25% and then decreased by 20%. What is the final price?",["$80","$84","$76","$85"],
+ "80 × 1.25 = 100, then 100 × 0.80 = 80. Percent changes don’t simply add.");
+add("pct","The ratio of boys to girls in a club is 3 : 5. If there are 40 members, how many are girls?",["25","15","24","30"],
+ "3 + 5 = 8 parts; 40 ÷ 8 = 5 per part; girls = 5 × 5 = 25.");
+add("pct","30 is 40% of what number?",["75","12","120","70"],
+ "0.40n = 30 → n = 75.");
+add("pct","A value rose from 250 to 290. What was the percent increase?",["16%","40%","13.8%","14%"],
+ "Percent change = (290 − 250)/250 = 40/250 = 0.16 = 16%. Always divide by the ORIGINAL value.");
+add("stat","The mean of five numbers is 20. Four of them are 12, 15, 20, and 25. What is the fifth?",["28","20","18","72"],
+ "Total = 5 × 20 = 100. The four numbers sum to 72, so the fifth is 28.");
+add("stat","In the data set 3, 7, 7, 9, 14, the value 14 is replaced with 40. Which statement is true?",
+ ["The mean increases, but the median stays the same.","The median increases, but the mean stays the same.","Both the mean and median increase.","Neither the mean nor the median changes."],
+ "The middle value is still 7, so the median doesn’t change. The sum increases, so the mean increases. Outliers affect the mean far more than the median.");
+add("stat","What is the median of 4, 11, 2, 9, 6, 15?",["7.5","6","9","7.83"],
+ "Sort first: 2, 4, 6, 9, 11, 15. With an even count, average the two middle values: (6 + 9)/2 = 7.5.");
+add("stat","Data sets A and B have the same mean, but set A has a larger standard deviation. Which must be true?",
+ ["The values in A are more spread out from the mean.","A has more values than B.","A has a larger median.","The values in A are closer together."],
+ "Standard deviation measures spread. A larger standard deviation means more spread from the mean.");
+add("stat","A random sample of 200 students at a high school found that 120 prefer a later start time. Which conclusion is best supported?",
+ ["About 60% of students at that school likely prefer a later start time.","Exactly 60% of all U.S. high school students prefer a later start time.","120 students in the state prefer a later start time.","No conclusion can be drawn from a sample."],
+ "A random sample supports conclusions about the population it was drawn from (that school), not a broader population.");
+add("prob","A bag has 4 red, 6 blue, and 5 green marbles. If one marble is chosen at random, what is the probability it is NOT blue?",["3/5","2/5","4/15","1/3"],
+ "Not blue = 4 + 5 = 9 marbles out of 15: 9/15 = 3/5.");
+add("prob","Two fair coins are flipped. What is the probability of getting at least one head?",["3/4","1/2","1/4","2/3"],
+ "Outcomes: HH, HT, TH, TT. Three of four have at least one head. (Or: 1 − P(no heads) = 1 − 1/4.)");
+add("prob","Two fair six-sided dice are rolled. What is the probability the sum is 7?",["1/6","7/36","1/12","1/36"],
+ "Six outcomes give 7: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1). 6/36 = 1/6.");
+add("prob","Of 80 students surveyed, 30 play a sport. Of those 30, 12 are also in the band. If a student who plays a sport is chosen at random, what is the probability the student is in the band?",["2/5","3/20","3/8","1/2"],
+ "This is conditional: only look at the 30 sport players. 12/30 = 2/5.");
+add("geo","A right triangle has legs of 9 and 12. What is the length of the hypotenuse?",["15","13","21","108"],
+ "9² + 12² = 81 + 144 = 225, √225 = 15 (a 3-4-5 triangle scaled by 3).");
+add("geo","A circle has an area of 49π. What is its circumference?",["14π","7π","49π","28π"],
+ "πr² = 49π → r = 7. Circumference = 2πr = 14π.");
+add("geo","Two parallel lines are cut by a transversal. One angle measures 115°. What is the measure of a same-side interior angle paired with it?",["65°","115°","25°","245°"],
+ "Same-side (consecutive) interior angles are supplementary: 180° − 115° = 65°.");
+add("geo","What is the radius of the circle x² + y² − 6x + 4y = 12?",["5","12","√12","25"],
+ "Complete the square: (x − 3)² + (y + 2)² = 12 + 9 + 4 = 25, so r = √25 = 5.");
+add("geo","Two similar triangles have corresponding sides in the ratio 2 : 3. The smaller triangle’s area is 20. What is the larger triangle’s area?",["45","30","60","40"],
+ "Areas scale by the square of the side ratio: (3/2)² = 9/4. 20 × 9/4 = 45.");
+add("geo","What is the volume of a cylinder with radius 3 and height 5?",["45π","15π","30π","90π"],
+ "V = πr²h = π(9)(5) = 45π.");
+add("trig","In right triangle ABC, angle C is 90°, AC = 5, BC = 12, and AB = 13. What is sin A?",["12/13","5/13","12/5","5/12"],
+ "sin A = opposite/hypotenuse. The side opposite A is BC = 12, so sin A = 12/13.");
+add("trig","If sin(x°) = cos(40°) and 0 &lt; x &lt; 90, what is x?",["50","40","140","90"],
+ "sin(x°) = cos(90° − x°), so complementary angles: x = 90 − 40 = 50.");
+add("trig","What is 3π/4 radians in degrees?",["135°","270°","45°","240°"],
+ "Multiply by 180°/π: (3π/4)(180/π) = 135°.");
+add("trig","In a 30°-60°-90° triangle, the shorter leg is 4. What is the hypotenuse?",["8","4√3","4√2","6"],
+ "In a 30-60-90 triangle, the hypotenuse is twice the shorter leg: 2 × 4 = 8.");
+add("word","A train travels 240 miles in 4 hours. At the same rate, how many hours will it take to travel 420 miles?",["7","6","8","10.5"],
+ "Rate = 240/4 = 60 mph. Time = 420/60 = 7 hours.");
+add("word","A phone plan costs $25 per month plus $0.10 per text. One month’s bill was $41. How many texts were sent?",["160","410","16","250"],
+ "25 + 0.10t = 41 → 0.10t = 16 → t = 160.");
+add("word","Pipe A fills a pool in 6 hours and pipe B fills it in 3 hours. Working together, how many hours do they take?",["2","4.5","3","9"],
+ "Rates add: 1/6 + 1/3 = 1/2 pool per hour, so it takes 2 hours.");
+add("word","How many liters of a 20% salt solution must be added to 10 liters of a 50% salt solution to make a 30% solution?",["20","10","15","5"],
+ "0.20x + 0.50(10) = 0.30(x + 10) → 0.2x + 5 = 0.3x + 3 → x = 20.");
+
+/* =====================================================================
+   VOCABULARY (also drives generated Words-in-Context questions)
+   ===================================================================== */
+const VOCAB = [
+["abate","verb","to become less intense","The crowd waited for the storm to abate before leaving the stadium."],
+["ambivalent","adjective","having mixed or conflicting feelings","She felt ambivalent about moving, excited by the new city but sad to leave her friends."],
+["anomaly","noun","something that differs from what is normal or expected","The scientists first dismissed the unusual reading as an anomaly."],
+["arbitrary","adjective","based on random choice rather than reason","Students complained that the new dress code seemed arbitrary."],
+["austere","adjective","severely plain; without decoration or comfort","The monk lived in an austere room with only a bed and a desk."],
+["benevolent","adjective","kind and generous","The benevolent donor paid for the entire library renovation."],
+["candid","adjective","honest and direct","In a candid interview, the author admitted she nearly abandoned the novel."],
+["catalyst","noun","something that causes or speeds up change","The printing press was a catalyst for the spread of literacy."],
+["coherent","adjective","logical and well organized","Her essay presented a coherent argument from start to finish."],
+["complacent","adjective","overly self-satisfied and unaware of danger","After ten straight wins, the team grew complacent and lost to a weaker opponent."],
+["concede","verb","to admit, often reluctantly, that something is true","The candidate refused to concede until every vote was counted."],
+["conspicuous","adjective","easy to notice; standing out","His bright orange jacket made him conspicuous in the crowd."],
+["corroborate","verb","to confirm with additional evidence","Two witnesses were able to corroborate the driver’s account of the accident."],
+["credible","adjective","believable; trustworthy","Good researchers rely on credible sources rather than rumors."],
+["cursory","adjective","hasty and not thorough","A cursory glance at the report missed several serious errors."],
+["deference","noun","polite respect and willingness to yield to another","Out of deference to her grandmother, she spoke softly at the dinner table."],
+["diligent","adjective","showing careful, steady effort","A diligent student, he reviewed his notes every night."],
+["discern","verb","to perceive or recognize, often with difficulty","It was hard to discern the trail in the thick fog."],
+["disparate","adjective","fundamentally different; not alike","The anthology brings together disparate voices from five continents."],
+["dubious","adjective","doubtful; questionable","The website made dubious claims about a miracle cure."],
+["eclectic","adjective","drawn from many different sources or styles","Her eclectic playlist mixed jazz, hip-hop, and classical music."],
+["elusive","adjective","hard to find, catch, or understand","The solution to the puzzle remained elusive for weeks."],
+["empirical","adjective","based on observation or experiment","The theory was finally supported by empirical evidence."],
+["ephemeral","adjective","lasting a very short time","The beauty of cherry blossoms is ephemeral, fading within days."],
+["equivocal","adjective","deliberately ambiguous; open to more than one interpretation","The witness gave an equivocal answer that satisfied no one."],
+["exacerbate","verb","to make a problem worse","Scratching will only exacerbate the rash."],
+["fortuitous","adjective","happening by lucky chance","Their fortuitous meeting at the airport led to a lifelong friendship."],
+["frugal","adjective","careful with money; avoiding waste","By being frugal, she saved enough for a new laptop."],
+["futile","adjective","incapable of producing any useful result","Trying to hold back the flood with a few sandbags proved futile."],
+["gregarious","adjective","sociable; fond of company","A gregarious person, he introduced himself to everyone at the party."],
+["impartial","adjective","fair; not favoring one side","A judge must remain impartial throughout the trial."],
+["inevitable","adjective","certain to happen; unavoidable","With the clouds darkening, rain seemed inevitable."],
+["innovative","adjective","introducing new ideas or methods","The company is known for its innovative approach to design."],
+["juxtapose","verb","to place side by side, especially for contrast","The curators chose to juxtapose ancient sculptures with modern photographs."],
+["lucid","adjective","clear and easy to understand","The professor gave a lucid explanation of a difficult concept."],
+["meticulous","adjective","extremely careful and precise","The meticulous editor caught every misplaced comma."],
+["mitigate","verb","to make less severe or harmful","Planting trees can help mitigate the effects of urban heat."],
+["novel","adjective","new and original","The engineers proposed a novel solution to the traffic problem."],
+["obsolete","adjective","no longer in use; out of date","Fax machines have become nearly obsolete."],
+["ostensibly","adverb","apparently or supposedly, but perhaps not actually","The meeting was ostensibly about safety, but it focused mostly on budget cuts."],
+["paradox","noun","a statement that seems contradictory but may be true","It is a paradox that having more choices can make people less satisfied."],
+["pragmatic","adjective","practical; focused on results rather than theory","Instead of arguing about ideals, the mayor took a pragmatic approach."],
+["precedent","noun","an earlier event used as an example or guide","The court’s ruling set a precedent for future cases."],
+["prolific","adjective","producing a great deal","The prolific author published three novels in a single year."],
+["prudent","adjective","wise and cautious about the future","It is prudent to save part of every paycheck."],
+["refute","verb","to prove a statement or theory wrong","The scientist used new data to refute the old theory."],
+["reticent","adjective","reserved; reluctant to share thoughts or feelings","Usually reticent, she surprised everyone with a passionate speech."],
+["scrutinize","verb","to examine closely and critically","Editors scrutinize every fact before an article is published."],
+["skeptical","adjective","doubtful; not easily convinced","Many investors remained skeptical of the company’s bold promises."],
+["substantiate","verb","to support a claim with proof","The reporter could not substantiate the rumor, so she did not publish it."],
+["superfluous","adjective","unnecessary; more than is needed","The editor cut superfluous words to tighten the essay."],
+["tenacious","adjective","persistent; not giving up easily","The tenacious reporter pursued the story for two years."],
+["tentative","adjective","not certain or fixed; provisional","We made tentative plans to meet on Friday."],
+["ubiquitous","adjective","found everywhere","Smartphones have become ubiquitous in modern life."],
+["undermine","verb","to weaken gradually or secretly","Constant interruptions can undermine a student’s concentration."],
+["venerate","verb","to regard with great respect","Many cultures venerate their ancestors."],
+["vindicate","verb","to clear from blame or prove right","The new evidence would vindicate the accused man."],
+["volatile","adjective","likely to change suddenly and unpredictably","The stock market was volatile all week."],
+["wary","adjective","cautious about possible danger","Hikers should be wary of loose rocks near the cliff edge."],
+["zealous","adjective","passionately devoted to a cause","The zealous fans camped outside the stadium overnight."],
+["alleviate","verb","to make pain or a problem less severe","The medicine helped alleviate her headache."],
+["assert","verb","to state confidently and forcefully","In her essay, the author is careful to assert only what the evidence supports."],
+["bolster","verb","to support or strengthen","The team signed two new players to bolster its defense."],
+["convey","verb","to communicate or express","The poet uses vivid imagery to convey a sense of loss."],
+["discrepancy","noun","a difference between things that should match","The auditor noticed a discrepancy between the two reports."],
+["explicit","adjective","stated clearly and directly","The instructions were explicit: no phones during the exam."],
+["implicit","adjective","suggested but not directly stated","There was an implicit warning in his calm tone."],
+["hinder","verb","to slow down or get in the way of","Heavy snow continued to hinder the rescue efforts."],
+["integral","adjective","essential to the whole","Teamwork is integral to the success of the project."],
+["nuanced","adjective","showing subtle differences or distinctions","The film offers a nuanced portrait of a complicated family."],
+["plausible","adjective","seemingly reasonable or likely","The detective considered every plausible explanation."],
+["profound","adjective","very great or deep in effect or insight","The discovery had a profound effect on modern medicine."],
+["resilient","adjective","able to recover quickly from difficulty","Coral reefs can be surprisingly resilient after storms."],
+["scrupulous","adjective","very careful to do what is right or accurate","The scrupulous accountant double-checked every figure."],
+["sporadic","adjective","happening at irregular intervals","The region received only sporadic rainfall last summer."],
+["trivial","adjective","of little importance","He dismissed the error as trivial, but it later caused major problems."],
+["ambiguous","adjective","having more than one possible meaning","The ambiguous ending left readers debating the hero’s fate."],
+["advocate","verb","to publicly support or recommend","The organization continues to advocate for cleaner air."],
+["contend","verb","to argue or claim","Some historians contend that the treaty caused more problems than it solved."],
+["deter","verb","to discourage someone from acting","Bright lights can deter deer from entering the garden."],
+["diminish","verb","to become or make smaller or less","The noise began to diminish as the parade moved away."],
+["feasible","adjective","possible and practical to do","Building the bridge in a single year was not feasible."],
+["illuminate","verb","to make clear; to shed light on","The letters illuminate the poet’s private struggles."],
+["meager","adjective","lacking in quantity or quality","The workers struggled to live on their meager wages."],
+["lament","verb","to express sorrow or regret","Fans continue to lament the closing of the historic theater."],
+["candor","noun","the quality of being open and honest","The coach appreciated the player’s candor about his injury."],
+["arduous","adjective","requiring great effort; difficult","The climbers began the arduous ascent before sunrise."],
+["benign","adjective","harmless; gentle","Doctors were relieved to find that the tumor was benign."],
+["censure","verb","to express strong official disapproval","The board voted to censure the member for his conduct."],
+["dogmatic","adjective","insisting one’s beliefs are true without considering others","His dogmatic attitude made compromise impossible."],
+["impetus","noun","a force that drives something to happen","The flood provided the impetus for new building codes."],
+["pervasive","adjective","spreading widely throughout","The smell of smoke was pervasive after the fire."],
+["reconcile","verb","to make two things consistent or compatible","Scientists struggled to reconcile the new data with the old model."]
+];
+
+/* =====================================================================
+   FLASHCARD DECKS
+   ===================================================================== */
+const GRAMMAR_CARDS = [
+["Semicolon ( ; )","Joins two complete independent clauses, like a “soft period.”","The rain stopped; the game resumed."],
+["Colon ( : )","Must follow a complete independent clause. Introduces a list, explanation, or example.","She had one goal: winning."],
+["Comma splice","Two independent clauses joined by only a comma — always wrong. Fix with a period, a semicolon, or comma + FANBOYS.","✗ I ran, I won. ✓ I ran, and I won."],
+["FANBOYS","for, and, nor, but, or, yet, so. Use a comma BEFORE one to join two independent clauses.","The test was hard, but she finished early."],
+["Nonessential elements","Extra information is set off by a matching pair: two commas, two dashes, or parentheses. Never mix them.","My aunt—a pilot—flies weekly."],
+["Essential clauses & “that”","Information needed to identify the noun takes no commas. “That” starts essential clauses; “which” usually starts nonessential ones.","The book that I lent you is overdue."],
+["Subject | verb","Never put a single comma between a subject and its verb.","✗ The tall trees, swayed. ✓ The tall trees swayed."],
+["However / therefore","Between two independent clauses: semicolon before, comma after.","It rained; however, we played."],
+["Subject–verb agreement","Find the real subject; cross out prepositional phrases (“of the…”, “in the…”) between subject and verb.","The box of crayons IS on the desk."],
+["Either/or, neither/nor","The verb agrees with the subject closer to it.","Neither the teacher nor the students WERE ready."],
+["Singular indefinite pronouns","each, every, either, neither, everyone, anybody, nobody → singular verbs and pronouns.","Everyone HAS HIS OR HER ticket."],
+["Collective nouns","team, jury, committee, company, family, audience → usually singular (“its”).","The team won ITS final game."],
+["its / it’s","its = possessive. it’s = it is / it has.","It’s clear the dog hurt its paw."],
+["their / there / they’re","their = possessive, there = place, they’re = they are.","They’re putting their bags over there."],
+["who / whom","Use who where he/she fits; whom where him/her fits.","Whom did you call? (You called HIM.)"],
+["Pronoun case in pairs","Remove the other person to test: “Sam and I went” (I went); “between you and me” (object after preposition).","Give it to Mia and ME."],
+["Dangling modifiers","The noun right after an introductory phrase must be the one it describes.","✓ Running late, Kai grabbed a bagel."],
+["Parallel structure","Items in a list or comparison must share the same grammatical form.","She likes hiking, swimming, and biking."],
+["Past perfect","had + past participle shows an action completed BEFORE another past action.","By noon, she had finished the essay."],
+["Apostrophes","Singular possessive: dog’s. Plural possessive: dogs’. Irregular plural: children’s.","The students’ projects won awards."],
+["Concision","If two choices are both grammatical and keep the meaning, the shorter one usually wins. Cut redundancy.","✗ annually every year ✓ annually"],
+["Logical comparisons","Compare like with like.","Her score was higher than THAT OF her rival (not “than her rival”)."],
+["fewer / less, number / amount","fewer & number → countable things; less & amount → uncountable.","fewer mistakes, less water"],
+["Transition types","Contrast: however, nevertheless. Cause: therefore, consequently. Addition: moreover, furthermore. Example: for instance.","Read both sentences, decide the relationship, THEN pick."],
+["Rhetorical synthesis","Read the GOAL in the question first. The right answer accomplishes exactly that goal — not just a true fact from the notes.","Goal: “contrast X and Y” → answer must mention both."],
+["Adjective vs. adverb","Adjectives modify nouns; adverbs (often -ly) modify verbs, adjectives, or other adverbs.","She sang beautifully. (not beautiful)"]
+];
+const FORMULA_CARDS = [
+["Slope","m = (y₂ − y₁) / (x₂ − x₁)","Rise over run."],
+["Slope-intercept form","y = mx + b","m = slope, b = y-intercept."],
+["Point-slope form","y − y₁ = m(x − x₁)","Use when you know a point and the slope."],
+["Parallel & perpendicular","Parallel: equal slopes. Perpendicular: slopes are negative reciprocals (m₁·m₂ = −1).","2 and −1/2 are perpendicular."],
+["Linear systems: # of solutions","Different slopes → 1 solution. Same slope, different intercept → 0. Same line → infinitely many.","Compare a/b ratios of the equations."],
+["Quadratic formula","x = (−b ± √(b² − 4ac)) / (2a)","For ax² + bx + c = 0."],
+["Discriminant","b² − 4ac: positive → 2 real roots; zero → 1; negative → 0 real roots.",""],
+["Vertex form","y = a(x − h)² + k","Vertex (h, k). a &gt; 0 opens up; a &lt; 0 opens down."],
+["Vertex x-coordinate","x = −b / (2a)","Plug it back in to get the max/min value."],
+["Sum & product of roots","Sum = −b/a, Product = c/a","For ax² + bx + c = 0."],
+["Difference of squares","a² − b² = (a + b)(a − b)","x² − 49 = (x + 7)(x − 7)"],
+["Perfect square trinomials","(a + b)² = a² + 2ab + b²   (a − b)² = a² − 2ab + b²",""],
+["Exponent rules","xᵃ·xᵇ = xᵃ⁺ᵇ   xᵃ/xᵇ = xᵃ⁻ᵇ   (xᵃ)ᵇ = xᵃᵇ   x⁰ = 1   x⁻ᵃ = 1/xᵃ","x^(m/n) = ⁿ√(xᵐ)"],
+["Exponential growth/decay","y = a(1 ± r)ᵗ","a = initial amount, r = rate as a decimal."],
+["Percent change","(new − old) / old × 100%","Always divide by the ORIGINAL."],
+["Distance formula","d = √((x₂ − x₁)² + (y₂ − y₁)²)","It’s the Pythagorean theorem."],
+["Midpoint","((x₁ + x₂)/2, (y₁ + y₂)/2)",""],
+["Circle equation","(x − h)² + (y − k)² = r²","Center (h, k), radius r. Complete the square if needed."],
+["Circle area & circumference","A = πr²   C = 2πr",""],
+["Arc length & sector area","Arc = (θ/360)·2πr   Sector = (θ/360)·πr²","With radians: arc = rθ."],
+["Pythagorean theorem","a² + b² = c²","Common triples: 3-4-5, 5-12-13, 8-15-17, 7-24-25."],
+["Special right triangles","45-45-90: x, x, x√2   30-60-90: x, x√3, 2x",""],
+["SOH-CAH-TOA","sin = opp/hyp   cos = adj/hyp   tan = opp/adj",""],
+["Complementary angle identity","sin(x) = cos(90° − x)","If sin A = cos B, then A + B = 90°."],
+["Radians ↔ degrees","180° = π radians","Degrees × π/180 = radians."],
+["Triangle facts","Area = ½bh. Angles sum to 180°. Exterior angle = sum of two remote interior angles.",""],
+["Polygon interior angles","Sum = (n − 2) × 180°","Hexagon: 720°."],
+["Volume formulas","Prism: lwh   Cylinder: πr²h   Cone: ⅓πr²h   Sphere: ⁴⁄₃πr³   Pyramid: ⅓lwh",""],
+["Mean, median, mode, range","Mean = sum ÷ count. Median = middle (sorted). Range = max − min.","Outliers pull the mean, not the median."],
+["Probability","P(event) = favorable / total. P(not A) = 1 − P(A). P(A and B) = P(A)·P(B) if independent.",""],
+["Conditional probability","P(A | B) = P(A and B) / P(B)","In tables: use only the row/column you are “given.”"],
+["Distance = rate × time","d = rt","Work problems: rates add (1/a + 1/b)."],
+["Remainder theorem","The remainder of p(x) ÷ (x − k) is p(k).","If p(k) = 0, then (x − k) is a factor."]
+];
+const DECKS = {
+  vocab: VOCAB.map(v=>({id:"v:"+v[0], front:`<div class="word">${v[0]}</div><div class="pos">${v[1]}</div>`, back:`<div class="def">${v[2]}</div><div class="ex">“${v[3]}”</div>`})),
+  grammar: GRAMMAR_CARDS.map(g=>({id:"g:"+g[0], front:`<div class="word" style="font-size:1.7rem">${g[0]}</div>`, back:`<div class="def">${g[1]}</div>${g[2]?`<div class="ex">${g[2]}</div>`:""}`})),
+  formulas: FORMULA_CARDS.map(f=>({id:"f:"+f[0], front:`<div class="word" style="font-size:1.7rem">${f[0]}</div>`, back:`<div class="fml">${f[1]}</div>${f[2]?`<div class="ex">${f[2]}</div>`:""}`}))
+};
+const DECK_NAMES = {vocab:"Vocabulary", grammar:"Grammar Rules", formulas:"Math Formulas"};
+
+/* =====================================================================
+   HELPERS
+   ===================================================================== */
+const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const nz=(a,b)=>{let v;do{v=ri(a,b)}while(v===0);return v;};
+const MN="−";
+function fmt(n){ n=Math.round(n*100)/100; if(Object.is(n,-0)) n=0; return n<0? MN+Math.abs(n) : String(n); }
+function paren(n){ return n<0? "("+fmt(n)+")" : fmt(n); }
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){const t=b;b=a%b;a=t;}return a||1;}
+function frac(n,d){ if(d<0){n=-n;d=-d;} const g=gcd(n,d); n/=g; d/=g; return d===1? fmt(n) : (n<0?MN:"")+Math.abs(n)+"/"+d; }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function poly(cs,v){ v=v||"x"; const deg=cs.length-1; let s="";
+  cs.forEach((c,i)=>{ const p=deg-i; if(!c) return; const ab=Math.abs(c);
+    const coef=(ab===1&&p>0)?"":String(ab); const vp=p===0?"":p===1?v:v+(p===2?"²":p===3?"³":"^"+p);
+    const term=coef+vp; if(!s) s=(c<0?MN:"")+term; else s+=(c<0?" "+MN+" ":" + ")+term; });
+  return s||"0"; }
+function lin2(a,b,c){ // ax + by = c
+  let s=""; const t=(k,v)=>Math.abs(k)===1?v:Math.abs(k)+v;
+  if(a) s=(a<0?MN:"")+t(a,"x");
+  if(b) s+= s? (b<0?" "+MN+" ":" + ")+t(b,"y") : (b<0?MN:"")+t(b,"y");
+  return s+" = "+fmt(c); }
+function fac(r){ return r<0? `(x + ${-r})` : `(x ${MN} ${r})`; }
+function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+let gid=0;
+function mk(t,q,correct,wrongs,e,p){
+  const out=[String(correct)];
+  for(const w of wrongs){ const s=String(w); if(!out.includes(s)) out.push(s); if(out.length===4) break; }
+  const cs=String(correct).replace(MN,"-");
+  const num=Number(cs), fm=cs.match(/^(-?\d+)\/(\d+)$/), pm=cs.match(/^(-?\d+(?:\.\d+)?)π$/);
+  let k=1;
+  while(out.length<4 && k<40){
+    const dlt=k%2? Math.ceil(k/2) : -Math.ceil(k/2); let cand=null;
+    if(isFinite(num)) cand=fmt(num+dlt);
+    else if(fm) cand=frac(Number(fm[1])+dlt,Number(fm[2]));
+    else if(pm && Number(pm[1])+dlt>0) cand=fmt(Number(pm[1])+dlt)+"π";
+    if(cand && !out.includes(cand)) out.push(cand);
+    k++;
+  }
+  while(out.length<4) out.push("None of these");  // safety only
+  return {id:"g"+(Date.now().toString(36))+(gid++), t, s:TOPICS[t].s, q, c:out, a:0, e, p:p||"", gen:true};
+}
+
+/* =====================================================================
+   PROCEDURAL GENERATORS
+   ===================================================================== */
+const GEN = {};
+function reg(t,f){ (GEN[t]=GEN[t]||[]).push(f); }
+
+/* ---------- English generators ---------- */
+const SVA_ITEMS = [
+ ["The collection","The collections","of rare coins","from the old museum","be","kept in a locked cabinet"],
+ ["The list","The lists","of required textbooks","for the advanced course","be","posted outside the classroom"],
+ ["The leader","The leaders","of the striking workers","of the union","plan","to meet with the governor on Monday"],
+ ["The bouquet","The bouquets","of fresh tulips","on the table","smell","wonderful"],
+ ["The study","The studies","of teenage sleep habits","from the university","suggest","that later school start times improve grades"],
+ ["The box","The boxes","of donated books","in the hallway","be","ready for delivery"],
+ ["The flock","The flocks","of migrating geese","near the lake","return","to the marsh each spring"],
+ ["The engine","The engines","in the newest cars","in the newest car","run","more efficiently than older models"],
+ ["The president","The presidents","of the two clubs","of the club","meet","with the principal each month"],
+ ["The painting","The paintings","by the Dutch masters","by the Dutch master","be","on loan from a private collector"],
+ ["The cost","The costs","of the new laptops","of the new laptop","exceed","the school’s budget"],
+ ["The quality","The qualities","of the hand-woven rugs","of the hand-woven rug","impress","visitors at the market"],
+ ["The bridge","The bridges","across the two rivers","across the river","need","urgent repairs"],
+ ["The source","The sources","of the rumors","of the rumor","remain","unknown"]
+];
+const VERB_FORMS = {
+  be:{s:["is","was","has been"],p:["are","were","have been"]},
+  plan:{s:["plans","is planning","has planned"],p:["plan","are planning","have planned"]},
+  smell:{s:["smells","has smelled","is smelling"],p:["smell","have smelled","are smelling"]},
+  suggest:{s:["suggests","is suggesting","has suggested"],p:["suggest","are suggesting","have suggested"]},
+  return:{s:["returns","is returning","has returned"],p:["return","are returning","have returned"]},
+  run:{s:["runs","is running","has run"],p:["run","are running","have run"]},
+  meet:{s:["meets","is meeting","has met"],p:["meet","are meeting","have met"]},
+  exceed:{s:["exceeds","is exceeding","has exceeded"],p:["exceed","are exceeding","have exceeded"]},
+  impress:{s:["impresses","is impressing","has impressed"],p:["impress","are impressing","have impressed"]},
+  need:{s:["needs","is needing","has needed"],p:["need","are needing","have needed"]},
+  remain:{s:["remains","is remaining","has remained"],p:["remain","are remaining","have remained"]}
+};
+reg("sva",()=>{
+  const it=pick(SVA_ITEMS), sing=Math.random()<.5, vf=VERB_FORMS[it[4]];
+  const head=sing?it[0]:it[1], phrase=sing?it[2]:it[3];
+  const own=sing?vf.s:vf.p, other=sing?vf.p:vf.s;
+  const hn=head.replace("The ","");
+  return mk("sva",STD,own[0],other,
+    `The subject is “${hn},” which is ${sing?"singular":"plural"}. The phrase “${phrase}” sits between the subject and the verb but doesn’t change the subject’s number, so the verb must be ${sing?"singular":"plural"}: “${own[0]}.”`,
+    `${head} ${phrase} ${BL} ${it[5]}.`);
+});
+reg("sva",()=>{
+  const pairs=[["the teacher","the students"],["the manager","the employees"],["the captain","the players"],["the author","the illustrators"],["the parents","the coach"],["the volunteers","the organizer"]];
+  const pr=pick(pairs), flip=Math.random()<.5; const [a,b]=flip?[pr[1],pr[0]]:pr;
+  const plural=/s$/.test(b);
+  const conj=pick([["Either","or"],["Neither","nor"]]);
+  const tail=pick(["responsible for the final decision","expected to attend the meeting","ready to begin the project"]);
+  const own=plural?"are":"is", wr=plural?["is","was","has been"]:["are","were","have been"];
+  return mk("sva",STD,own,wr,
+    `With “${conj[0].toLowerCase()}…${conj[1]},” the verb agrees with the subject closer to it. “${cap(b.replace("the ",""))}” is ${plural?"plural":"singular"}, so use “${own}.”`,
+    `${conj[0]} ${a} ${conj[1]} ${b} ${BL} ${tail}.`);
+});
+
+const CLAUSES = [
+ ["The city’s first public library opened in 1895","its original building still stands on Main Street"],
+ ["Monarch butterflies migrate thousands of miles each fall","some travel from Canada all the way to central Mexico"],
+ ["The orchestra rehearsed for months before the premiere","the performance earned a standing ovation"],
+ ["Marie Curie won two Nobel Prizes","she remains the only person honored in two different sciences"],
+ ["The bridge was closed for repairs","commuters had to take a ferry across the river"],
+ ["Volcanic soil is extremely fertile","farmers often grow crops on the slopes of active volcanoes"],
+ ["The author wrote her first novel by hand","she typed the final draft on a borrowed typewriter"],
+ ["Tide pools host a surprising variety of life","sea stars, anemones, and crabs all thrive there"],
+ ["The museum’s newest exhibit features ancient Egyptian jewelry","many of the pieces have never been displayed before"],
+ ["Bamboo is one of the fastest-growing plants on Earth","certain species can grow nearly a meter in a single day"],
+ ["The city council approved the budget","construction on the new park will begin in May"],
+ ["Glaciers carved the valleys of Yosemite","their slow movement left behind dramatic granite cliffs"],
+ ["The chess champion studied thousands of past games","her preparation gave her an edge in the final match"],
+ ["Honey almost never spoils","archaeologists have found edible honey in ancient tombs"],
+ ["The team’s first prototype failed","the engineers redesigned the wing and tested it again"],
+ ["Octavia Butler wrote every morning before dawn","she kept notebooks filled with ideas and goals"],
+ ["The comet returns roughly every 76 years","its next appearance is expected in 2061"],
+ ["The town’s bakery opened in 1922","the same family has run it for four generations"]
+];
+reg("punc",()=>{
+  const [c1,c2]=pick(CLAUSES); const w1=c1.split(" "), w2=c2.split(" ");
+  const last=w1.pop(), first=w2.shift();
+  const useSemi=Math.random()<.5;
+  const correct= useSemi? `${last}; ${first}` : `${last}. ${cap(first)}`;
+  return mk("punc",STD,correct,[`${last}, ${first}`,`${last} ${first}`,`${last}, however, ${first}`],
+    `“${c1}” and “${cap(c2)}” are both independent clauses. They must be separated by a ${useSemi?"semicolon":"period"} (or another mark that can join independent clauses). A comma alone is a comma splice, no punctuation is a run-on, and “, however,” with only commas is still a splice.`,
+    `${w1.join(" ")} ${BL} ${w2.join(" ")}.`);
+});
+const POSS = [["team","teams","uniforms","were washed before the tournament"],["scientist","scientists","notebooks","were stored in a fireproof cabinet"],
+ ["author","authors","signatures","appeared on the first page of the anthology"],["company","companies","profits","rose sharply in the final quarter"],
+ ["city","cities","mayors","met to discuss regional transit"],["student","students","projects","were displayed in the front hall"],
+ ["nurse","nurses","schedules","changed after the hospital hired more staff"],["country","countries","flags","lined the entrance to the stadium"]];
+reg("punc",()=>{
+  const [s,p,thing,rest]=pick(POSS); const n=pick(["three","five","six","all twelve","both"]);
+  const wr=[s+"’s "+thing, p+" "+thing, (s+"s"!==p? s+"s’ ":p+"’s ")+thing];
+  return mk("punc",STD,p+"’ "+thing,wr,
+    `The ${thing} belong to ${n==="both"?"two":"several"} ${p}, so you need the plural possessive. Form the plural first (${p}), then add an apostrophe after the s: ${p}’.`,
+    `${cap(n)} ${BL} ${rest}.`);
+});
+
+const COLLECTIVE = [["The committee","announced","decision on Friday"],["The company","released","quarterly report"],["The orchestra","performed","final concert of the season"],
+ ["The school board","approved","new policy"],["The jury","reached","verdict quickly"],["The team","celebrated","first championship"],["The city council","postponed","vote on the proposal"],["The band","recorded","debut album"]];
+reg("pron",()=>{
+  const [n,v,obj]=pick(COLLECTIVE);
+  return mk("pron",STD,"its",["their","it’s","they’re"],
+    `“${n.replace("The ","")}” is a collective noun acting as a single unit, so it takes the singular possessive pronoun “its.” “It’s” means “it is,” and “their”/“they’re” are plural.`,
+    `${n} ${v} ${BL} ${obj}.`);
+});
+reg("pron",()=>{
+  const names=["Priya","Jordan","Mateo","Aisha","Liam","Sofia","Kenji","Grace"]; const nm=pick(names);
+  const forms=[ // [frame, correct, wrongs, role]
+    [`The coach gave the award to ${nm} and ${BL}.`,"me",["I","myself","mine"],"object of the preposition “to”"],
+    [`${nm} and ${BL} built the robot for the science fair.`,"I",["me","myself","mine"],"part of the subject"],
+    [`Ms. Rivera asked ${nm} and ${BL} to present first.`,"him",["he","himself","his"],"object of the verb “asked”"],
+    [`${nm} and ${BL} were chosen to lead the debate team.`,"she",["her","herself","hers"],"part of the subject"],
+    [`Between you and ${BL}, the second draft is much stronger.`,"me",["I","myself","mine"],"object of the preposition “between”"],
+    [`The teacher praised ${nm} and ${BL} for our careful work.`,"me",["I","myself","mine"],"object of the verb “praised”"],
+    [`The principal told the seniors and ${BL} that the assembly was canceled.`,"us",["we","ourselves","ours"],"object of the verb “told”"],
+    [`${cap(BL)} students organized the fundraiser ourselves.`,"We",["Us","Ourselves","Our"],"subject"]
+  ];
+  const f=pick(forms.slice(0,7));
+  return mk("pron",STD,f[1],f[2],
+    `The pronoun is the ${f[3]}. Test it by removing the other person: the sentence only sounds right with “${f[1]}.” ${/subject/.test(f[3])?"Subjects take subject pronouns (I, he, she, we, they).":"Objects take object pronouns (me, him, her, us, them)."} Reflexive pronouns like “myself” need an earlier matching subject.`,
+    f[0]);
+});
+
+const TRANS_SETS = {
+  contrast:["However","Nevertheless","In contrast","On the other hand","Nonetheless"],
+  cause:["Therefore","As a result","Consequently","Thus","For this reason"],
+  addition:["Moreover","Furthermore","Additionally","In addition"],
+  example:["For example","For instance"]
+};
+const TRANS_DESC={contrast:"contrasts with",cause:"is a result of",addition:"adds a related point to",example:"gives a specific example of"};
+const TRANS_ITEMS = [
+ ["contrast","Most frogs lay their eggs in water.","the coquí frog of Puerto Rico lays its eggs on land, and the young hatch as tiny frogs."],
+ ["contrast","The novel received harsh reviews when it was first published.","it is now widely considered a classic of American literature."],
+ ["contrast","Electric cars produce no tailpipe emissions.","the electricity used to charge them may still come from burning fossil fuels."],
+ ["contrast","The hiking trail is less than two miles long.","its steep, rocky sections make it challenging even for experienced hikers."],
+ ["contrast","Early critics dismissed photography as a mere mechanical process.","many photographers of the era considered their work a serious art form."],
+ ["cause","The river flooded its banks for three straight days.","several roads near the town were closed."],
+ ["cause","The museum received a large grant from a local foundation.","it was able to extend its hours and offer free admission on weekends."],
+ ["cause","Sea otters eat sea urchins, which feed on kelp.","areas with healthy otter populations tend to have thriving kelp forests."],
+ ["cause","The bakery’s new sourdough recipe became wildly popular.","the owners hired two additional bakers to keep up with demand."],
+ ["cause","The factory upgraded to energy-efficient machines.","its monthly electricity costs dropped by nearly a third."],
+ ["addition","Regular exercise strengthens the heart.","it can improve mood and help people sleep better."],
+ ["addition","The new library offers free computer classes.","it hosts weekly workshops on résumé writing."],
+ ["addition","The volunteers removed litter along the beach.","they planted dune grass to help prevent erosion."],
+ ["addition","The software update fixes several security flaws.","it adds a dark mode that many users had requested."],
+ ["example","Many animals use camouflage to avoid predators.","the leaf-tailed gecko has skin that closely resembles tree bark."],
+ ["example","Many English words come from Arabic.","“algebra” and “coffee” both have Arabic origins."],
+ ["example","Several of the city’s newer buildings are designed to save energy.","the courthouse uses rooftop solar panels and collects rainwater."],
+ ["example","Some planets in our solar system have dozens of moons.","Saturn has more than one hundred known moons."]
+];
+reg("trans",()=>{
+  const [cat,s1,s2]=pick(TRANS_ITEMS);
+  const others=Object.keys(TRANS_SETS).filter(k=>k!==cat);
+  const correct=pick(TRANS_SETS[cat]);
+  return mk("trans",TRN,correct,others.map(k=>pick(TRANS_SETS[k])),
+    `The second sentence ${TRANS_DESC[cat]} the first, so ${cat==="cause"?"a cause-and-effect":cat==="addition"?"an addition":cat==="example"?"an example":"a contrast"} transition is needed: “${correct}.”`,
+    `${s1} ${BL}, ${s2}`);
+});
+
+function vocabSamePos(v,n){ const pool=VOCAB.filter(x=>x[0]!==v[0]&&x[1]===v[1]); return shuffle(pool.length>=n?pool:VOCAB.filter(x=>x[0]!==v[0])).slice(0,n); }
+reg("wic",()=>{
+  const v=pick(VOCAB); const re=new RegExp("\\b"+v[0]+"\\b","i");
+  const sent=v[3].replace(re,BL); const others=vocabSamePos(v,3);
+  return mk("wic",WIC,v[0],others.map(o=>o[0]),
+    `“${v[0]}” (${v[1]}) means <b>${v[2]}</b>, which fits the context. ${others.map(o=>`“${o[0]}” means ${o[2]}.`).join(" ")}`,
+    sent);
+});
+reg("wic",()=>{
+  const v=pick(VOCAB); const others=vocabSamePos(v,3);
+  return mk("wic",`Which word means “${v[2]}”?`,v[0],others.map(o=>o[0]),
+    `“${v[0]}” means ${v[2]}. Example: “${v[3]}” ${others.map(o=>`“${o[0]}” means ${o[2]}.`).join(" ")}`);
+});
+
+/* ---------- Math generators ---------- */
+reg("lin",()=>{
+  const x=nz(-9,9), a=ri(2,9); let c; do{c=ri(1,9)}while(c===a);
+  const b=ri(-15,15), d=a*x+b-c*x;
+  return mk("lin",`If ${poly([a,b])} = ${poly([c,d])}, what is the value of x?`,fmt(x),[fmt(-x),fmt(x+2),fmt(x-1),fmt(Math.round((d+b)/(a-c)))],
+    `Collect x-terms on one side and constants on the other: (${a} ${MN} ${c})x = ${paren(d)} ${MN} ${paren(b)}, so ${a-c}x = ${fmt(d-b)} and x = ${fmt(x)}.`);
+});
+reg("lin",()=>{
+  const x1=ri(-6,6), y1=ri(-6,6), dx=nz(-6,6), dy=nz(-8,8), x2=x1+dx, y2=y1+dy;
+  return mk("lin",`A line passes through (${fmt(x1)}, ${fmt(y1)}) and (${fmt(x2)}, ${fmt(y2)}). What is the slope of the line?`,
+    frac(dy,dx),[frac(dx,dy),frac(-dy,dx),frac(-dx,dy),frac(dy+1,dx),frac(dy-1,dx)],
+    `Slope = (y₂ ${MN} y₁)/(x₂ ${MN} x₁) = (${fmt(y2)} ${MN} ${paren(y1)})/(${fmt(x2)} ${MN} ${paren(x1)}) = ${fmt(dy)}/${fmt(dx)} = ${frac(dy,dx)}.`);
+});
+reg("lin",()=>{
+  const p=nz(-5,5), q=ri(1,4), b=ri(-9,9); const m=frac(p,q);
+  const perp=Math.random()<.6;
+  const ans= perp? frac(-q,p) : m;
+  return mk("lin",`Line k has equation y = ${m==="1"?"":m==="−1"?MN:q===1?m:"("+m+")"}x ${b<0?MN+" "+(-b):"+ "+b}. What is the slope of a line ${perp?"perpendicular":"parallel"} to line k?`,
+    ans,[perp?m:frac(-q,p), perp?frac(q,p):frac(-p,q), frac(-p,q), fmt(b), frac(q,p), frac(-q,p), frac(p+q,q), fmt(-b)],
+    perp? `Perpendicular slopes are negative reciprocals. The slope of k is ${m}; flip it and change the sign: ${ans}.` : `Parallel lines have equal slopes, so the slope is ${m}.`);
+});
+reg("lin",()=>{
+  const a=ri(2,7), k=nz(-6,6);
+  return mk("lin",`For what value of c does the equation ${a}(x ${k<0?"+ "+(-k):MN+" "+k}) = ${a}x + c have infinitely many solutions?`,
+    fmt(-a*k),[fmt(a*k),fmt(-k),fmt(k),fmt(a-k)],
+    `Distribute: ${a}x ${(-a*k)<0?MN+" "+(a*k):"+ "+(-a*k)} = ${a}x + c. Both sides are identical for every x exactly when c = ${fmt(-a*k)}.`);
+});
+reg("sys",()=>{
+  const x=nz(-6,8), y=nz(-6,8); let a1,b1,a2,b2;
+  do{a1=nz(-5,5);b1=nz(-5,5);a2=nz(-5,5);b2=nz(-5,5);}while(a1*b2-a2*b1===0);
+  const c1=a1*x+b1*y, c2=a2*x+b2*y; const ask=pick(["x","y","x + y","x − y"]);
+  const ans= ask==="x"?x: ask==="y"?y: ask==="x + y"?x+y:x-y;
+  return mk("sys",`If (x, y) is the solution to the system of equations above, what is the value of ${ask}?`,fmt(ans),
+    [fmt(x),fmt(y),fmt(x+y),fmt(x-y),fmt(-ans),fmt(y-x)].filter(s=>s!==fmt(ans)),
+    `Use elimination or substitution. The solution is x = ${fmt(x)}, y = ${fmt(y)}. Check: ${fmt(a1)}(${fmt(x)}) + ${paren(b1)}(${fmt(y)}) = ${fmt(c1)} ✓. So ${ask} = ${fmt(ans)}.`,
+    `<div style="font-family:inherit">${lin2(a1,b1,c1)}<br>${lin2(a2,b2,c2)}</div>`);
+});
+reg("sys",()=>{
+  const items=pick([["adult tickets","student tickets"],["large pizzas","small pizzas"],["hardcover books","paperback books"],["T-shirts","hats"]]);
+  const p1=ri(6,15), p2=ri(2,p1-1), n1=ri(8,40), n2=ri(8,40), N=n1+n2, T=p1*n1+p2*n2;
+  return mk("sys",`A school club sold ${items[0]} for $${p1} each and ${items[1]} for $${p2} each. It sold ${N} items in all for a total of $${T}. How many ${items[0]} were sold?`,
+    String(n1),[String(n2),String(Math.round(T/p1)),String(Math.round(N/2)),String(n1+2)],
+    `Let a = ${items[0]}, b = ${items[1]}: a + b = ${N} and ${p1}a + ${p2}b = ${T}. Substitute b = ${N} − a: ${p1}a + ${p2}(${N} − a) = ${T} → ${p1-p2}a = ${T-p2*N} → a = ${n1}.`);
+});
+reg("sys",()=>{
+  const a=nz(-5,5), b=nz(-5,5), c=ri(-9,9), k=pick([2,3,-2,4]);
+  const type=pick(["inf","none","one"]);
+  let q,ans;
+  const wr=["Zero","Exactly one","Infinitely many","Exactly two"];
+  if(type==="inf"){ q=`${lin2(a,b,c)}<br>${lin2(k*a,k*b,k*c)}`; ans="Infinitely many"; }
+  else if(type==="none"){ q=`${lin2(a,b,c)}<br>${lin2(k*a,k*b,k*c+nz(-4,4))}`; ans="Zero"; }
+  else { let a2; do{a2=nz(-5,5)}while(a2*b===a*k*b); q=`${lin2(a,b,c)}<br>${lin2(a2,k*b,ri(-9,9))}`; ans="Exactly one"; }
+  return mk("sys","How many solutions does the system of equations above have?",ans,wr.filter(w=>w!==ans),
+    type==="inf"?`The second equation is exactly ${k} times the first, so they describe the same line: infinitely many solutions.`:
+    type==="none"?`The left side of the second equation is ${k} times the first, but the constant isn’t, so the lines are parallel and distinct: no solution.`:
+    `The coefficient ratios differ, so the lines have different slopes and intersect at exactly one point.`, q);
+});
+reg("quad",()=>{
+  const r=nz(-9,9); let s; do{s=nz(-9,9)}while(s===r||s===-r);
+  const A=pick([1,1,1,2,3]); const B=-A*(r+s), C=A*r*s;
+  const ask=pick(["greater","sum","product"]); let ans,wr,ex;
+  const base=`Factor: ${A>1?A:""}${fac(r)}${fac(s)} = 0, so x = ${fmt(r)} or x = ${fmt(s)}. `;
+  if(ask==="greater"){ ans=Math.max(r,s); wr=[Math.min(r,s),-Math.max(r,s),-Math.min(r,s),r+s]; ex=base+`The greater solution is ${fmt(ans)}.`; }
+  else if(ask==="sum"){ ans=r+s; wr=[-(r+s),r*s,-(r*s),B]; ex=base+`Sum = ${fmt(ans)}. (Shortcut: sum = −b/a = ${fmt(-B)}/${A} = ${fmt(ans)}.)`; }
+  else { ans=r*s; wr=[-(r*s),r+s,-(r+s),C]; ex=base+`Product = ${fmt(ans)}. (Shortcut: product = c/a = ${fmt(C)}/${A} = ${fmt(ans)}.)`; }
+  const q= ask==="greater"?`What is the greater of the two solutions to ${poly([A,B,C])} = 0?`: ask==="sum"?`What is the sum of the solutions to ${poly([A,B,C])} = 0?`:`What is the product of the solutions to ${poly([A,B,C])} = 0?`;
+  return mk("quad",q,fmt(ans),wr.map(fmt),ex);
+});
+reg("quad",()=>{
+  const a=pick([1,-1,2,-2,3,-3]), h=nz(-6,6), k=ri(-9,9);
+  const cs=[a,-2*a*h,a*h*h+k];
+  const ext=Math.random()<.5;
+  if(ext) return mk("quad",`The function f is defined by f(x) = ${poly(cs)}. What is the ${a>0?"minimum":"maximum"} value of f(x)?`,
+    fmt(k),[fmt(h),fmt(-k),fmt(cs[2]),fmt(-h)],
+    `The vertex is at x = −b/(2a) = ${fmt(-cs[1])}/${paren(2*a)} = ${fmt(h)}. f(${fmt(h)}) = ${fmt(k)}. Since a ${a>0?"&gt; 0 the parabola opens up (minimum)":"&lt; 0 the parabola opens down (maximum)"}.`);
+  return mk("quad",`What is the x-coordinate of the vertex of the parabola y = ${poly(cs)}?`,fmt(h),[fmt(-h),fmt(k),fmt(2*h),fmt(cs[1])],
+    `x = −b/(2a) = ${fmt(-cs[1])}/${paren(2*a)} = ${fmt(h)}.`);
+});
+reg("quad",()=>{
+  const type=pick([0,1,2]); let a,b,c,D;
+  if(type===1){ a=pick([1,2,3]); const r=nz(-5,5); b=-2*a*r; c=a*r*r; }
+  else { do{ a=nz(-4,4); b=ri(-9,9); c=nz(-9,9); D=b*b-4*a*c; }while(type===2? D<=0 : D>=0); }
+  D=b*b-4*a*c;
+  const lab={2:"Exactly two distinct real solutions",1:"Exactly one real solution",0:"No real solutions"};
+  return mk("quad",`How many distinct real solutions does ${poly([a,b,c])} = 0 have?`,lab[type],[lab[(type+1)%3],lab[(type+2)%3],"Infinitely many solutions"],
+    `Discriminant = b² − 4ac = ${paren(b)}² − 4(${fmt(a)})(${fmt(c)}) = ${fmt(D)}. ${D>0?"Positive → two real solutions.":D===0?"Zero → exactly one real solution.":"Negative → no real solutions."}`);
+});
+reg("func",()=>{
+  const a=nz(-3,4), b=ri(-6,6), c=ri(-9,9), k=nz(-4,4); const f=x=>a*x*x+b*x+c;
+  return mk("func",`If f(x) = ${poly([a,b,c])}, what is f(${fmt(k)})?`,fmt(f(k)),[fmt(f(-k)),fmt(a*k*k+b*k-c),fmt(-a*k*k+b*k+c),fmt(a*2*k+b*k+c)],
+    `Substitute x = ${fmt(k)}: ${fmt(a)}(${fmt(k)})² + ${paren(b)}(${fmt(k)}) + ${paren(c)} = ${fmt(a*k*k)} + ${paren(b*k)} + ${paren(c)} = ${fmt(f(k))}.`);
+});
+reg("func",()=>{
+  const m=nz(-4,5), b=ri(-6,6), p=nz(-3,3), q=ri(-5,5), k=nz(-3,4);
+  const f=x=>m*x+b, g=x=>p*x*x+q;
+  const order=Math.random()<.5;
+  const ans= order? f(g(k)) : g(f(k));
+  return mk("func",`If f(x) = ${poly([m,b])} and g(x) = ${poly([p,0,q])}, what is ${order?"f(g("+fmt(k)+"))":"g(f("+fmt(k)+"))"}?`,
+    fmt(ans),[fmt(order?g(f(k)):f(g(k))),fmt(f(k)*g(k)),fmt(f(k)+g(k)),fmt(ans+m)],
+    order? `Work from the inside out: g(${fmt(k)}) = ${fmt(g(k))}, then f(${fmt(g(k))}) = ${fmt(ans)}.` : `Work from the inside out: f(${fmt(k)}) = ${fmt(f(k))}, then g(${fmt(f(k))}) = ${fmt(ans)}.`);
+});
+reg("func",()=>{
+  const m=nz(-5,5), b=ri(-10,10); const p=ri(-4,4); let r; do{r=ri(-4,6)}while(r===p); const t=ri(-6,8);
+  const f=x=>m*x+b;
+  return mk("func",`For the linear function f, f(${fmt(p)}) = ${fmt(f(p))} and f(${fmt(r)}) = ${fmt(f(r))}. What is f(${fmt(t)})?`,
+    fmt(f(t)),[fmt(m*t-b),fmt(-m*t+b),fmt(f(t)+m),fmt(m*t)],
+    `Slope m = (${fmt(f(r))} ${MN} ${paren(f(p))})/(${fmt(r)} ${MN} ${paren(p)}) = ${fmt(m)}. Then b = f(${fmt(p)}) − m·${paren(p)} = ${fmt(b)}. So f(x) = ${poly([m,b])} and f(${fmt(t)}) = ${fmt(f(t))}.`);
+});
+reg("expo",()=>{
+  const P=pick([200,500,1200,2500,8000,15000]), r=pick([3,4,5,6,8,12,15,20,25]), grow=Math.random()<.5;
+  const thing=grow? pick(["The population of a town","The number of subscribers to a channel","The value of an investment"]) : pick(["The value of a machine","The amount of a medication in a patient’s body","The population of an endangered species"]);
+  const g=fmt(1+r/100), d=fmt(1-r/100);
+  return mk("expo",`${thing} is ${P.toLocaleString()} and ${grow?"increases":"decreases"} by ${r}% each year. Which expression gives the amount after t years?`,
+    `${P.toLocaleString()}(${grow?g:d})<sup>t</sup>`,[`${P.toLocaleString()}(${grow?d:g})<sup>t</sup>`,`${P.toLocaleString()}(${fmt(r/100)})<sup>t</sup>`,`${P.toLocaleString()} ${grow?"+":MN} ${r}t`,`${P.toLocaleString()}(${r})<sup>t</sup>`],
+    `A ${grow?"growth":"decay"} of ${r}% per year multiplies the amount by 1 ${grow?"+":MN} ${fmt(r/100)} = ${grow?g:d} each year.`);
+});
+reg("expo",()=>{
+  const half=Math.random()<.4;
+  if(half){ const P=pick([800,1600,3200,6400]), d=pick([2,3,5,8,10]), n=ri(2,5);
+    return mk("expo",`A sample of ${P} grams of a substance has a half-life of ${d} days. How many grams remain after ${n*d} days?`,
+      fmt(P/Math.pow(2,n)),[fmt(P/(2*n)),fmt(P/Math.pow(2,n-1)),fmt(P/Math.pow(2,n+1)),fmt(P-n*d)],
+      `${n*d} days is ${n} half-lives. ${P} × (1/2)<sup>${n}</sup> = ${P}/${Math.pow(2,n)} = ${fmt(P/Math.pow(2,n))} grams.`); }
+  const P=pick([50,100,300,400,750]), d=pick([2,3,4,5,6]), n=ri(2,5);
+  return mk("expo",`A colony of ${P} bacteria doubles every ${d} hours. How many bacteria will there be after ${n*d} hours?`,
+    String(P*Math.pow(2,n)),[String(P*2*n),String(P*Math.pow(2,n+1)),String(P*Math.pow(2,n-1)),String(P*n*n)],
+    `${n*d} hours is ${n} doubling periods. ${P} × 2<sup>${n}</sup> = ${P} × ${Math.pow(2,n)} = ${P*Math.pow(2,n)}.`);
+});
+reg("expo",()=>{
+  const b=pick([2,3,5]); const m= b===2?ri(3,7): b===3?ri(2,5):ri(2,4); const k=nz(-3,4); const v=Math.pow(b,m);
+  return mk("expo",`If ${b}<sup>x ${k<0?MN+" "+(-k):"+ "+k}</sup> = ${v}, what is the value of x?`,fmt(m-k),[fmt(m+k),fmt(m),fmt(v-k),fmt(-m+k)],
+    `Write ${v} as a power of ${b}: ${v} = ${b}<sup>${m}</sup>. So x ${k<0?MN+" "+(-k):"+ "+k} = ${m}, and x = ${fmt(m-k)}.`);
+});
+reg("poly",()=>{
+  const a=pick([1,2,3]), c=pick([1,2]), b=nz(-7,7), d=nz(-7,7); const mid=a*d+b*c;
+  if(mid===0) return GEN.poly[1]();
+  const right=poly([a*c,mid,b*d]);
+  return mk("poly",`Which expression is equivalent to (${poly([a,b])})(${poly([c,d])})?`,right,
+    [poly([a*c,-mid,b*d]),poly([a*c,mid,-b*d]),poly([a*c,0,b*d]),poly([a*c,a*d-b*c,b*d]),poly([a+c,mid,b*d])],
+    `Multiply each term (FOIL): ${poly([a*c,0,0])} + ${poly([a*d,0])} + ${poly([b*c,0])} + ${paren(b*d)} = ${right}.`.replace(/\+ −/g,"− "));
+});
+reg("poly",()=>{
+  const a=ri(-4,4), b=ri(-6,6), c=ri(-9,9), k=nz(-3,3); const p=x=>x*x*x+a*x*x+b*x+c;
+  return mk("poly",`What is the remainder when p(x) = ${poly([1,a,b,c])} is divided by ${poly([1,-k])}?`,fmt(p(k)),[fmt(p(-k)),fmt(c),fmt(p(k)+k),fmt(-p(k))],
+    `By the Remainder Theorem, the remainder when dividing by (x ${k<0?"+ "+(-k):MN+" "+k}) equals p(${fmt(k)}) = ${fmt(p(k))}.`);
+});
+reg("poly",()=>{
+  const r=nz(-8,8); let s; do{s=nz(-8,8)}while(s===-r); const B=-(r+s), C=r*s;
+  return mk("poly",`Which of the following is a factor of ${poly([1,B,C])}?`,poly([1,-r]),[poly([1,r]),poly([1,-(r+s)]),poly([1,C]),poly([1,s]),poly([1,r+s]),poly([1,-C]),poly([1,-r+1]),poly([1,-r-1])],
+    `${poly([1,B,C])} = ${fac(r)}${fac(s)}. Find two numbers that multiply to ${fmt(C)} and add to ${fmt(B)}: ${fmt(-r)} and ${fmt(-s)}. So the roots are x = ${fmt(r)} and x = ${fmt(s)}.`);
+});
+reg("pct",()=>{
+  const P=pick([40,60,80,120,200,250,400]), a=pick([10,20,25,50]), b=pick([10,20,25,40]);
+  const fin=P*(1+a/100)*(1-b/100);
+  return mk("pct",`An item priced at $${P} is marked up ${a}% and then the new price is discounted ${b}%. What is the final price?`,
+    "$"+fmt(fin),["$"+fmt(P*(1+(a-b)/100)),"$"+fmt(P),"$"+fmt(P*(1+a/100)),"$"+fmt(P*(1-b/100))],
+    `$${P} × ${fmt(1+a/100)} = $${fmt(P*(1+a/100))}, then × ${fmt(1-b/100)} = $${fmt(fin)}. Percent changes multiply—they don’t simply add.`);
+});
+reg("pct",()=>{
+  let W,p,part; do{ W=ri(2,30)*10; p=pick([10,15,20,25,30,40,60,75,80]); part=W*p/100; }while(part!==Math.round(part));
+  return mk("pct",`${part} is ${p}% of what number?`,String(W),[fmt(part*p/100),fmt(part+p),fmt(part*(100-p)/100),fmt(W/2)],
+    `${fmt(p/100)} × n = ${part} → n = ${part} ÷ ${fmt(p/100)} = ${W}.`);
+});
+reg("pct",()=>{
+  const a=ri(1,7), b=ri(1,9); if(gcd(a,b)!==1||a===b) return GEN.pct[0](); const k=ri(3,12), N=k*(a+b);
+  const grp=pick([["boys","girls","students in a class"],["red marbles","blue marbles","marbles in a jar"],["fiction books","nonfiction books","books on a shelf"]]);
+  return mk("pct",`The ratio of ${grp[0]} to ${grp[1]} is ${a} : ${b}. If there are ${N} ${grp[2]} in total, how many are ${grp[1]}?`,
+    String(k*b),[String(k*a),String(Math.round(N*b/(a+b+1))),String(N-b),String(b*(a+b))],
+    `There are ${a} + ${b} = ${a+b} parts. ${N} ÷ ${a+b} = ${k} per part, so ${grp[1]} = ${b} × ${k} = ${k*b}.`);
+});
+reg("pct",()=>{
+  const old=pick([40,50,80,200,250,400,500]), p=pick([10,12,15,20,25,30,40,60]), up=Math.random()<.5; const nw=old*(1+(up?p:-p)/100);
+  return mk("pct",`A quantity ${up?"increased":"decreased"} from ${old} to ${fmt(nw)}. By what percent did it ${up?"increase":"decrease"}?`,
+    p+"%",[fmt(Math.abs(nw-old))+"%",fmt(Math.abs(nw-old)/nw*100)+"%",(100-p)+"%",(p*2)+"%"],
+    `Percent change = |new − old| ÷ old = ${fmt(Math.abs(nw-old))} ÷ ${old} = ${fmt(p/100)} = ${p}%.`);
+});
+reg("stat",()=>{
+  const n=ri(4,6), m=ri(12,40); const vals=[]; for(let i=0;i<n-1;i++) vals.push(m+ri(-10,10));
+  const last=m*n-vals.reduce((s,v)=>s+v,0); if(last<1) return GEN.stat[0]();
+  const sum=vals.reduce((s,v)=>s+v,0);
+  return mk("stat",`The mean of ${n} numbers is ${m}. ${n-1} of the numbers are ${vals.join(", ")}. What is the remaining number?`,
+    String(last),[String(m),fmt(sum/(n-1)),String(last+n),String(m*n)],
+    `Total of all ${n} numbers = ${n} × ${m} = ${m*n}. The ${n-1} known numbers sum to ${sum}, so the last number is ${m*n} − ${sum} = ${last}.`);
+});
+reg("stat",()=>{
+  const n=ri(5,8); const set=new Set(); while(set.size<n) set.add(ri(1,40)); const vals=[...set]; const s=vals.slice().sort((a,b)=>a-b);
+  const med= n%2? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2; const mean=vals.reduce((a,b)=>a+b,0)/n;
+  return mk("stat",`What is the median of the data set ${vals.join(", ")}?`,fmt(med),[fmt(mean),fmt(vals[Math.floor(n/2)]),fmt(s[n-1]-s[0]),fmt(n%2?s[(n-1)/2+1]:s[n/2])],
+    `First sort: ${s.join(", ")}. ${n%2?`With ${n} values, the median is the middle value (position ${(n+1)/2}): ${fmt(med)}.`:`With ${n} values, average the two middle values: (${s[n/2-1]} + ${s[n/2]})/2 = ${fmt(med)}.`} (Don’t confuse it with the mean, ${fmt(mean)}.)`);
+});
+reg("stat",()=>{
+  let n1,n2,m1,m2,c; do{ n1=pick([10,15,20,25,30]); n2=pick([10,15,20,25,30]); m1=ri(70,95); m2=ri(70,95); c=(n1*m1+n2*m2)/(n1+n2); }while(c!==Math.round(c)||m1===m2);
+  return mk("stat",`Class A has ${n1} students with a mean test score of ${m1}. Class B has ${n2} students with a mean of ${m2}. What is the mean score of all ${n1+n2} students combined?`,
+    String(c),[fmt((m1+m2)/2),String(c+1),String(Math.max(m1,m2)),fmt((m1+m2)/2+2)],
+    `Combined mean = total points ÷ total students = (${n1}·${m1} + ${n2}·${m2}) ÷ ${n1+n2} = ${n1*m1+n2*m2} ÷ ${n1+n2} = ${c}. You can’t just average the two means when the groups are different sizes.`);
+});
+reg("prob",()=>{
+  const cols=["red","blue","green","yellow"]; const k=ri(3,4); const cnt=cols.slice(0,k).map(()=>ri(2,9)); const T=cnt.reduce((a,b)=>a+b,0);
+  const i=ri(0,k-1), not=Math.random()<.4;
+  const num= not? T-cnt[i] : cnt[i];
+  const desc=cols.slice(0,k).map((c,j)=>`${cnt[j]} ${c}`).join(", ");
+  return mk("prob",`A bag contains ${desc} marbles. If one marble is chosen at random, what is the probability that it is ${not?"<b>not</b> ":""}${cols[i]}?`,
+    frac(num,T),[frac(T-num,T),frac(num,T-num||1),frac(num,T+1),frac(cnt[(i+1)%k],T)],
+    `There are ${T} marbles in total and ${num} ${not?"are not "+cols[i]:"are "+cols[i]}. Probability = ${num}/${T}${frac(num,T)!==num+"/"+T?" = "+frac(num,T):""}.`);
+});
+reg("prob",()=>{
+  const r=ri(3,8), b=ri(2,8), T=r+b;
+  return mk("prob",`A box has ${r} red and ${b} blue cards. Two cards are drawn at random <b>without replacement</b>. What is the probability that both are red?`,
+    frac(r*(r-1),T*(T-1)),[frac(r*r,T*T),frac(r,T),frac(r-1,T-1),frac(2*r,T)],
+    `P(first red) = ${r}/${T}. With one red removed, P(second red) = ${r-1}/${T-1}. Multiply: (${r}/${T})(${r-1}/${T-1}) = ${frac(r*(r-1),T*(T-1))}.`);
+});
+reg("prob",()=>{
+  const a=ri(10,40), b=ri(10,40), c=ri(10,40), d=ri(10,40);
+  const rows=pick([["Grade 9","Grade 10"],["Juniors","Seniors"]]), cols=pick([["Yes","No"],["Plays an instrument","Does not"]]);
+  const tbl=`A survey asked students a question. The results are shown below.<table><tr><th></th><th>${cols[0]}</th><th>${cols[1]}</th><th>Total</th></tr><tr><th>${rows[0]}</th><td>${a}</td><td>${b}</td><td>${a+b}</td></tr><tr><th>${rows[1]}</th><td>${c}</td><td>${d}</td><td>${c+d}</td></tr><tr><th>Total</th><td>${a+c}</td><td>${b+d}</td><td>${a+b+c+d}</td></tr></table>`;
+  const T=a+b+c+d; const type=pick([0,1,2]);
+  if(type===0) return mk("prob",`If a student in ${rows[0]} is chosen at random, what is the probability the student answered “${cols[0]}”?`,frac(a,a+b),[frac(a,a+c),frac(a,T),frac(b,a+b),frac(a+c,T)],
+    `“Given ${rows[0]}” means only use that row: ${a} out of ${a+b} → ${frac(a,a+b)}.`,tbl);
+  if(type===1) return mk("prob",`If a student who answered “${cols[0]}” is chosen at random, what is the probability the student is in ${rows[1]}?`,frac(c,a+c),[frac(c,c+d),frac(c,T),frac(a,a+c),frac(c+d,T)],
+    `“Given ${cols[0]}” means only use that column: ${c} out of ${a+c} → ${frac(c,a+c)}.`,tbl);
+  return mk("prob",`If one of the ${T} students is chosen at random, what is the probability the student is in ${rows[0]} and answered “${cols[1]}”?`,frac(b,T),[frac(b,a+b),frac(b,b+d),frac(a+b,T),frac(b+d,T),frac(a,T),frac(d,T),frac(b+1,T),frac(b-1,T)],
+    `The “and” cell is ${b}, out of all ${T} students → ${frac(b,T)}.`,tbl);
+});
+const TRIPLES=[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[6,8,10],[9,12,15],[20,21,29]];
+reg("geo",()=>{
+  const t=pick(TRIPLES), k=pick([1,1,2,3]); const [a,b,c]=t.map(x=>x*k);
+  if(Math.random()<.5) return mk("geo",`A right triangle has legs of length ${a} and ${b}. What is the length of the hypotenuse?`,String(c),[String(a+b),String(c+k),fmt(Math.sqrt(b*b-a*a)),String(c-k)],
+    `a² + b² = c²: ${a}² + ${b}² = ${a*a} + ${b*b} = ${c*c}, so c = √${c*c} = ${c}.`);
+  return mk("geo",`A right triangle has a hypotenuse of ${c} and one leg of ${a}. What is the length of the other leg?`,String(b),[fmt(Math.sqrt(c*c+a*a)),String(c-a),String(c+a),String(b+k)],
+    `${a}² + b² = ${c}² → b² = ${c*c} − ${a*a} = ${b*b} → b = ${b}.`);
+});
+reg("geo",()=>{
+  const r=ri(3,12), v=pick([0,1,2]);
+  if(v===0) return mk("geo",`A circle has an area of ${r*r}π. What is its circumference?`,`${2*r}π`,[`${r}π`,`${r*r}π`,`${4*r}π`,`${2*r*r}π`],
+    `πr² = ${r*r}π → r = ${r}. Circumference = 2πr = ${2*r}π.`);
+  if(v===1) return mk("geo",`A circle has a circumference of ${2*r}π. What is its area?`,`${r*r}π`,[`${2*r}π`,`${4*r*r}π`,`${r}π`,`${2*r*r}π`],
+    `2πr = ${2*r}π → r = ${r}. Area = πr² = ${r*r}π.`);
+  const h=nz(-6,6), k=nz(-6,6), F=r*r-h*h-k*k;
+  return mk("geo",`What is the radius of the circle with equation x² + y² ${-2*h<0?MN+" "+(2*h):"+ "+(-2*h)}x ${-2*k<0?MN+" "+(2*k):"+ "+(-2*k)}y = ${fmt(F)}?`,String(r),[String(r*r),fmt(Math.abs(F)),String(r+1),fmt(Math.sqrt(Math.abs(F)))],
+    `Complete the square: (x ${h<0?"+ "+(-h):MN+" "+h})² + (y ${k<0?"+ "+(-k):MN+" "+k})² = ${fmt(F)} + ${h*h} + ${k*k} = ${r*r}. So r = √${r*r} = ${r}, and the center is (${fmt(h)}, ${fmt(k)}).`);
+});
+reg("geo",()=>{
+  const v=pick([0,1,2]);
+  if(v===0){ const a=ri(25,90), b=ri(20,150-a);
+    return mk("geo",`Two angles of a triangle measure ${a}° and ${b}°. What is the measure of the third angle?`,(180-a-b)+"°",[(a+b)+"°",(360-a-b)+"°",(90-Math.abs(a-b))+"°",(180-a)+"°"],
+      `The angles of a triangle sum to 180°: 180 − ${a} − ${b} = ${180-a-b}°.`); }
+  if(v===1){ const n=ri(5,12); const names={5:"pentagon",6:"hexagon",7:"heptagon",8:"octagon",9:"nonagon",10:"decagon",11:"11-sided polygon",12:"dodecagon"};
+    return mk("geo",`What is the sum of the interior angles of a ${names[n]} (${n} sides)?`,((n-2)*180)+"°",[(n*180)+"°",((n-1)*180)+"°",(360)+"°",((n-2)*90)+"°"],
+      `Sum = (n − 2) × 180° = (${n} − 2) × 180° = ${(n-2)*180}°.`); }
+  const a=ri(30,80), b=ri(30,80);
+  return mk("geo",`In a triangle, two interior angles measure ${a}° and ${b}°. What is the measure of the exterior angle at the third vertex?`,(a+b)+"°",[(180-a-b)+"°",(180-a)+"°",(360-a-b)+"°",(Math.abs(a-b))+"°"],
+    `An exterior angle equals the sum of the two remote interior angles: ${a}° + ${b}° = ${a+b}°.`);
+});
+reg("geo",()=>{
+  const r=ri(2,6), h=ri(2,10), v=pick(["cyl","cone","sph"]);
+  if(v==="cyl") return mk("geo",`What is the volume of a cylinder with radius ${r} and height ${h}?`,`${r*r*h}π`,[`${2*r*h}π`,`${r*h}π`,`${fmt(r*r*h/3)}π`,`${2*r*r*h}π`],`V = πr²h = π(${r*r})(${h}) = ${r*r*h}π.`);
+  if(v==="cone"){ const hh=3*ri(1,4); return mk("geo",`What is the volume of a cone with radius ${r} and height ${hh}?`,`${r*r*hh/3}π`,[`${r*r*hh}π`,`${fmt(r*hh/3)}π`,`${2*r*r*hh/3}π`,`${fmt(r*r*hh/2)}π`],`V = (1/3)πr²h = (1/3)π(${r*r})(${hh}) = ${r*r*hh/3}π.`); }
+  const rr=3*ri(1,3); return mk("geo",`What is the volume of a sphere with radius ${rr}?`,`${4*rr*rr*rr/3}π`,[`${4*rr*rr}π`,`${rr*rr*rr}π`,`${fmt(2*rr*rr*rr/3)}π`,`${4*rr*rr*rr}π`],`V = (4/3)πr³ = (4/3)π(${rr*rr*rr}) = ${4*rr*rr*rr/3}π.`);
+});
+reg("trig",()=>{
+  const t=pick(TRIPLES), k=pick([1,2,3]); const [a,b,c]=t.map(x=>x*k);
+  const asks={ "sin A":[b,c,"opposite/hypotenuse = BC/AB"], "cos A":[a,c,"adjacent/hypotenuse = AC/AB"], "tan A":[b,a,"opposite/adjacent = BC/AC"], "sin B":[a,c,"opposite/hypotenuse = AC/AB"], "cos B":[b,c,"adjacent/hypotenuse = BC/AB"], "tan B":[a,b,"opposite/adjacent = AC/BC"] };
+  const key=pick(Object.keys(asks)), [n,d,how]=asks[key];
+  return mk("trig",`In right triangle ABC, angle C is the right angle, AC = ${a}, BC = ${b}, and AB = ${c}. What is ${key}?`,frac(n,d),
+    [frac(d,n),frac(a===n?b:a,c),frac(n===a?b:a,d===c?(n===a?b:a):c),frac(a,b),frac(b,a),frac(a,c),frac(b,c)].filter(x=>x!==frac(n,d)),
+    `${key} = ${how} = ${n}/${d}${frac(n,d)!==n+"/"+d?" = "+frac(n,d):""}. (SOH-CAH-TOA)`);
+});
+reg("trig",()=>{
+  if(Math.random()<.5){ const y=ri(10,80);
+    return mk("trig",`If sin(x°) = cos(${y}°) and 0 &lt; x &lt; 90, what is the value of x?`,String(90-y),[String(y),String(180-y),String(90+y),String(360-y)],
+      `sin(x°) = cos(90° − x°), so x = 90 − ${y} = ${90-y}. The angles are complementary.`); }
+  const t=pick(TRIPLES); const n=pick([t[0],t[1]]);
+  return mk("trig",`In right triangle PQR, angle R is 90°. If sin P = ${frac(n,t[2])}, what is cos Q?`,frac(n,t[2]),[frac(t[2],n),frac(n===t[0]?t[1]:t[0],t[2]),frac(n,n===t[0]?t[1]:t[0]),frac(n===t[0]?t[1]:t[0],n)],
+    `P and Q are complementary (they sum to 90°), and the side opposite P is the side adjacent to Q. So cos Q = sin P = ${frac(n,t[2])}.`);
+});
+const RAD=[[30,"π/6"],[45,"π/4"],[60,"π/3"],[90,"π/2"],[120,"2π/3"],[135,"3π/4"],[150,"5π/6"],[180,"π"],[210,"7π/6"],[225,"5π/4"],[240,"4π/3"],[270,"3π/2"],[300,"5π/3"],[315,"7π/4"],[330,"11π/6"]];
+reg("trig",()=>{
+  const it=pick(RAD), others=shuffle(RAD.filter(x=>x!==it)).slice(0,3), toDeg=Math.random()<.5;
+  if(toDeg) return mk("trig",`What is ${it[1]} radians in degrees?`,it[0]+"°",others.map(o=>o[0]+"°"),`Multiply by 180°/π: ${it[1]} × 180°/π = ${it[0]}°.`);
+  return mk("trig",`What is ${it[0]}° in radians?`,it[1],others.map(o=>o[1]),`Multiply by π/180°: ${it[0]} × π/180 = ${it[1]}.`);
+});
+reg("trig",()=>{
+  const s=ri(2,12), v=pick(["45h","30h","30l"]);
+  if(v==="45h") return mk("trig",`An isosceles right triangle has legs of length ${s}. What is the hypotenuse?`,`${s}√2`,[`${s}√3`,`${2*s}`,`${s*s}`,`${s}`],`In a 45°-45°-90° triangle, hypotenuse = leg × √2 = ${s}√2.`);
+  if(v==="30h") return mk("trig",`In a 30°-60°-90° triangle, the side opposite the 30° angle is ${s}. What is the hypotenuse?`,String(2*s),[`${s}√3`,`${s}√2`,String(3*s),`${2*s}√3`],`Hypotenuse = 2 × shorter leg = ${2*s}.`);
+  return mk("trig",`In a 30°-60°-90° triangle, the side opposite the 30° angle is ${s}. What is the side opposite the 60° angle?`,`${s}√3`,[String(2*s),`${s}√2`,`${2*s}√3`,`${fmt(s/2)}√3`],`Longer leg = shorter leg × √3 = ${s}√3.`);
+});
+reg("word",()=>{
+  const r=pick([40,45,50,55,60,65,70,75]), t=ri(2,6), T=ri(3,9); if(T===t) return GEN.word[0]();
+  const veh=pick(["train","car","bus","cyclist"]);
+  return mk("word",`A ${veh} travels ${r*t} miles in ${t} hours. At the same rate, how many hours will it take to travel ${r*T} miles?`,String(T),[String(T+1),String(T-1),fmt(r*T/t/10),fmt(T*t/2)],
+    `Rate = ${r*t} ÷ ${t} = ${r} mph. Time = ${r*T} ÷ ${r} = ${T} hours.`);
+});
+reg("word",()=>{
+  const fixed=pick([15,20,25,30,40,50]), per=pick([0.25,0.5,0.75,1.5,2,2.5,3]), n=ri(8,60); const tot=fixed+per*n;
+  const ctx=pick([["A gym charges a one-time fee of","per class","classes"],["A taxi charges a base fare of","per mile","miles"],["A print shop charges a setup fee of","per poster","posters"]]);
+  return mk("word",`${ctx[0]} $${fixed} plus $${per.toFixed(2)} ${ctx[1]}. A customer paid $${tot.toFixed(2)} in total. How many ${ctx[2]} were charged?`,String(n),
+    [fmt(tot/per),fmt((tot+fixed)/per),String(n+fixed%7+1),fmt(tot/per/2)],
+    `${fixed} + ${per}n = ${fmt(tot)} → ${per}n = ${fmt(tot-fixed)} → n = ${n}.`);
+});
+reg("word",()=>{
+  const pr=pick([[3,6],[4,12],[6,12],[10,15],[12,24],[20,30],[2,6],[6,3],[5,20],[12,6]]); const [a,b]=pr; const t=a*b/(a+b);
+  return mk("word",`One machine can complete a job in ${a} hours, and a second machine can complete it in ${b} hours. Working together at these rates, how many hours will the job take?`,fmt(t),
+    [fmt((a+b)/2),fmt(a+b),fmt(Math.abs(a-b)),fmt(Math.min(a,b)/2)],
+    `Rates add: 1/${a} + 1/${b} = ${frac(a+b,a*b)} job per hour. Time = 1 ÷ ${frac(a+b,a*b)} = ${fmt(t)} hours.`);
+});
+reg("word",()=>{
+  const n=2*ri(2,40), S=3*n+6;
+  return mk("word",`The sum of three consecutive even integers is ${S}. What is the largest of the three integers?`,String(n+4),[String(n),String(n+2),String(n+6),fmt(S/3)],
+    `Let them be n, n + 2, n + 4. Then 3n + 6 = ${S} → n = ${n}. The largest is n + 4 = ${n+4}.`);
+});
+
+/* =====================================================================
+   STORAGE (all reads/writes wrapped in try/catch)
+   ===================================================================== */
+const KEY="prepLab.v1";
+function DEF(){ return {stats:{},days:{},streak:{cur:0,best:0},missed:[],cards:{},tests:[],theme:""}; }
+function load(){ try{ const raw=localStorage.getItem(KEY); if(!raw) return DEF(); const o=JSON.parse(raw); const d=DEF(); return Object.assign(d,o&&typeof o==="object"?o:{}); }catch(e){ return DEF(); } }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+let S=load();
+function dkey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function today(){ return dkey(new Date()); }
+function dayStreak(){ let n=0; const d=new Date(); if(!S.days[dkey(d)]) d.setDate(d.getDate()-1); while(S.days[dkey(d)]){ n++; d.setDate(d.getDate()-1); } return n; }
+function rec(q,ok,fromReview){
+  const st=S.stats[q.t]||(S.stats[q.t]={n:0,c:0}); st.n++; if(ok) st.c++;
+  const d=today(); S.days[d]=(S.days[d]||0)+1;
+  S.streak.cur= ok? S.streak.cur+1 : 0; S.streak.best=Math.max(S.streak.best,S.streak.cur);
+  if(!ok) addMissed(q); else if(fromReview) removeMissed(q.id);
+  save();
+}
+function addMissed(q){ S.missed=S.missed.filter(m=>m.id!==q.id); S.missed.push({id:q.id,t:q.t,s:q.s,q:q.q,c:q.c,a:q.a,e:q.e,p:q.p}); if(S.missed.length>200) S.missed.shift(); }
+function removeMissed(id){ S.missed=S.missed.filter(m=>m.id!==id); }
+function acc(t){ const s=S.stats[t]; return s&&s.n? Math.round(100*s.c/s.n) : null; }
+function totals(sec){ let n=0,c=0; for(const k in S.stats){ if(TOPICS[k] && (!sec||TOPICS[k].s===sec)){ n+=S.stats[k].n; c+=S.stats[k].c; } } return {n,c,p:n?Math.round(100*c/n):0}; }
+function barCls(p){ return p===null?"":p>=80?"g":p>=60?"":p>=40?"w":"r"; }
+
+/* =====================================================================
+   QUESTION SELECTION
+   ===================================================================== */
+function prep(q){ const idx=shuffle([0,1,2,3].slice(0,q.c.length)); return Object.assign({},q,{c:idx.map(i=>q.c[i]),a:idx.indexOf(q.a)}); }
+function wpick(keys,ws){ let s=ws.reduce((a,b)=>a+b,0), r=Math.random()*s; for(let i=0;i<keys.length;i++){ r-=ws[i]; if(r<=0) return keys[i]; } return keys[keys.length-1]; }
+function smartTopic(){ const ks=Object.keys(TOPICS); return wpick(ks,ks.map(k=>{ const s=S.stats[k]; let w= !s||s.n<4? 2 : 1+4*(1-s.c/s.n); return TOPICS[k].s==="E"? w*1.4 : w; })); }
+function topicFor(mode){
+  if(mode.kind==="topic") return mode.topic;
+  if(mode.kind==="E") return pick(ETOP);
+  if(mode.kind==="M") return pick(MTOP);
+  if(mode.kind==="smart") return smartTopic();
+  return Math.random()<.6? pick(ETOP) : pick(MTOP);
+}
+function drawQuestion(mode,seen){
+  const t=topicFor(mode);
+  const bank=BANK.filter(q=>q.t===t), avail=bank.filter(q=>!seen.has(q.id)), gens=GEN[t]||[];
+  let q;
+  if(avail.length && (!gens.length || Math.random()<.5)) q=pick(avail);
+  else if(gens.length){ try{ q=pick(gens)(); }catch(e){ q=null; } if(!q) q=pick(bank); }
+  else { bank.forEach(b=>seen.delete(b.id)); q=pick(bank); }
+  seen.add(q.id);
+  return prep(q);
+}
+
+/* =====================================================================
+   RENDERING
+   ===================================================================== */
+const app=document.getElementById("app");
+let view="home", timerId=null, sess=null, T=null;
+const NAV=[["home","Dashboard"],["practice","Practice"],["test","Timed Test"],["review","Review"],["cards","Flashcards"],["progress","Progress"]];
+function renderNav(){
+  document.getElementById("nav").innerHTML=NAV.map(([k,l])=>`<button class="${view===k?"on":""}" onclick="go('${k}')">${l}${k==="review"&&S.missed.length?`<span class="badge">${S.missed.length}</span>`:""}</button>`).join("");
+}
+function go(v){
+  if(T && !T.done && v!=="test"){ if(!confirm("Leave the timed test? Your answers on this test will be lost.")) return; stopTimer(); T=null; }
+  view=v; renderNav(); render(); window.scrollTo(0,0);
+}
+function render(){ ({home:rHome,practice:rPractice,test:rTest,review:rReview,cards:rCards,progress:rProgress})[view](); }
+function secTag(q){ return `<span class="tag ${q.s==="M"?"m":""}">${q.s==="M"?"Math":"English"} · ${TOPICS[q.t].n}</span>`; }
+function choicesHTML(q,picked,reveal,fn){
+  return `<div class="choices">${q.c.map((c,i)=>{ let cls="choice";
+    if(reveal){ if(i===q.a) cls+=" correct"; else if(i===picked) cls+=" wrong"; } else if(i===picked) cls+=" sel";
+    return `<button class="${cls}" ${reveal?"disabled":""} onclick="${fn}(${i})"><span class="letter">${"ABCD"[i]}</span><span>${c}</span></button>`; }).join("")}</div>`;
+}
+function qBody(q){ return `${q.p?`<div class="passage">${q.p}</div>`:""}<p class="stem">${q.q}</p>`; }
+
+/* ---------- Dashboard ---------- */
+const TIPS=[
+ "On SAT Reading & Writing, read the question first so you know what to look for in the passage.",
+ "For punctuation questions, first decide whether each side of the blank is an independent clause.",
+ "On “Words in Context,” predict your own word for the blank before looking at the choices.",
+ "When two choices are both grammatical, the shorter one is usually correct.",
+ "For transitions, name the relationship (contrast, cause, addition, example) before you look at the options.",
+ "On math, plug the answer choices back in when you’re stuck — it’s a legitimate strategy.",
+ "Percent changes multiply: a 20% increase then a 20% decrease does NOT return to the original.",
+ "If a question says “given,” you’re working with conditional probability — shrink the denominator.",
+ "For rhetorical synthesis, the right answer achieves the stated GOAL, not just any true fact.",
+ "Outliers pull the mean much more than the median.",
+ "When a modifier opens a sentence, the very next noun must be the thing it describes."
+];
+function rHome(){
+  const t=totals(), te=totals("E"), tm=totals("M"), ds=dayStreak(), td=S.days[today()]||0;
+  const weak=Object.keys(TOPICS).filter(k=>S.stats[k]&&S.stats[k].n>=3).sort((a,b)=>acc(a)-acc(b))[0];
+  const learn=Object.values(S.cards).reduce((n,d)=>n+Object.values(d).filter(v=>v==="learn").length,0);
+  app.innerHTML=`
+  <section class="panel">
+    <h2>Welcome back${td?" — "+td+" answered today":""}</h2>
+    <p class="muted">Endless SAT &amp; ACT practice: ${BANK.length} hand-written questions plus unlimited generated grammar, vocabulary, and math problems. Every answer comes with an explanation.</p>
+  </section>
+  <div class="tiles">
+    <div class="tile"><div class="k">Answered</div><div class="v">${t.n}</div><div class="s">${t.p}% correct overall</div></div>
+    <div class="tile"><div class="k">English</div><div class="v">${te.n?te.p+"%":"—"}</div><div class="s">${te.n} questions</div></div>
+    <div class="tile"><div class="k">Math</div><div class="v">${tm.n?tm.p+"%":"—"}</div><div class="s">${tm.n} questions</div></div>
+    <div class="tile"><div class="k">Day streak</div><div class="v">${ds}</div><div class="s">Best answer streak: ${S.streak.best}</div></div>
+  </div>
+  <h3>Jump in</h3>
+  <div class="quick">
+    <button class="qk" onclick="startPractice('smart')"><b>Smart Mix</b><span>Focuses on your weakest topics, weighted toward English.</span></button>
+    <button class="qk" onclick="go('test')"><b>Timed Test</b><span>A mixed section under real time pressure.</span></button>
+    ${weak?`<button class="qk" onclick="startPractice('topic','${weak}')"><b>Fix a weak spot</b><span>${TOPICS[weak].n} — ${acc(weak)}% so far.</span></button>`:`<button class="qk" onclick="startPractice('E')"><b>All English</b><span>Grammar, transitions, vocabulary, reading.</span></button>`}
+    <button class="qk" onclick="go('review')"><b>Review missed</b><span>${S.missed.length} question${S.missed.length===1?"":"s"} waiting.</span></button>
+    <button class="qk" onclick="go('cards')"><b>Flashcards</b><span>${learn? learn+" cards marked “still learning.”" : "Vocabulary, grammar rules, and formulas."}</span></button>
+  </div>
+  <h3>Tip of the day</h3>
+  <div class="tip">${TIPS[new Date().getDate()%TIPS.length]}</div>`;
+}
+
+/* ---------- Practice ---------- */
+function startPractice(kind,topic){
+  sess={mode:{kind,topic},seen:new Set(),n:0,c:0,q:null,picked:null,answered:false,queue:null};
+  if(kind==="review"){ sess.queue=shuffle(S.missed.slice()); if(!sess.queue.length){ sess=null; go("review"); return; } }
+  nextQ(); view= kind==="review"?"review":"practice"; renderNav(); render(); window.scrollTo(0,0);
+}
+function nextQ(){
+  if(sess.mode.kind==="review"){ const q=sess.queue.shift(); sess.q=q? prep(Object.assign({},q,{c:q.c.slice()})) : null; }
+  else sess.q=drawQuestion(sess.mode,sess.seen);
+  sess.picked=null; sess.answered=false;
+}
+function modeLabel(m){ return m.kind==="topic"?TOPICS[m.topic].n : {E:"All English",M:"All Math",X:"Mixed (60% English)",smart:"Smart Mix",review:"Review missed"}[m.kind]; }
+function pAnswer(i){
+  if(!sess||sess.answered) return; sess.picked=i; sess.answered=true; const ok=i===sess.q.a;
+  sess.n++; if(ok) sess.c++; rec(sess.q,ok,sess.mode.kind==="review"); renderNav(); render();
+  const fb=document.querySelector(".fb"); if(fb&&fb.getBoundingClientRect().bottom>innerHeight) fb.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function pNext(){ if(!sess) return; nextQ(); render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function endPractice(){ const r=sess&&sess.mode.kind==="review"; sess=null; if(r) go("review"); else render(); }
+function practiceScreen(){
+  const q=sess.q, ok=sess.picked===q.a;
+  return `<div class="qtop"><button class="ghost" onclick="endPractice()">← ${sess.mode.kind==="review"?"Back to review":"Choose topic"}</button>
+    <div class="score">${modeLabel(sess.mode)} · ${sess.c}/${sess.n} correct${S.streak.cur>1?` · streak ${S.streak.cur}`:""}</div></div>
+  <article class="qcard">
+    <div class="tags">${secTag(q)}${q.gen?`<span class="tag soft">Generated</span>`:""}${sess.mode.kind==="review"?`<span class="tag soft">${sess.queue.length} left after this</span>`:""}</div>
+    ${qBody(q)}
+    ${choicesHTML(q,sess.picked,sess.answered,"pAnswer")}
+    ${sess.answered?`<div class="fb"><div class="res ${ok?"ok":"no"}">${ok?"Correct!":"Not quite — the answer is "+"ABCD"[q.a]+"."}</div><div>${q.e}</div></div>
+      <div class="actions"><span class="muted mini">${!ok?"Saved to your Review list.":sess.mode.kind==="review"?"Removed from your Review list.":""}</span>
+      ${sess.mode.kind==="review"&&!sess.queue.length?`<button class="btn pri" onclick="endPractice()">Finish review</button>`:`<button class="btn pri" onclick="pNext()">Next question →</button>`}</div>`
+      :`<p class="hint">Press <kbd>1</kbd>–<kbd>4</kbd> or <kbd>A</kbd>–<kbd>D</kbd> to answer.</p>`}
+  </article>`;
+}
+function topicBtn(k){ const a=acc(k), s=S.stats[k];
+  return `<button class="topic ${TOPICS[k].s==="M"?"m":""}" onclick="startPractice('topic','${k}')"><b>${TOPICS[k].n}</b>
+    <span class="meta">${s&&s.n?`${a}% · ${s.n} answered`:"Not started"}${GEN[k]?" · endless":""}</span><div class="bar"><i class="${barCls(a)}" style="width:${a||0}%"></i></div></button>`; }
+function rPractice(){
+  if(sess && sess.mode.kind!=="review"){ app.innerHTML=practiceScreen(); return; }
+  app.innerHTML=`<section class="panel"><h2>Practice</h2><p class="muted">Untimed practice with instant feedback. Questions you miss are saved for review. Topics marked “endless” mix hand-written questions with freshly generated ones.</p>
+  <div class="mixrow" style="margin-top:14px">
+    <button class="qk" onclick="startPractice('smart')"><b>Smart Mix</b><span>Targets weak topics</span></button>
+    <button class="qk" onclick="startPractice('X')"><b>Mixed</b><span>60% English · 40% Math</span></button>
+    <button class="qk" onclick="startPractice('E')"><b>All English</b><span>Reading &amp; Writing</span></button>
+    <button class="qk" onclick="startPractice('M')"><b>All Math</b><span>Algebra through trig</span></button>
+  </div>
+  <h3>English topics</h3><div class="topics">${ETOP.map(topicBtn).join("")}</div>
+  <h3>Math topics</h3><div class="topics">${MTOP.map(topicBtn).join("")}</div></section>`;
+}
+
+/* ---------- Timed test ---------- */
+let testCfg={n:20,mix:"X"};
+function stopTimer(){ if(timerId){ clearInterval(timerId); timerId=null; } }
+function startTest(){
+  const seen=new Set(), qs=[]; const n=testCfg.n;
+  if(testCfg.mix==="X"){ const ne=Math.round(n*.6); for(let i=0;i<ne;i++) qs.push(drawQuestion({kind:"E"},seen)); for(let i=ne;i<n;i++) qs.push(drawQuestion({kind:"M"},seen)); }
+  else for(let i=0;i<n;i++) qs.push(drawQuestion({kind:testCfg.mix},seen));
+  const secs=qs.reduce((s,q)=>s+(q.s==="E"?71:95),0);
+  T={qs,ans:qs.map(()=>null),idx:0,secs,end:Date.now()+secs*1000,start:Date.now(),done:false};
+  stopTimer(); timerId=setInterval(tick,500); render();
+}
+function fmtTime(s){ s=Math.max(0,Math.ceil(s)); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
+function tick(){ if(!T||T.done){ stopTimer(); return; } const left=(T.end-Date.now())/1000; const el=document.getElementById("timer");
+  if(el){ el.textContent=fmtTime(left); el.classList.toggle("low",left<60); } if(left<=0) submitTest(true); }
+function tAnswer(i){ if(!T||T.done) return; T.ans[T.idx]=i; render(); }
+function tGo(i){ if(!T) return; T.idx=Math.max(0,Math.min(T.qs.length-1,i)); render(); }
+function submitTest(auto){
+  if(!T||T.done) return;
+  if(!auto){ const un=T.ans.filter(a=>a===null).length; if(un && !confirm(`You have ${un} unanswered question${un>1?"s":""}. Submit anyway?`)) return; }
+  stopTimer(); T.done=true; T.used=Math.round((Date.now()-T.start)/1000);
+  T.qs.forEach((q,i)=>rec(q,T.ans[i]===q.a,false));
+  const c=T.qs.filter((q,i)=>T.ans[i]===q.a).length;
+  S.tests.push({d:today(),c,n:T.qs.length,mix:testCfg.mix}); if(S.tests.length>50) S.tests.shift(); save();
+  renderNav(); render(); window.scrollTo(0,0);
+}
+function rTest(){
+  if(!T){
+    const est=testCfg.mix==="E"?testCfg.n*71:testCfg.mix==="M"?testCfg.n*95:Math.round(testCfg.n*.6)*71+(testCfg.n-Math.round(testCfg.n*.6))*95;
+    const last=S.tests.slice(-5).reverse();
+    app.innerHTML=`<section class="panel"><h2>Timed Test</h2><p class="muted">Simulates test pressure: about 71 seconds per Reading &amp; Writing question and 95 seconds per Math question (the real SAT pacing). You can skip around and change answers until you submit. Explanations appear at the end.</p>
+      <div class="field"><label>Number of questions</label><div class="seg">${[10,20,30,44].map(n=>`<button class="${testCfg.n===n?"on":""}" onclick="testCfg.n=${n};rTest()">${n}</button>`).join("")}</div></div>
+      <div class="field"><label>Content</label><div class="seg">${[["X","Mixed (60% English)"],["E","English only"],["M","Math only"]].map(([k,l])=>`<button class="${testCfg.mix===k?"on":""}" onclick="testCfg.mix='${k}';rTest()">${l}</button>`).join("")}</div></div>
+      <p>Time limit: <b>${fmtTime(est)}</b></p>
+      <div class="row" style="margin-top:12px"><button class="btn pri" onclick="startTest()">Start test</button></div></section>
+      ${last.length?`<section class="panel"><h3 style="margin-top:0">Recent tests</h3>${last.map(t=>`<div class="row" style="justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0"><span>${t.d} · ${{X:"Mixed",E:"English",M:"Math"}[t.mix]}</span><b>${t.c}/${t.n} (${Math.round(100*t.c/t.n)}%)</b></div>`).join("")}</section>`:""}`;
+    return;
+  }
+  if(!T.done){
+    const q=T.qs[T.idx], left=(T.end-Date.now())/1000, answered=T.ans.filter(a=>a!==null).length;
+    app.innerHTML=`<div class="testbar"><div><b>Question ${T.idx+1}</b> <span class="muted">of ${T.qs.length} · ${answered} answered</span></div>
+      <div id="timer" class="timer ${left<60?"low":""}">${fmtTime(left)}</div><button class="btn pri sm" onclick="submitTest()">Submit</button></div>
+      <div class="qnav">${T.qs.map((x,i)=>`<button class="${T.ans[i]!==null?"ans":""} ${i===T.idx?"cur":""}" onclick="tGo(${i})">${i+1}</button>`).join("")}</div>
+      <article class="qcard"><div class="tags">${secTag(q)}</div>${qBody(q)}${choicesHTML(q,T.ans[T.idx],false,"tAnswer")}
+      <div class="actions"><button class="btn" onclick="tGo(${T.idx-1})" ${T.idx===0?"disabled":""}>← Previous</button>
+      ${T.idx<T.qs.length-1?`<button class="btn pri" onclick="tGo(${T.idx+1})">Next →</button>`:`<button class="btn pri" onclick="submitTest()">Submit test</button>`}</div></article>`;
+    return;
+  }
+  const c=T.qs.filter((q,i)=>T.ans[i]===q.a).length, n=T.qs.length;
+  const part=s=>{ const idx=T.qs.map((q,i)=>i).filter(i=>T.qs[i].s===s); const k=idx.filter(i=>T.ans[i]===T.qs[i].a).length; return idx.length?`${k}/${idx.length}`:"—"; };
+  app.innerHTML=`<section class="panel"><h2>Test results</h2>
+    <div class="row" style="gap:28px;align-items:flex-end"><div><div class="big">${Math.round(100*c/n)}%</div><div class="muted">${c} of ${n} correct</div></div>
+    <div><b>English</b><br>${part("E")}</div><div><b>Math</b><br>${part("M")}</div><div><b>Time used</b><br>${fmtTime(T.used)} of ${fmtTime(T.secs)}</div></div>
+    <div class="row" style="margin-top:16px"><button class="btn pri" onclick="T=null;startTest()">New test</button><button class="btn" onclick="T=null;rTest()">Change settings</button>${S.missed.length?`<button class="btn" onclick="T=null;go('review')">Review missed (${S.missed.length})</button>`:""}</div></section>
+    <section class="panel"><h3 style="margin-top:0">Question by question</h3>
+    ${T.qs.map((q,i)=>{ const a=T.ans[i], ok=a===q.a; return `<details class="rv"><summary><span class="dot ${a===null?"skip":ok?"":"no"}"></span>${i+1}. ${TOPICS[q.t].n} <span class="muted mini">— ${a===null?"skipped":ok?"correct":"incorrect"}</span></summary>
+      <div class="body">${qBody(q)}${choicesHTML(q,a,true,"void")}<div class="fb">${q.e}</div></div></details>`; }).join("")}</section>`;
+}
+
+/* ---------- Review ---------- */
+function rReview(){
+  if(sess && sess.mode.kind==="review"){ if(!sess.q){ sess=null; } else { app.innerHTML=practiceScreen(); return; } }
+  const by={}; S.missed.forEach(m=>{ by[m.t]=(by[m.t]||0)+1; });
+  app.innerHTML=`<section class="panel"><h2>Review missed questions</h2>
+  ${S.missed.length?`<p class="muted">You have <b>${S.missed.length}</b> question${S.missed.length>1?"s":""} to review. Answer one correctly and it leaves the list; miss it again and it stays.</p>
+    <div class="row" style="margin:14px 0"><button class="btn pri" onclick="startPractice('review')">Start review</button><button class="btn bad" onclick="if(confirm('Clear all missed questions?')){S.missed=[];save();renderNav();rReview();}">Clear list</button></div>
+    <table class="prog"><tr><th>Topic</th><th style="text-align:right">Missed</th></tr>${Object.keys(by).sort((a,b)=>by[b]-by[a]).map(k=>`<tr><td>${TOPICS[k].n}</td><td class="n">${by[k]}</td></tr>`).join("")}</table>`
+  :`<p class="muted">Nothing to review — questions you miss in Practice or a Timed Test will show up here.</p><div class="row" style="margin-top:12px"><button class="btn pri" onclick="startPractice('smart')">Practice now</button></div>`}
+  </section>`;
+}
+
+/* ---------- Flashcards ---------- */
+const FC={deck:"vocab",filter:"all",order:[],i:0};
+function fcState(id){ return (S.cards[FC.deck]||{})[id]; }
+function fcBuild(shuf){ const d=DECKS[FC.deck], m=S.cards[FC.deck]||{};
+  let list=d.filter(c=> FC.filter==="all" || (FC.filter==="learn"&&m[c.id]==="learn") || (FC.filter==="notknown"&&m[c.id]!=="know"));
+  FC.order=(shuf?shuffle(list):list).map(c=>c.id); FC.i=0; }
+function fcSet(deck){ FC.deck=deck; FC.filter="all"; fcBuild(false); rCards(); }
+function fcFilter(f){ FC.filter=f; fcBuild(false); rCards(); }
+function fcFlip(){ const el=document.getElementById("card3d"); if(el) el.classList.toggle("flipped"); }
+function fcMove(d){ if(!FC.order.length) return; FC.i=(FC.i+d+FC.order.length)%FC.order.length; rCards(); }
+function fcMark(v){ if(!FC.order.length) return; const id=FC.order[FC.i]; (S.cards[FC.deck]=S.cards[FC.deck]||{})[id]=v; save(); fcMove(1); }
+function fcReset(){ if(confirm(`Reset “know it / still learning” marks for ${DECK_NAMES[FC.deck]}?`)){ S.cards[FC.deck]={}; save(); fcBuild(false); rCards(); } }
+function rCards(){
+  if(!FC.order.length && FC.filter==="all") fcBuild(false);
+  const d=DECKS[FC.deck], m=S.cards[FC.deck]||{}; const know=d.filter(c=>m[c.id]==="know").length, learn=d.filter(c=>m[c.id]==="learn").length;
+  const card=FC.order.length? d.find(c=>c.id===FC.order[FC.i]) : null; const st=card?m[card.id]:null;
+  const stp=st?`<span class="pillst ${st}">${st==="know"?"Know it":"Still learning"}</span>`:"";
+  app.innerHTML=`<div class="fcwrap"><section class="panel">
+    <div class="row" style="justify-content:space-between"><h2 style="margin:0">Flashcards</h2><span class="muted mini">${know} known · ${learn} learning · ${d.length} total</span></div>
+    <div class="bar" style="margin:10px 0 14px"><i class="g" style="width:${Math.round(100*know/d.length)}%"></i></div>
+    <div class="seg" style="margin-bottom:8px">${Object.keys(DECKS).map(k=>`<button class="${FC.deck===k?"on":""}" onclick="fcSet('${k}')">${DECK_NAMES[k]}</button>`).join("")}</div>
+    <div class="seg">${[["all","All cards"],["notknown","Not known yet"],["learn","Still learning"]].map(([k,l])=>`<button class="${FC.filter===k?"on":""}" onclick="fcFilter('${k}')">${l}</button>`).join("")}</div>
+    ${card?`<div class="card3d" id="card3d" tabindex="0" onclick="fcFlip()" role="button" aria-label="Flip card">
+      <div class="inner"><div class="face front"><span class="lbl">${DECK_NAMES[FC.deck]}</span><span class="st">${stp}</span>${card.front}<div class="muted mini" style="margin-top:18px">Click or press Space to flip</div></div>
+      <div class="face back"><span class="lbl">Answer</span><span class="st">${stp}</span>${card.back}</div></div></div>
+      <div class="fcctl"><button class="btn" onclick="fcMove(-1)">← Prev</button><button class="btn" onclick="fcFlip()">Flip</button><button class="btn" onclick="fcMove(1)">Next →</button></div>
+      <div class="fcctl" style="margin-top:10px"><button class="btn bad" onclick="fcMark('learn')">Still learning <kbd>L</kbd></button><button class="btn good" onclick="fcMark('know')">Know it <kbd>K</kbd></button></div>
+      <div class="row" style="justify-content:space-between;margin-top:16px"><span class="muted mini">Card ${FC.i+1} of ${FC.order.length}</span>
+      <span class="row"><button class="btn sm" onclick="fcBuild(true);rCards()">Shuffle</button><button class="btn sm" onclick="fcReset()">Reset marks</button></span></div>`
+    :`<p class="muted" style="margin-top:20px">No cards match this filter. ${FC.filter==="learn"?"Mark cards as “still learning” to build a focused review pile.":"You know every card in this deck — nice work!"}</p>`}
+  </section></div>`;
+}
+
+/* ---------- Progress ---------- */
+function rProgress(){
+  const t=totals(), te=totals("E"), tm=totals("M");
+  const days=[]; for(let i=13;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push([d,S.days[dkey(d)]||0]); }
+  const mx=Math.max(5,...days.map(x=>x[1]));
+  const row=k=>{ const s=S.stats[k], a=acc(k); return `<tr><td>${TOPICS[k].n}</td><td style="width:40%"><div class="bar"><i class="${barCls(a)}" style="width:${a||0}%"></i></div></td><td class="n">${s&&s.n?a+"%":"—"}</td><td class="n muted">${s?s.c+"/"+s.n:"0/0"}</td><td class="n"><button class="btn sm" onclick="startPractice('topic','${k}')">Practice</button></td></tr>`; };
+  const tested=Object.keys(TOPICS).filter(k=>S.stats[k]&&S.stats[k].n>=3).sort((a,b)=>acc(a)-acc(b));
+  const cardsKnown=Object.keys(DECKS).map(k=>{ const m=S.cards[k]||{}; return `${DECK_NAMES[k]}: ${DECKS[k].filter(c=>m[c.id]==="know").length}/${DECKS[k].length}`; }).join(" · ");
+  app.innerHTML=`<div class="tiles">
+    <div class="tile"><div class="k">Total answered</div><div class="v">${t.n}</div><div class="s">${t.p}% accuracy</div></div>
+    <div class="tile"><div class="k">Day streak</div><div class="v">${dayStreak()}</div><div class="s">consecutive days practiced</div></div>
+    <div class="tile"><div class="k">Answer streak</div><div class="v">${S.streak.cur}</div><div class="s">Best ever: ${S.streak.best}</div></div>
+    <div class="tile"><div class="k">Tests taken</div><div class="v">${S.tests.length}</div><div class="s">${S.tests.length?"Last: "+Math.round(100*S.tests[S.tests.length-1].c/S.tests[S.tests.length-1].n)+"%":"None yet"}</div></div>
+  </div>
+  <section class="panel" style="margin-top:18px"><div class="grid2"><div><h3 style="margin-top:0">Last 14 days</h3>
+    <div class="chart">${days.map(([d,n])=>`<div class="c" title="${dkey(d)}: ${n} questions"><i style="height:${Math.round(100*n/mx)}%"></i><span>${d.getDate()}</span></div>`).join("")}</div></div>
+    <div><h3 style="margin-top:0">Focus next</h3>${tested.length?tested.slice(0,3).map(k=>`<p>• <b>${TOPICS[k].n}</b> <span class="muted">(${acc(k)}%)</span></p>`).join(""):`<p class="muted">Answer at least 3 questions in a topic to see suggestions.</p>`}
+    <p class="muted mini" style="margin-top:10px">Flashcards known — ${cardsKnown}</p></div></div></section>
+  <section class="panel"><h3 style="margin-top:0">English — ${te.n?te.p+"%":"no data"} <span class="muted mini">(${te.n} answered)</span></h3>
+    <table class="prog">${ETOP.map(row).join("")}</table>
+    <h3>Math — ${tm.n?tm.p+"%":"no data"} <span class="muted mini">(${tm.n} answered)</span></h3>
+    <table class="prog">${MTOP.map(row).join("")}</table>
+    <div class="row" style="margin-top:18px"><button class="btn bad sm" onclick="if(confirm('Erase ALL progress, missed questions, and flashcard marks? This cannot be undone.')){const th=S.theme;S=DEF();S.theme=th;save();renderNav();rProgress();}">Reset all progress</button></div></section>`;
+}
+
+/* =====================================================================
+   THEME + KEYBOARD + INIT
+   ===================================================================== */
+function applyTheme(){ const r=document.documentElement; if(S.theme) r.setAttribute("data-theme",S.theme); else r.removeAttribute("data-theme"); }
+document.getElementById("themeBtn").onclick=()=>{
+  const dark= S.theme? S.theme==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  S.theme= dark?"light":"dark"; save(); applyTheme();
+};
+document.addEventListener("keydown",e=>{
+  if(e.metaKey||e.ctrlKey||e.altKey) return;
+  const tag=(e.target.tagName||"").toLowerCase(); if(tag==="input"||tag==="textarea"||tag==="select") return;
+  const k=e.key.toLowerCase(); const idx="1234".indexOf(k)>=0?"1234".indexOf(k):"abcd".indexOf(k);
+  if((view==="practice"||view==="review") && sess && sess.q){
+    if(!sess.answered && idx>=0 && idx<sess.q.c.length){ e.preventDefault(); pAnswer(idx); }
+    else if(sess.answered && k==="enter"){ e.preventDefault(); if(sess.mode.kind==="review"&&!sess.queue.length) endPractice(); else pNext(); }
+  } else if(view==="test" && T && !T.done){
+    if(idx>=0 && idx<T.qs[T.idx].c.length){ e.preventDefault(); tAnswer(idx); }
+    else if(k==="arrowright"){ tGo(T.idx+1); } else if(k==="arrowleft"){ tGo(T.idx-1); }
+  } else if(view==="cards"){
+    if(k===" "||k==="enter"){ e.preventDefault(); fcFlip(); }
+    else if(k==="arrowright") fcMove(1); else if(k==="arrowleft") fcMove(-1);
+    else if(k==="k") fcMark("know"); else if(k==="l") fcMark("learn");
+  }
+});
+applyTheme(); renderNav(); render();
+</script>
+</body>
+</html>
