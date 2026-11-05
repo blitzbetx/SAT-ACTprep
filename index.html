@@ -2,198 +2,402 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SAT/ACT Prep Lab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prep Lab — SAT & ACT</title>
 <style>
 :root{
-  --bg:#f5f6fa; --surface:#ffffff; --surface2:#f0f2f8; --ink:#1b2133; --muted:#5d667b; --line:#e2e5ee;
-  --accent:#3b5bdb; --accent-ink:#ffffff; --accent-soft:#e7ecff;
-  --good:#2b8a3e; --good-soft:#e5f5e9; --bad:#c92a2a; --bad-soft:#fdeaea; --warn:#e67700;
-  --eng:#6741d9; --eng-soft:#efe9ff; --math:#0b7285; --math-soft:#e3f6f9;
-  --shadow:0 1px 2px rgba(20,30,60,.06),0 4px 16px rgba(20,30,60,.06);
+  --bg:#f5f6fb; --surface:#ffffff; --surface2:#f2f4f9; --surface3:#e7eaf2; --segon:#ffffff;
+  --ink:#161b2e; --muted:#606982; --line:#e3e6ee; --line2:#d3d8e3;
+  --good:#1f9d55; --good-soft:#e2f6ea; --bad:#d63c3c; --bad-soft:#fdecec; --warn:#c96a00; --warn-soft:#fff3df;
+  --eng:#6f4ae0; --eng-soft:#f0ebff; --math:#0b7f93; --math-soft:#e1f6f9;
+  --accent:#4263eb; --accent-ink:#ffffff; --accent-deep:#4263eb;
+  --accent-soft:color-mix(in srgb,var(--accent) 12%,var(--surface));
+  --shadow:0 1px 2px rgba(22,27,46,.05),0 6px 20px rgba(22,27,46,.05);
+  --shadow-lg:0 12px 40px rgba(22,27,46,.13);
+  --r:18px; --rs:12px; --pad:24px; --gap:18px;
+  --pfont:Georgia,"Iowan Old Style","Times New Roman",serif;
+  color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0f1320; --surface:#171c2b; --surface2:#1e2436; --ink:#e7eaf3; --muted:#9aa3b8; --line:#2a3146;
-    --accent:#7b93ff; --accent-ink:#0f1320; --accent-soft:#232c4d;
-    --good:#5fd47a; --good-soft:#163020; --bad:#ff7b7b; --bad-soft:#3a1c20; --warn:#ffb347;
-    --eng:#a98bff; --eng-soft:#2a2347; --math:#4fd1e3; --math-soft:#14313a;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+    --bg:#0e1220; --surface:#161b2b; --surface2:#1d2336; --surface3:#283049; --segon:#2c3550;
+    --ink:#e8ebf4; --muted:#9aa3b9; --line:#272e44; --line2:#343c56;
+    --good:#5fd47a; --good-soft:#15301f; --bad:#ff7b7b; --bad-soft:#3a1c22; --warn:#ffb347; --warn-soft:#3a2a12;
+    --eng:#a98bff; --eng-soft:#272044; --math:#4fd1e3; --math-soft:#12303a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.2); --shadow-lg:0 12px 40px rgba(0,0,0,.45);
+    color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0f1320; --surface:#171c2b; --surface2:#1e2436; --ink:#e7eaf3; --muted:#9aa3b8; --line:#2a3146;
-  --accent:#7b93ff; --accent-ink:#0f1320; --accent-soft:#232c4d;
-  --good:#5fd47a; --good-soft:#163020; --bad:#ff7b7b; --bad-soft:#3a1c20; --warn:#ffb347;
-  --eng:#a98bff; --eng-soft:#2a2347; --math:#4fd1e3; --math-soft:#14313a;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+  --bg:#0e1220; --surface:#161b2b; --surface2:#1d2336; --surface3:#283049; --segon:#2c3550;
+  --ink:#e8ebf4; --muted:#9aa3b9; --line:#272e44; --line2:#343c56;
+  --good:#5fd47a; --good-soft:#15301f; --bad:#ff7b7b; --bad-soft:#3a1c22; --warn:#ffb347; --warn-soft:#3a2a12;
+  --eng:#a98bff; --eng-soft:#272044; --math:#4fd1e3; --math-soft:#12303a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.2); --shadow-lg:0 12px 40px rgba(0,0,0,.45);
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
+html{font-size:16px;-webkit-text-size-adjust:100%}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
 button{font:inherit;color:inherit;cursor:pointer}
-h1,h2,h3{line-height:1.25;margin:0 0 .5rem}
-h2{font-size:1.45rem} h3{font-size:1.05rem;margin-top:1.4rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-p{margin:.4rem 0}
-.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
-header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.topin{display:flex;align-items:center;gap:14px;height:60px}
-.brand{display:flex;align-items:center;gap:9px;font-weight:750;font-size:1.08rem;white-space:nowrap}
-.brand small{font-weight:600;color:var(--muted);font-size:.75rem;letter-spacing:.05em}
-.logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--eng));display:grid;place-items:center;color:#fff;font-weight:800}
-nav{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
-nav::-webkit-scrollbar{display:none}
-nav button{background:none;border:0;padding:8px 12px;border-radius:9px;color:var(--muted);font-weight:600;font-size:.93rem;white-space:nowrap;position:relative}
-nav button:hover{background:var(--surface2);color:var(--ink)}
-nav button.on{background:var(--accent-soft);color:var(--accent)}
-.badge{display:inline-block;min-width:18px;padding:0 5px;margin-left:5px;border-radius:9px;background:var(--bad);color:#fff;font-size:.7rem;line-height:18px;text-align:center}
-.iconbtn{border:1px solid var(--line);background:var(--surface);width:36px;height:36px;border-radius:10px;flex:none}
-main{padding:24px 16px 60px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
-.muted{color:var(--muted)}
+a{color:var(--accent);font-weight:600}
+h1,h2,h3{line-height:1.2;margin:0;letter-spacing:-.015em}
+p{margin:.35rem 0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ic{flex:none;display:block}
+.muted{color:var(--muted)} .mini{font-size:.86rem}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.btn{border:1px solid var(--line);background:var(--surface);padding:10px 16px;border-radius:11px;font-weight:650;transition:transform .05s,background .15s}
-.btn:hover{background:var(--surface2)}
+.between{justify-content:space-between}
+html.nomotion *,html.nomotion *::before,html.nomotion *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+
+/* ---------- app shell ---------- */
+.shell{display:grid;grid-template-columns:252px minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--surface);border-right:1px solid var(--line);padding:22px 14px 16px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:11px;padding:0 8px 24px}
+.brand b{display:block;font-size:1.1rem;letter-spacing:-.01em}
+.brand small{display:block;color:var(--muted);font-size:.7rem;font-weight:700;letter-spacing:.1em}
+.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--eng));color:#fff;display:grid;place-items:center;flex:none;box-shadow:0 6px 16px color-mix(in srgb,var(--accent) 35%,transparent)}
+.logo.sm{width:28px;height:28px;border-radius:9px;box-shadow:none}
+.navlist{display:flex;flex-direction:column;gap:3px}
+.navi{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border:0;background:none;border-radius:var(--rs);color:var(--muted);font-weight:620;font-size:.95rem;text-align:left;transition:background .15s,color .15s}
+.navi:hover{background:var(--surface2);color:var(--ink)}
+.navi.on{background:var(--accent-soft);color:var(--accent)}
+.navi>span:not(.badge){flex:1}
+.badge{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--bad);color:#fff;font-size:.7rem;font-weight:750;display:inline-grid;place-items:center;line-height:1}
+.sidefoot{margin-top:auto;padding-top:18px;display:flex;flex-direction:column;gap:10px}
+.goalmini{background:var(--surface2);border-radius:var(--rs);padding:12px 13px}
+.goalmini .row{justify-content:space-between;font-size:.8rem;font-weight:650;margin-bottom:7px}
+.me{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:var(--rs);padding:8px 10px;text-align:left;width:100%;transition:background .15s}
+.me:hover{background:var(--surface2)}
+.me>span:not(.av){min-width:0;flex:1}
+.me b{display:block;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.me small{display:block;color:var(--muted);font-size:.75rem}
+.av{border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-weight:750;flex:none;letter-spacing:.02em}
+.main{min-width:0}
+.topbar{max-width:1120px;margin:0 auto;padding:28px 36px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.topbar h1{font-size:1.7rem;font-weight:800}
+.topbar p{color:var(--muted);margin:.3rem 0 0}
+.tr{display:flex;gap:8px;align-items:center;flex:none}
+.iconbtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--muted);transition:background .15s,color .15s}
+.iconbtn:hover{color:var(--ink);background:var(--surface2)}
+.avbtn{display:none;padding:0;border:0;background:none;width:auto;height:auto}
+.mbrand{display:none;align-items:center;gap:9px;font-weight:800;font-size:1.05rem}
+.content{max-width:1120px;margin:0 auto;padding:22px 36px 64px;animation:fadein .25s ease}
+.tabbar{display:none}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes fadeup{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.015)}100%{transform:scale(1)}}
+
+/* ---------- generic pieces ---------- */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);box-shadow:var(--shadow);margin-bottom:var(--gap)}
+.panel h3{font-size:1.02rem;font-weight:750;margin:0 0 12px}
+.h-sec{font-size:.76rem;font-weight:780;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;margin:28px 0 12px}
+.ph{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ph .h-sec{margin-bottom:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);padding:10px 16px;border-radius:var(--rs);font-weight:650;font-size:.95rem;transition:transform .06s,background .15s,border-color .15s,filter .15s;white-space:nowrap;text-decoration:none;color:var(--ink)}
+.btn:hover{background:var(--surface2);border-color:var(--line2)}
 .btn:active{transform:translateY(1px)}
-.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 28%,transparent)}
 .btn.pri:hover{filter:brightness(1.07)}
 .btn.good{background:var(--good-soft);border-color:transparent;color:var(--good)}
 .btn.bad{background:var(--bad-soft);border-color:transparent;color:var(--bad)}
-.btn.sm{padding:6px 11px;font-size:.88rem;border-radius:9px}
-.btn:disabled{opacity:.45;cursor:default}
-.ghost{background:none;border:0;color:var(--muted);font-weight:600;padding:6px 4px}
-.ghost:hover{color:var(--ink)}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
-.tile .k{font-size:.8rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-.tile .v{font-size:1.9rem;font-weight:780;margin-top:2px}
-.tile .s{font-size:.85rem;color:var(--muted)}
-.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:6px}
-.qk{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
-.qk:hover{border-color:var(--accent)}
-.qk b{display:block;font-size:1.02rem;margin-bottom:3px}
-.qk span{color:var(--muted);font-size:.9rem}
-.mixrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
-.topic{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;border-left:4px solid var(--eng)}
-.topic.m{border-left-color:var(--math)}
-.topic:hover{background:var(--surface2)}
-.topic b{display:block;font-size:.97rem}
-.topic .meta{font-size:.8rem;color:var(--muted)}
-.bar{height:6px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-top:7px}
-.bar i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.btn.ghost{background:none;border-color:transparent;color:var(--muted)}
+.btn.ghost:hover{color:var(--ink);background:var(--surface2)}
+.btn.sm{padding:7px 12px;font-size:.86rem}
+.btn.lg{padding:13px 22px;font-size:1rem}
+.btn.block{width:100%}
+.btn:disabled{opacity:.45;cursor:default;transform:none;filter:none}
+.bar{height:7px;background:var(--surface3);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:5px;transition:width .6s ease}
 .bar i.g{background:var(--good)} .bar i.w{background:var(--warn)} .bar i.r{background:var(--bad)}
-.qtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.score{font-weight:650;color:var(--muted);font-size:.93rem}
-.qcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow)}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.tag{font-size:.75rem;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--eng-soft);color:var(--eng)}
+.bar.thin{height:5px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--gap)}
+.grid2>.panel{margin-bottom:0}
+kbd{font-family:inherit;font-size:.76rem;border:1px solid var(--line2);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--surface)}
+.seg{display:inline-flex;background:var(--surface2);border:1px solid var(--line);border-radius:var(--rs);padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:7px 13px;border-radius:calc(var(--rs) - 3px);font-weight:650;color:var(--muted);font-size:.9rem;transition:background .15s,color .15s}
+.seg button:hover{color:var(--ink)}
+.seg button.on{background:var(--segon);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg.full{display:flex}
+.seg.full button{flex:1}
+.sw{width:46px;height:28px;border-radius:14px;border:0;background:var(--surface3);position:relative;transition:background .2s;flex:none;padding:0}
+.sw i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.sw.on{background:var(--accent)} .sw.on i{transform:translateX(18px)}
+.inp{font:inherit;font-weight:500;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:var(--rs);padding:11px 13px;width:100%;transition:border-color .15s,box-shadow .15s;min-width:0}
+.inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.fl{display:flex;flex-direction:column;gap:6px;font-weight:650;font-size:.9rem;min-width:0}
+.fl em{font-style:normal;color:var(--muted);font-weight:500;font-size:.8rem}
+.fl small{color:var(--muted);font-weight:500;font-size:.8rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chk{display:flex;gap:10px;align-items:center;font-size:.92rem;font-weight:600;cursor:pointer}
+.chk input{width:18px;height:18px;accent-color:var(--accent);margin:0}
+.err{color:var(--bad);font-size:.88rem;font-weight:650;margin:0}
+.err:empty{display:none}
+.swatches{display:flex;gap:9px;flex-wrap:wrap}
+.swatch{width:32px;height:32px;border-radius:50%;border:3px solid var(--surface);box-shadow:0 0 0 1.5px var(--line2);padding:0;transition:box-shadow .15s}
+.swatch.on{box-shadow:0 0 0 2.5px var(--ink)}
+
+/* ---------- dashboard ---------- */
+.hero{display:flex;gap:28px;align-items:center;justify-content:space-between;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 13%,var(--surface)) 0%,var(--surface) 65%);border:1px solid var(--line);border-radius:var(--r);padding:calc(var(--pad) + 8px);box-shadow:var(--shadow);margin-bottom:var(--gap)}
+.eyebrow{font-size:.78rem;font-weight:780;color:var(--accent);text-transform:uppercase;letter-spacing:.09em;margin:0 0 6px}
+.hero h1{font-size:2.1rem;font-weight:820}
+.hero .sub{color:var(--muted);margin-top:8px;max-width:52ch}
+.hero-r{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;flex:none}
+.ring{position:relative;display:grid;place-items:center;flex:none}
+.ring svg{position:absolute;inset:0}
+.ringfg{transition:stroke-dashoffset .9s ease}
+.ringlbl{position:relative;text-align:center;line-height:1.1}
+.ringlbl b{font-size:1.75rem;font-weight:820}
+.ringlbl b span{font-size:.95rem;color:var(--muted);font-weight:650}
+.ringlbl small{display:block;color:var(--muted);font-size:.74rem;font-weight:650;margin-top:2px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);margin-bottom:var(--gap)}
+.tile{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);min-width:0}
+.ti{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
+.ti.eng{background:var(--eng-soft);color:var(--eng)} .ti.math{background:var(--math-soft);color:var(--math)} .ti.hot{background:var(--warn-soft);color:var(--warn)} .ti.good{background:var(--good-soft);color:var(--good)} .ti.bad{background:var(--bad-soft);color:var(--bad)}
+.tile .k{font-size:.78rem;color:var(--muted);font-weight:650}
+.tile .v{font-size:1.65rem;font-weight:820;line-height:1.15}
+.tile .s{font-size:.8rem;color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:12px}
+.qk{display:flex;gap:14px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);transition:border-color .15s,transform .15s,box-shadow .15s;color:var(--ink)}
+.qk:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.qk b{display:block;font-size:.98rem}
+.qk .d{color:var(--muted);font-size:.86rem;display:block;margin-top:2px}
+.sline{display:grid;grid-template-columns:90px 1fr 48px;gap:12px;align-items:center;margin:10px 0;font-size:.92rem;font-weight:620}
+.sline .n{text-align:right;font-variant-numeric:tabular-nums}
+.wk{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:.93rem}
+.tipbox{border-left:4px solid var(--accent);background:var(--accent-soft);padding:14px 16px;border-radius:var(--rs);line-height:1.6}
+
+/* ---------- practice ---------- */
+.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:10px}
+.topic{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--rs);padding:13px 15px 13px 18px;display:flex;flex-direction:column;gap:4px;transition:border-color .15s,background .15s,transform .15s;position:relative;overflow:hidden;color:var(--ink)}
+.topic::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--eng)}
+.topic.m::before{background:var(--math)}
+.topic:hover{border-color:var(--line2);background:var(--surface2);transform:translateY(-1px)}
+.topic b{font-size:.95rem}
+.topic .meta{font-size:.78rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px;margin-bottom:3px}
+.qwrap{max-width:840px;margin:0 auto}
+.pbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.pmeta{display:flex;gap:6px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:.8rem;font-weight:700;padding:5px 11px;border-radius:20px;background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.pill.hot{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:calc(var(--pad) + 4px);box-shadow:var(--shadow);animation:fadeup .25s ease}
+.tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.tag{font-size:.74rem;font-weight:720;padding:4px 10px;border-radius:20px;background:var(--eng-soft);color:var(--eng)}
 .tag.m{background:var(--math-soft);color:var(--math)}
 .tag.soft{background:var(--surface2);color:var(--muted)}
-.passage{background:var(--surface2);border-radius:12px;padding:16px 18px;margin-bottom:16px;font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.05rem;line-height:1.65}
-.passage ul{margin:.3rem 0;padding-left:1.2rem}
-.passage table{border-collapse:collapse;font-family:inherit;font-size:.95rem;margin:.3rem 0}
-.passage th,.passage td{border:1px solid var(--line);padding:5px 12px;text-align:center}
+.qnum{margin-left:auto;font-size:.78rem;color:var(--muted);font-weight:650}
+.passage{background:var(--surface2);border-radius:var(--rs);padding:18px 20px;margin-bottom:18px;font-family:var(--pfont);font-size:1.06rem;line-height:1.72;border-left:3px solid var(--line2)}
+.passage ul{margin:.4rem 0;padding-left:1.2rem}
+.passage li{margin:.2rem 0}
+.passage table{border-collapse:collapse;font-family:inherit;font-size:.95rem;margin:.5rem 0}
+.passage th,.passage td{border:1px solid var(--line2);padding:6px 12px;text-align:center}
 .passage th{background:var(--surface)}
-.blank{display:inline-block;min-width:70px;border-bottom:2px solid var(--ink);margin:0 2px}
-.stem{font-weight:620;font-size:1.04rem;margin:0 0 14px}
-.choices{display:grid;gap:9px}
-.choice{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;transition:border-color .12s,background .12s}
+.blank{display:inline-block;min-width:70px;border-bottom:2px solid var(--ink);margin:0 3px}
+.stem{font-weight:650;font-size:1.04rem;margin:0 0 16px}
+.choices{display:grid;gap:10px}
+.choice{display:flex;gap:14px;align-items:center;text-align:left;width:100%;border:1.5px solid var(--line);background:var(--surface);border-radius:var(--rs);padding:13px 15px;transition:border-color .12s,background .12s,transform .06s,opacity .2s;line-height:1.45;color:var(--ink)}
 .choice:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.choice:active:not(:disabled){transform:scale(.995)}
 .choice:disabled{cursor:default}
-.letter{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.85rem;color:var(--muted)}
+.letter{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line2);display:grid;place-items:center;font-weight:750;font-size:.84rem;color:var(--muted);transition:all .12s}
 .choice.sel{border-color:var(--accent);background:var(--accent-soft)}
 .choice.sel .letter{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.choice.correct{border-color:var(--good);background:var(--good-soft)}
+.choice.correct{border-color:var(--good);background:var(--good-soft);animation:pop .3s ease}
 .choice.correct .letter{background:var(--good);border-color:var(--good);color:#fff}
 .choice.wrong{border-color:var(--bad);background:var(--bad-soft)}
 .choice.wrong .letter{background:var(--bad);border-color:var(--bad);color:#fff}
-.fb{margin-top:16px;border-radius:12px;padding:14px 16px;border:1px solid var(--line);background:var(--surface2)}
-.fb .res{font-weight:780;margin-bottom:4px}
-.fb .res.ok{color:var(--good)} .fb .res.no{color:var(--bad)}
-.hint{color:var(--muted);font-size:.83rem;margin-top:14px}
-.actions{display:flex;justify-content:space-between;gap:10px;margin-top:16px;flex-wrap:wrap}
-.testbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:12px;box-shadow:var(--shadow);position:sticky;top:70px;z-index:5}
-.timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.25rem}
+.choice.dim{opacity:.55}
+.fb{margin-top:18px;border-radius:var(--rs);padding:16px 18px;background:var(--surface2);border:1px solid var(--line);animation:fadeup .25s ease}
+.fb.ok{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 30%,transparent)}
+.fb.no{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.fb .res{display:flex;align-items:center;gap:8px;font-weight:800;margin-bottom:6px}
+.fb.ok .res{color:var(--good)} .fb.no .res{color:var(--bad)}
+.actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.hint{color:var(--muted);font-size:.83rem}
+
+/* ---------- timed test ---------- */
+.opts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.opt{border:1.5px solid var(--line);background:var(--surface);border-radius:var(--rs);padding:14px;text-align:left;transition:border-color .15s,background .15s;color:var(--ink)}
+.opt:hover{border-color:var(--line2)}
+.opt.on{border-color:var(--accent);background:var(--accent-soft)}
+.opt b{display:block;font-size:1.4rem;font-weight:820}
+.opt span{color:var(--muted);font-size:.82rem;font-weight:600}
+.testbar{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;margin-bottom:12px;box-shadow:var(--shadow);position:sticky;top:12px;z-index:5}
+.tb-l{flex:1;min-width:0}
+.tb-l .bar{margin-top:7px;max-width:260px}
+.timer{display:flex;align-items:center;gap:7px;font-variant-numeric:tabular-nums;font-weight:820;font-size:1.25rem}
 .timer.low{color:var(--bad)}
-.qnav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.qnav button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:.82rem;font-weight:650}
+.qnav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.qnav button{width:36px;height:36px;border-radius:9px;border:1px solid var(--line);background:var(--surface);font-size:.82rem;font-weight:700;position:relative;color:var(--ink)}
 .qnav button.ans{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 .qnav button.cur{outline:2px solid var(--accent);outline-offset:1px}
+.qnav button.fl::after{content:"";position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:var(--warn);border:2px solid var(--surface)}
 .qnav button.ok{background:var(--good-soft);border-color:var(--good);color:var(--good)}
 .qnav button.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
-.seg{display:inline-flex;background:var(--surface2);border-radius:11px;padding:3px;gap:2px;flex-wrap:wrap}
-.seg button{border:0;background:none;padding:7px 13px;border-radius:9px;font-weight:650;color:var(--muted);font-size:.92rem}
-.seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
-.field{margin:14px 0}
-.field label{display:block;font-weight:650;margin-bottom:6px;font-size:.92rem}
-.big{font-size:2.6rem;font-weight:800}
-details.rv{border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0;background:var(--surface)}
-details.rv summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:10px;align-items:center}
+.flagbtn.on{color:var(--warn);background:var(--warn-soft)}
+.resgrid{display:flex;gap:30px;align-items:center;flex-wrap:wrap}
+.stat b{display:block;font-size:1.25rem;font-weight:800}
+.stat span{color:var(--muted);font-size:.84rem;font-weight:600}
+details.rv{border:1px solid var(--line);border-radius:var(--rs);padding:11px 14px;margin:8px 0;background:var(--surface)}
+details.rv summary{cursor:pointer;font-weight:620;list-style:none;display:flex;gap:10px;align-items:center}
 details.rv summary::-webkit-details-marker{display:none}
 .dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--good)} .dot.no{background:var(--bad)} .dot.skip{background:var(--muted)}
-.rv .body{margin-top:10px}
-.mini{font-size:.9rem}
-/* flashcards */
-.fcwrap{max-width:640px;margin:0 auto}
-.card3d{perspective:1400px;height:330px;margin:14px 0;cursor:pointer;outline:none}
-.card3d .inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+.rv .body{margin-top:12px}
+.hist{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:.93rem}
+.hist:first-of-type{border-top:0}
+
+/* ---------- flashcards ---------- */
+.fcwrap{max-width:680px;margin:0 auto}
+.decks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.deck{border:1.5px solid var(--line);background:var(--surface);border-radius:var(--rs);padding:12px 14px;text-align:left;transition:border-color .15s,background .15s;color:var(--ink);min-width:0}
+.deck:hover{border-color:var(--line2)}
+.deck.on{border-color:var(--accent);background:var(--accent-soft)}
+.deck b{display:block;font-size:.92rem}
+.deck small{color:var(--muted);font-size:.78rem;font-weight:600}
+.deck .bar{margin-top:8px}
+.card3d{perspective:1400px;height:330px;margin:16px 0;cursor:pointer;outline:none}
+.card3d .inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
 .card3d.flipped .inner{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;overflow:auto}
-.face.back{transform:rotateY(180deg);background:var(--surface)}
-.face .word{font-size:2.2rem;font-weight:800;letter-spacing:-.01em}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:calc(var(--r) + 4px);border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center;overflow:auto}
+.face.front{background:linear-gradient(160deg,var(--surface),color-mix(in srgb,var(--accent) 6%,var(--surface)))}
+.face.back{transform:rotateY(180deg)}
+.face .word{font-size:2.3rem;font-weight:820;letter-spacing:-.02em}
 .face .pos{color:var(--muted);font-style:italic;margin-top:4px}
-.face .lbl{position:absolute;top:14px;left:18px;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.face .st{position:absolute;top:12px;right:16px}
-.face .def{font-size:1.15rem;font-weight:600}
-.face .ex{color:var(--muted);font-style:italic;margin-top:10px;font-family:Georgia,serif}
-.face .fml{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1.12rem;background:var(--surface2);padding:10px 14px;border-radius:10px;margin-top:6px}
+.face .lbl{position:absolute;top:16px;left:20px;font-size:.7rem;font-weight:780;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}
+.face .st{position:absolute;top:13px;right:16px}
+.face .def{font-size:1.15rem;font-weight:620}
+.face .ex{color:var(--muted);font-style:italic;margin-top:12px;font-family:var(--pfont)}
+.face .fml{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1.08rem;background:var(--surface2);padding:10px 14px;border-radius:10px;margin-top:6px}
+.face .fliphint{margin-top:20px;color:var(--muted);font-size:.8rem}
 .fcctl{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
-.pillst{font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:20px}
-.pillst.know{background:var(--good-soft);color:var(--good)} .pillst.learn{background:#fff3e0;color:#b35c00}
-:root[data-theme="dark"] .pillst.learn{background:#3a2a12;color:var(--warn)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pillst.learn{background:#3a2a12;color:var(--warn)}}
-table.prog{width:100%;border-collapse:collapse;font-size:.94rem}
-table.prog td,table.prog th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left}
-table.prog th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+.pillst{font-size:.72rem;font-weight:750;padding:3px 9px;border-radius:20px}
+.pillst.know{background:var(--good-soft);color:var(--good)} .pillst.learn{background:var(--warn-soft);color:var(--warn)}
+
+/* ---------- progress ---------- */
+table.prog{width:100%;border-collapse:collapse;font-size:.93rem}
+table.prog td,table.prog th{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
+table.prog tr:last-child td{border-bottom:0}
 table.prog td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-table.prog .bar{margin:0;min-width:80px}
-.chart{display:flex;align-items:flex-end;gap:6px;height:120px;padding-top:10px}
-.chart .c{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
-.chart .c i{display:block;width:100%;max-width:34px;background:var(--accent);border-radius:5px 5px 2px 2px;min-height:2px}
+table.prog .bar{margin:0;min-width:70px}
+.chart{display:flex;align-items:flex-end;gap:6px;height:140px;padding-top:10px}
+.chart .c{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end;min-width:0}
+.chart .c i{display:block;width:100%;max-width:30px;background:var(--accent);border-radius:6px 6px 3px 3px;min-height:3px;opacity:.85;transition:height .6s ease}
+.chart .c.today i{opacity:1}
 .chart .c span{font-size:.68rem;color:var(--muted)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.tip{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:10px}
-footer{color:var(--muted);font-size:.8rem;text-align:center;padding:0 16px 30px}
-kbd{font-family:inherit;font-size:.78rem;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--surface)}
-@media (max-width:720px){
+.chart .c.today span{color:var(--accent);font-weight:800}
+
+/* ---------- settings ---------- */
+.setgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--gap);align-items:start}
+.setgrid .panel{margin-bottom:0}
+.setgrid .wide{grid-column:1/-1}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.panel h3+.setrow{border-top:0;padding-top:4px}
+.sl{min-width:0}
+.sl b{display:block;font-weight:650;font-size:.95rem}
+.sl small{display:block;color:var(--muted);font-size:.83rem;margin-top:1px}
+.sc{flex:none;max-width:62%;display:flex;justify-content:flex-end}
+.profhead{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.profhead b{font-size:1.2rem;display:block}
+.profgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+
+/* ---------- sign-up / profile picker ---------- */
+.authwrap{min-height:100vh;display:grid;place-items:center;padding:28px 16px;background:radial-gradient(1100px 600px at 0% -10%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 60%),radial-gradient(900px 500px at 110% 110%,color-mix(in srgb,var(--eng) 14%,transparent),transparent 60%),var(--bg)}
+.auth{display:grid;grid-template-columns:1fr 1.05fr;max-width:1000px;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow-lg);overflow:hidden;animation:fadeup .35s ease}
+.auth.one{grid-template-columns:1fr;max-width:480px}
+.auth-art{background:linear-gradient(150deg,var(--accent-deep),#6f4ae0);color:#fff;padding:44px 40px;display:flex;flex-direction:column;gap:22px}
+.auth-art .brand{padding:0}
+.auth-art .logo{background:rgba(255,255,255,.18);box-shadow:none}
+.auth-art .brand small{color:rgba(255,255,255,.75)}
+.auth-art h1{font-size:2.15rem;font-weight:820;line-height:1.12}
+.auth-art p{opacity:.88;margin:0}
+.feat{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:14px}
+.feat li{display:flex;gap:12px;align-items:flex-start;font-weight:550}
+.feat .fi{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.16);display:grid;place-items:center;flex:none}
+.auth-card{padding:38px 40px;display:flex;flex-direction:column;gap:16px}
+.auth-card h2{font-size:1.55rem;font-weight:800}
+.auth-card .center{justify-content:center}
+.fine{font-size:.8rem;color:var(--muted);text-align:center;margin:0}
+.plist{display:grid;gap:10px}
+.pitem{display:flex;align-items:center;gap:14px;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:var(--rs);padding:12px 14px;transition:border-color .15s,background .15s;color:var(--ink)}
+.pitem:hover{border-color:var(--accent);background:var(--accent-soft)}
+.pitem>span:not(.av){flex:1;min-width:0}
+.pitem b{display:block}
+.pitem small{color:var(--muted)}
+
+/* ---------- toasts ---------- */
+#toasts{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:calc(100vw - 32px)}
+.toast{display:flex;align-items:center;gap:10px;background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:12px;font-weight:650;font-size:.92rem;box-shadow:var(--shadow-lg);animation:fadeup .25s ease;transition:opacity .3s,transform .3s}
+.toast.good .ic{color:#51cf66}
+.toast.out{opacity:0;transform:translateY(-6px)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1060px){
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .opts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .setgrid{grid-template-columns:1fr}
+  .profgrid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{display:none}
+  .topbar{padding:14px 16px 0;align-items:center}
+  .topbar h1{font-size:1.4rem}
+  .topbar p{font-size:.88rem}
+  .avbtn{display:grid}
+  .mbrand{display:flex}
+  .content{padding:14px 16px calc(96px + env(safe-area-inset-bottom))}
   .grid2{grid-template-columns:1fr}
-  .qcard,.panel{padding:16px;border-radius:14px}
-  .brand small{display:none}
-  .card3d{height:300px}
-  .face .word{font-size:1.8rem}
-  header.top{position:static}
-  .topin{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:6px;gap:8px}
-  .brand{flex:1}
-  nav{order:3;flex-basis:100%;margin:0 -6px;flex-wrap:wrap;overflow:visible}
-  nav button{padding:7px 10px;font-size:.88rem}
+  .tabbar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 0;color:var(--muted);font-size:10.5px;font-weight:680;position:relative;border-radius:10px;min-width:0}
+  .tabbar button.on{color:var(--accent)}
+  .tabbar .badge{position:absolute;top:0;left:calc(50% + 5px);min-width:16px;height:16px;font-size:9.5px;padding:0 4px}
   .testbar{top:8px}
-  main{padding:16px 16px 50px}
-  .hint,footer{display:none}
-  .big{font-size:2rem}
+}
+@media (max-width:640px){
+  .hero{flex-direction:column;align-items:stretch;gap:20px;padding:22px}
+  .hero h1{font-size:1.65rem}
+  .hero-r{flex-direction:row;text-align:left;gap:16px}
+  .hero .row .btn{flex:1}
+  .tile{padding:14px;gap:10px;flex-direction:column}
+  .ti{width:34px;height:34px;border-radius:10px}
+  .tile .v{font-size:1.4rem}
+  .qcard,.panel{padding:16px}
+  .passage{padding:14px 15px;font-size:1rem}
+  .card3d{height:300px}
+  .face .word{font-size:1.85rem}
+  .face{padding:22px}
+  .setrow{flex-wrap:wrap;gap:10px}
+  .setrow.stack .sc{max-width:none;width:100%;justify-content:flex-start}
+  .profgrid{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+  .hint{display:none}
+  .sline{grid-template-columns:72px 1fr 42px}
+  .deck{padding:10px}
+  .deck small{display:none}
+  .auth{border-radius:20px}
+}
+@media (max-width:820px){
+  .auth{grid-template-columns:1fr}
+  .auth-art{padding:26px 24px;gap:12px}
+  .auth-art h1{font-size:1.5rem}
+  .feat{display:none}
+  .auth-card{padding:24px 20px}
 }
 </style>
 </head>
 <body>
-<header class="top">
-  <div class="wrap topin">
-    <div class="brand"><span class="logo">P</span>Prep Lab <small>SAT · ACT</small></div>
-    <nav id="nav" aria-label="Main"></nav>
-    <button class="iconbtn" id="themeBtn" title="Toggle light/dark" aria-label="Toggle theme">◐</button>
+<div id="auth" class="authwrap" hidden></div>
+<div class="shell" id="shell" hidden>
+  <aside class="side" id="side" aria-label="Main navigation"></aside>
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+    <main class="content" id="app"></main>
   </div>
-</header>
-<main class="wrap" id="app"></main>
-<footer>Progress is saved in this browser only. Keyboard: <kbd>1</kbd>–<kbd>4</kbd> or <kbd>A</kbd>–<kbd>D</kbd> to answer, <kbd>Enter</kbd> for next; flashcards: <kbd>Space</kbd> flip, <kbd>←</kbd>/<kbd>→</kbd> move, <kbd>K</kbd> know it, <kbd>L</kbd> still learning.</footer>
+</div>
+<nav class="tabbar" id="tabbar" aria-label="Main navigation" hidden></nav>
+<div id="toasts" aria-live="polite"></div>
 
 <script>
 "use strict";
@@ -1270,13 +1474,13 @@ reg("geo",()=>{
 reg("geo",()=>{
   const v=pick([0,1,2]);
   if(v===0){ const a=ri(25,90), b=ri(20,150-a);
-    return mk("geo",`Two angles of a triangle measure ${a}° and ${b}°. What is the measure of the third angle?`,(180-a-b)+"°",[(a+b)+"°",(360-a-b)+"°",(90-Math.abs(a-b))+"°",(180-a)+"°"],
+    return mk("geo",`Two angles of a triangle measure ${a}° and ${b}°. What is the measure of the third angle?`,(180-a-b)+"°",[(a+b)+"°",(360-a-b)+"°",(90-Math.abs(a-b))+"°",(180-a)+"°",(180-a-b+10)+"°",(180-a-b-10)+"°",(180-a-b+20)+"°"].filter(s=>parseInt(s)>0),
       `The angles of a triangle sum to 180°: 180 − ${a} − ${b} = ${180-a-b}°.`); }
   if(v===1){ const n=ri(5,12); const names={5:"pentagon",6:"hexagon",7:"heptagon",8:"octagon",9:"nonagon",10:"decagon",11:"11-sided polygon",12:"dodecagon"};
     return mk("geo",`What is the sum of the interior angles of a ${names[n]} (${n} sides)?`,((n-2)*180)+"°",[(n*180)+"°",((n-1)*180)+"°",(360)+"°",((n-2)*90)+"°"],
       `Sum = (n − 2) × 180° = (${n} − 2) × 180° = ${(n-2)*180}°.`); }
   const a=ri(30,80), b=ri(30,80);
-  return mk("geo",`In a triangle, two interior angles measure ${a}° and ${b}°. What is the measure of the exterior angle at the third vertex?`,(a+b)+"°",[(180-a-b)+"°",(180-a)+"°",(360-a-b)+"°",(Math.abs(a-b))+"°"],
+  return mk("geo",`In a triangle, two interior angles measure ${a}° and ${b}°. What is the measure of the exterior angle at the third vertex?`,(a+b)+"°",[(180-a-b)+"°",(180-a)+"°",(360-a-b)+"°",(Math.abs(a-b))+"°",(a+b+10)+"°",(a+b-10)+"°"].filter(s=>parseInt(s)>0),
     `An exterior angle equals the sum of the two remote interior angles: ${a}° + ${b}° = ${a+b}°.`);
 });
 reg("geo",()=>{
@@ -1338,23 +1542,633 @@ reg("word",()=>{
     `Let them be n, n + 2, n + 4. Then 3n + 6 = ${S} → n = ${n}. The largest is n + 4 = ${n+4}.`);
 });
 
+
 /* =====================================================================
-   STORAGE (all reads/writes wrapped in try/catch)
+   EXPANSION PACK — more hand-written questions, vocabulary, cards,
+   and generators
    ===================================================================== */
-const KEY="prepLab.v1";
-function DEF(){ return {stats:{},days:{},streak:{cur:0,best:0},missed:[],cards:{},tests:[],theme:""}; }
-function load(){ try{ const raw=localStorage.getItem(KEY); if(!raw) return DEF(); const o=JSON.parse(raw); const d=DEF(); return Object.assign(d,o&&typeof o==="object"?o:{}); }catch(e){ return DEF(); } }
-function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
-let S=load();
+const NOTES=items=>"While researching a topic, a student has taken the following notes:<ul>"+items.map(i=>"<li>"+i+"</li>").join("")+"</ul>";
+const CONC="Which choice completes the text most concisely while keeping its meaning?";
+
+/* ---- Punctuation & boundaries ---- */
+gq("punc","The museum’s newest exhibit features artifacts from three ancient ___ Egypt, Greece, and Rome.",
+ ["civilizations:","civilizations;","civilizations, which","civilizations that"],
+ "A complete independent clause comes before the blank, and a list follows. A colon is the right way to introduce that list. A semicolon would need another independent clause after it.");
+gq("punc","Many desert plants store water in thick ___ others send roots deep underground to reach groundwater.",
+ ["stems, while","stems,","stems while,","stems; while"],
+ "“While others send roots…” is a dependent clause, so a comma before “while” attaches it correctly. A comma alone creates a comma splice. A semicolon can’t come before a dependent clause.");
+gq("punc","The novelist’s first ___ published when she was only nineteen, became an instant bestseller.",
+ ["book,","book","book;","book—"],
+ "“Published when she was only nineteen” is extra information already closed by a comma, so it needs a matching comma before it. A dash would not match the comma after.");
+gq("punc","Jupiter has at least 95 known ___ the four largest were discovered by Galileo in 1610.",
+ ["moons; the","moons, the","moons the","moons, and, the"],
+ "Both sides are independent clauses, so they need a semicolon (or a period). A comma alone is a comma splice, and no punctuation makes a run-on.");
+gq("punc","Engineers tested the bridge’s design in a wind ___ wanted to be sure it could withstand hurricane-force gusts.",
+ ["tunnel because they","tunnel, they","tunnel. Because they","tunnel; because they"],
+ "“Because they wanted…” is a dependent clause that finishes the sentence. It needs no punctuation before it. Choice “. Because they” leaves a fragment, and a comma alone creates a splice.");
+gq("punc","The tallest tree ever measured, a coast redwood named ___ stands more than 115 meters tall.",
+ ["Hyperion,","Hyperion","Hyperion;","Hyperion:"],
+ "The appositive “a coast redwood named Hyperion” opens with a comma, so it must close with one before the verb “stands.”");
+gq("punc","Marie Curie won Nobel Prizes in two different ___ physics in 1903 and chemistry in 1911.",
+ ["sciences:","sciences;","sciences, being","sciences and"],
+ "A colon follows a complete clause to introduce an explanation or list. Here it introduces the two prizes. A semicolon needs an independent clause after it.");
+
+/* ---- Subject–verb agreement ---- */
+gq("sva","The collection of rare coins that my grandfather left me ___ kept in a safe-deposit box.",
+ ["is","are","were","have been"],
+ "The subject is “collection” (singular). “Of rare coins” is a prepositional phrase, so ignore it. Singular subject → “is.”");
+gq("sva","Neither the players nor the coach ___ expecting the sudden thunderstorm.",
+ ["was","were","are","have been"],
+ "With “neither…nor,” the verb agrees with the closer subject: “the coach” (singular) → “was.”");
+gq("sva","Along the edge of the canyon ___ a row of ancient juniper trees.",
+ ["grows","grow","are growing","have grown"],
+ "The sentence is inverted. The real subject comes after the verb: “a row” (singular). “Of ancient juniper trees” is a prepositional phrase. Singular → “grows.”");
+gq("sva","Each of the students in the robotics club ___ responsible for one part of the design.",
+ ["is","are","were","have been"],
+ "“Each” is always singular, no matter what phrase follows it, so the verb is “is.”");
+gq("sva","The results of the latest survey, which included more than 2,000 participants, ___ that most teens get less sleep than doctors recommend.",
+ ["suggest","suggests","has suggested","was suggesting"],
+ "The subject is “results” (plural). Skip the prepositional phrase and the nonessential clause between commas. Plural, present tense → “suggest.”");
+gq("sva","Mathematics, along with physics and chemistry, ___ a required course for engineering majors.",
+ ["is","are","were","have been"],
+ "Phrases like “along with” and “as well as” do NOT make a compound subject. The subject is “Mathematics,” which is singular → “is.”");
+
+/* ---- Pronouns ---- */
+gq("pron","When the scientists finally published ___ findings, other labs rushed to replicate the experiment.",
+ ["their","its","his or her","they’re"],
+ "The pronoun refers to “the scientists” (plural), so the plural possessive “their” is correct. “They’re” means “they are.”");
+gq("pron","The award will be shared by Priya and ___ since we designed the project together.",
+ ["me","I","myself","mine"],
+ "Remove “Priya and”: “shared by me.” After a preposition, use the object pronoun “me.” “Myself” only works when “I” is also the subject.");
+gq("pron","The architect ___ designed the new library also planned the city’s riverside park.",
+ ["who","whom","which","whose"],
+ "The pronoun is the subject of “designed” (HE designed), so use “who.” “Which” is for things, not people.");
+gq("pron","To ___ should the committee send the final report?",
+ ["whom","who","whoever","which"],
+ "Rephrase it: “The committee should send it to HIM.” “Him” is an object pronoun, so use “whom,” the object form.");
+gq("pron","Every country in the alliance agreed to reduce ___ carbon emissions by 2035.",
+ ["its","their","it’s","there"],
+ "“Every country” is singular, so it takes the singular possessive “its.” “It’s” means “it is.”");
+gq("pron","Between you and ___, the surprise party is next Friday.",
+ ["me","I","myself","mine"],
+ "“Between” is a preposition, so both pronouns after it must be object pronouns: “between you and me.”");
+
+/* ---- Modifiers ---- */
+add("mod",STD,["the campers collapsed into their sleeping bags.","the sleeping bags were a welcome sight to the campers.","sleep came quickly for the campers.","the campsite was where the campers collapsed."],
+ "The opening phrase describes someone who is exhausted. The campers were exhausted, so “the campers” must come right after the comma.",
+ "Exhausted after the twelve-hour hike, "+BL);
+add("mod",STD,["Martha Graham developed a technique still taught in studios worldwide.","a technique still taught in studios worldwide was developed by Martha Graham.","studios worldwide still teach a technique developed by Martha Graham.","Martha Graham’s technique is still taught in studios worldwide."],
+ "“A pioneer of modern dance” describes Martha Graham herself, not her technique or the studios. Her name must come right after the comma. “Martha Graham’s technique” makes the technique the pioneer.",
+ "A pioneer of modern dance, "+BL);
+add("mod",STD,["the Musée d’Orsay now houses one of the world’s finest collections of Impressionist art.","one of the world’s finest collections of Impressionist art is now housed in the Musée d’Orsay.","visitors now see Impressionist art in the Musée d’Orsay.","Impressionist art now fills the Musée d’Orsay."],
+ "What was built as a railway station? The building, so “the Musée d’Orsay” must come right after the modifier.",
+ "Originally built as a railway station in 1900, "+BL);
+add("mod",STD,["astronomers detected water vapor in the planet’s atmosphere.","water vapor was detected in the planet’s atmosphere.","the planet’s atmosphere was found to contain water vapor.","the detection of water vapor in the planet’s atmosphere was made."],
+ "Who used the telescope? The astronomers. In the other choices, water vapor, the atmosphere, or a “detection” seems to be using the telescope.",
+ "Using a powerful telescope, "+BL);
+add("mod",STD,["the painting attracted crowds at the gallery.","crowds gathered to see the painting.","the gallery was crowded with people viewing the painting.","people crowded around the painting."],
+ "The painting is what is known for its vivid colors, so “the painting” must follow the comma.",
+ "Known for its vivid colors, "+BL);
+
+/* ---- Parallel structure ---- */
+add("para",STD,["reduce their risk of injury.","reducing their risk of injury.","their risk of injury will be reduced.","a reduction in their risk of injury."],
+ "The list is “to improve…, strengthen…, and ___.” Each item is a base verb, so the last one must be “reduce.”",
+ "The new training program aims to improve players’ endurance, strengthen their core muscles, and "+BL);
+add("para",STD,["cramming for hours the night before.","to cram for hours the night before.","if you cram for hours the night before.","the night before, hours of cramming."],
+ "A comparison should compare matching forms. “Studying” is an -ing noun, so the other side should be “cramming.”",
+ "Studying in short sessions is often more effective than "+BL);
+add("para",STD,["for her willingness to compromise.","her willingness to compromise.","because she was willing to compromise.","she was willing to compromise."],
+ "“Not only for X but also for Y.” The word after “not only” is “for,” so the word after “but also” should be “for” too.",
+ "The senator was praised not only for her honesty but also "+BL);
+add("para",STD,["painting the visitor center.","they painted the visitor center.","to paint the visitor center.","the visitor center was painted."],
+ "The list is “planting…, clearing…, and ___.” Keep the -ing pattern: “painting.”",
+ "Volunteers spent the weekend planting trees, clearing trails, and "+BL);
+add("para",STD,["that of Chicago.","Chicago.","Chicago’s climate is.","in Chicago."],
+ "Compare like with like: Seattle’s climate with Chicago’s CLIMATE (“that of Chicago”), not with the city itself.",
+ "The climate of Seattle is milder than "+BL);
+
+/* ---- Verb tense ---- */
+gq("tense","By the time the firefighters arrived, the blaze ___ through three floors of the building.",
+ ["had spread","spreads","has spread","will spread"],
+ "The spreading finished BEFORE another past event (the firefighters arriving), so use the past perfect: “had spread.”");
+gq("tense","Every summer since 2015, the town ___ a festival celebrating its founding.",
+ ["has held","held","had held","will have held"],
+ "“Since 2015” describes something that started in the past and continues now. That calls for the present perfect: “has held.”");
+gq("tense","In 1969, Neil Armstrong ___ the first person to walk on the Moon.",
+ ["became","becomes","has become","will become"],
+ "A completed event at a specific past time (1969) takes the simple past: “became.”");
+gq("tense","Researchers predict that by 2050, global demand for fresh water ___ by more than 20 percent.",
+ ["will have increased","had increased","increased","has been increasing"],
+ "“By 2050” marks a point in the future when the increase will be complete. That is the future perfect: “will have increased.”");
+gq("tense","As she walked home from school yesterday, Tara ___ a lost puppy hiding under a bench.",
+ ["noticed","notices","has noticed","will notice"],
+ "“Walked” and “yesterday” put the sentence in the past, so the simple past “noticed” keeps the tenses consistent.");
+
+/* ---- Transitions ---- */
+add("trans",TRN,["Specifically","However","Nevertheless","In contrast"],
+ "The second sentence gives a precise detail about how the dance works. “Specifically” introduces that kind of detail. Nothing here is a contrast.",
+ "Honeybees communicate the location of food through a “waggle dance.” "+BL+", the angle of the dance indicates the direction of the food relative to the sun.");
+add("trans",TRN,["However","Therefore","For example","Similarly"],
+ "No tailpipe emissions sounds entirely clean, but the coal-generated electricity complicates that. A contrast transition fits.",
+ "Electric cars produce no tailpipe emissions. "+BL+", the electricity that charges them is sometimes generated by burning coal.");
+add("trans",TRN,["As a result","However","In contrast","Likewise"],
+ "Being buried by ash is the CAUSE, and preservation is the EFFECT. “As a result” signals cause and effect.",
+ "The ancient city of Pompeii was buried by volcanic ash in 79 CE. "+BL+", many of its buildings, paintings, and even loaves of bread were preserved for nearly two thousand years.");
+add("trans",TRN,["Similarly","Consequently","However","Instead"],
+ "Both sentences describe animals that migrate long distances. The second makes a parallel point, so “Similarly” fits.",
+ "Some birds, like the Arctic tern, migrate thousands of miles each year. "+BL+", monarch butterflies travel up to 3,000 miles between Canada and Mexico.");
+add("trans",TRN,["Today, however","Therefore","Moreover","For instance"],
+ "Early critics dismissed the novel, but it is now praised. “Today, however” marks both the change in time and the contrast.",
+ "When it was first published, critics dismissed the novel as too long and too strange. "+BL+", it is widely considered one of the greatest works of American literature.");
+add("trans",TRN,["Next","In contrast","Nevertheless","For example"],
+ "The text gives steps in order (“first… ___”). A sequence word, “Next,” continues the steps.",
+ "To make paper by hand, first soak shredded scraps in water until they form a pulp. "+BL+", spread the pulp evenly over a fine screen and press out the excess water.");
+add("trans",TRN,["Moreover","However","Instead","Nonetheless"],
+ "Easy storage is a second advantage that adds to the first (high effectiveness). “Moreover” signals addition.",
+ "The vaccine proved highly effective in clinical trials. "+BL+", it was easy to store at ordinary refrigerator temperatures, making it simpler to distribute.");
+
+/* ---- Words in context ---- */
+add("wic",WIC,["inconclusive","definitive","irrefutable","celebrated"],
+ "“Although” sets up a contrast with “later experiments… confirmed her hypothesis.” So the early findings must NOT have settled the question: “inconclusive” (not leading to a firm conclusion).",
+ "Although the scientist’s early findings were "+BL+", later experiments with larger samples confirmed her hypothesis beyond reasonable doubt.");
+add("wic",WIC,["balanced","partisan","whimsical","hostile"],
+ "Presenting both sides “without favoring either” describes a “balanced” approach. “Partisan” means the opposite.",
+ "The documentary takes a "+BL+" approach to its subject, presenting the arguments of both supporters and critics without favoring either side.");
+add("wic",WIC,["unsafe","ornate","popular","scenic"],
+ "The bridge was closed “until repairs could be made,” so it must have become “unsafe.”",
+ "Because the old bridge had become "+BL+", engineers closed it to traffic until repairs could be made.");
+add("wic",WIC,["eclectic","austere","predictable","meager"],
+ "Dishes from four very different cuisines show variety drawn from many sources. That is the meaning of “eclectic.”",
+ "The chef’s menu was so "+BL+" that it included dishes from Ethiopia, Peru, Korea, and Lebanon.");
+add("wic",WIC,["galvanized","halted","concealed","mimicked"],
+ "The book did more than describe: it sparked a movement that led to a new agency. “Galvanized” means shocked or excited into action.",
+ "Biologist Rachel Carson’s 1962 book <i>Silent Spring</i> did not merely describe the dangers of pesticides; it "+BL+" a national movement that helped lead to the founding of the Environmental Protection Agency.");
+add("wic",WIC,["ambiguous","precise","literal","redundant"],
+ "Language that can be interpreted “in several different ways” is “ambiguous.” “Precise” and “literal” suggest one clear meaning.",
+ "The poet’s language is deliberately "+BL+", allowing readers to interpret each line in several different ways.");
+
+/* ---- Rhetorical synthesis ---- */
+add("synth","The student wants to emphasize the variety of Mae Jemison’s careers. "+SYN,
+ ["Before becoming the first African American woman in space, Mae Jemison worked as a physician and Peace Corps medical officer, and she later founded a technology company.",
+  "Mae Jemison flew aboard the space shuttle <i>Endeavour</i> in 1992.",
+  "Mae Jemison was the first African American woman to travel to space.",
+  "In 1992, the space shuttle <i>Endeavour</i> carried Mae Jemison into orbit."],
+ "The goal is VARIETY of careers. Only the correct choice names several different jobs: physician, Peace Corps officer, astronaut, and company founder.",
+ NOTES(["Mae Jemison became the first African American woman in space in 1992, aboard the shuttle <i>Endeavour</i>.","She trained as a medical doctor.","She served as a medical officer in the Peace Corps in Sierra Leone and Liberia.","After leaving NASA, she founded a technology company."]));
+add("synth","The student wants to compare the main spans of the two bridges. "+SYN,
+ ["The Akashi Kaikyō Bridge’s main span (1,991 meters) is more than 700 meters longer than that of the Golden Gate Bridge (1,280 meters).",
+  "Both the Golden Gate Bridge and the Akashi Kaikyō Bridge are suspension bridges.",
+  "The Golden Gate Bridge opened in 1937, and the Akashi Kaikyō Bridge opened in 1998.",
+  "The Akashi Kaikyō Bridge, in Japan, opened in 1998."],
+ "A comparison of MAIN SPANS needs both span lengths. Only the correct choice gives both numbers and relates them (1,991 − 1,280 = 711).",
+ NOTES(["The Golden Gate Bridge in San Francisco opened in 1937.","Its main span is 1,280 meters long.","The Akashi Kaikyō Bridge in Japan opened in 1998.","Its main span is 1,991 meters long.","Both are suspension bridges."]));
+add("synth","The student wants to introduce tardigrades to an audience unfamiliar with them. "+SYN,
+ ["Tardigrades, microscopic animals less than a millimeter long, can survive extreme conditions—even the vacuum of space.",
+  "In 2007, tardigrades survived exposure to the vacuum of space.",
+  "In the tun state, tardigrades lose most of their body water.",
+  "Tardigrades can survive temperatures from −272°C to about 150°C."],
+ "An unfamiliar audience first needs to know WHAT a tardigrade is. Only the correct choice says what they are (microscopic animals) and gives their key trait.",
+ NOTES(["Tardigrades are microscopic animals, usually less than 1 millimeter long.","They can survive temperatures from about −272°C to 150°C.","In a 2007 experiment, tardigrades survived exposure to the vacuum of space.","To survive harsh conditions, they curl into a dried-out “tun” state, losing most of their body water."]));
+add("synth","The student wants to present the study’s main finding. "+SYN,
+ ["A 2021 study of 300 high school students found that those who slept at least eight hours scored, on average, 12 percent higher on memory tests.",
+  "Researchers studied 300 high school students in 2021.",
+  "Memory tests were given to high school students in the study.",
+  "Many doctors say that sleep is important for teenagers."],
+ "A study’s FINDING is its result. Only the correct choice states the result: more sleep was linked to higher memory scores. The last choice isn’t from the notes at all.",
+ NOTES(["In 2021, researchers studied 300 high school students.","Students recorded their sleep each night for a month.","Students then took a series of memory tests.","Those who averaged at least eight hours of sleep scored 12 percent higher on average than those who did not."]));
+add("synth","The student wants to explain how Frida Kahlo began painting. "+SYN,
+ ["Frida Kahlo began painting while recovering from a serious bus accident in 1925 that left her bedridden for months.",
+  "Frida Kahlo created about 200 paintings, including 55 self-portraits.",
+  "Frida Kahlo, a Mexican painter, lived from 1907 to 1954.",
+  "Many of Frida Kahlo’s paintings are self-portraits."],
+ "The goal is HOW she began painting. Only the correct choice explains the origin: her recovery after the 1925 accident.",
+ NOTES(["Frida Kahlo was a Mexican painter (1907–1954).","In 1925, she was badly injured in a bus accident.","While bedridden for months, she began to paint, using a mirror mounted above her bed.","She created about 200 paintings, 55 of them self-portraits."]));
+
+/* ---- Main idea & inference ---- */
+const P7="Marcus had practiced the sonata every evening for three months, until his fingers knew the notes better than his mind did. Yet when he sat down at the piano in the crowded auditorium, his hands hovered above the keys, suddenly strangers to him. He took a breath, closed his eyes, and let his fingers remember what he had forgotten.";
+add("read","Which choice best describes what happens in the text?",
+ ["A pianist briefly freezes in front of an audience but then relies on his practiced muscle memory.",
+  "A pianist refuses to perform because he has not practiced enough.",
+  "A pianist decides to play a different piece than the one he rehearsed.",
+  "A pianist forgets the sonata and leaves the stage."],
+ "Marcus hesitates (“hands hovered”) and then lets his practiced fingers “remember,” which means he plays from muscle memory. The text says he practiced for three months, so “not practiced enough” is wrong.",P7);
+add("read","As used in the text, what does the phrase “suddenly strangers to him” most nearly suggest about Marcus’s hands?",
+ ["They briefly felt unfamiliar and hard to control.","They belonged to someone else in the audience.","They had never touched a piano before.","They were injured during practice."],
+ "Calling his hands “strangers” is figurative. In his nervousness, his own hands suddenly feel unfamiliar. Nothing suggests injury or that they are literally someone else’s.",P7);
+const P8="Coral reefs cover less than one percent of the ocean floor, yet they support roughly a quarter of all known marine species. This remarkable concentration of life depends on a partnership: tiny algae living inside coral tissues produce food through photosynthesis, while the coral provides the algae with shelter and nutrients. When ocean temperatures rise even slightly, corals expel these algae, turning white in a process called bleaching—and, if the stress continues, the corals starve.";
+add("read","Which choice best states the main idea of the text?",
+ ["Coral reefs support an unusually large share of marine life through a partnership with algae that rising temperatures can disrupt.",
+  "Coral reefs cover most of the ocean floor and are home to nearly all marine species.",
+  "Algae are harmful to corals and cause them to turn white.",
+  "Scientists have discovered how to prevent coral bleaching."],
+ "The text covers three linked ideas: reefs hold lots of life, that depends on a coral–algae partnership, and heat breaks the partnership. Only the correct choice captures all three. Reefs cover LESS than 1% of the ocean floor, and the algae help corals rather than harm them.",P8);
+add("read","Based on the text, what would most likely happen to a reef after a long period of unusually warm ocean water?",
+ ["Many of its corals would die from lack of food.","Its corals would take in more algae than usual.","It would expand to cover more of the ocean floor.","The number of species living on it would increase."],
+ "The text says heat makes corals expel their algae, and “if the stress continues, the corals starve.” A long warm period would therefore likely kill many corals.",P8);
+add("read","Which choice best describes the overall structure of the text?",
+ ["It presents a long-held assumption and then describes evidence that challenges it.","It describes a historical event and then explains its causes.","It compares two historians’ methods and declares one superior.","It lists several types of medieval records without drawing a conclusion."],
+ "First: “Historians long assumed…” (an assumption). Then: “Recent analysis… however, suggests…” (evidence against it). That is the assumption-then-challenge structure.",
+ "Historians long assumed that medieval European peasants rarely traveled more than a few miles from their villages. Recent analysis of court records and pilgrimage accounts, however, suggests that many ordinary people journeyed to distant markets, shrines, and cities—some traveling hundreds of miles in a lifetime.");
+add("read","Which choice most logically completes the text?",
+ ["the hurricane acted as a force of natural selection, favoring lizards with larger toe pads.","individual lizards grow larger toe pads during their lifetimes in response to wind.","lizards with smaller toe pads are better climbers than those with larger toe pads.","hurricanes have no measurable effect on animal populations."],
+ "Lizards that grip better survived, so the trait became more common in the population. That is natural selection. The text gives no evidence that individuals grow bigger toe pads during their lives.",
+ "After a powerful hurricane struck a Caribbean island, biologists noticed that the surviving lizards of one species had, on average, larger toe pads than the population had before the storm. Lizards with larger toe pads, the researchers found, can cling more tightly to branches in strong winds. The researchers therefore concluded that "+BL);
+
+/* ---- Concision & style ---- */
+add("conc",CONC,["combine","combine together","join and combine","jointly combine together"],
+ "“Combine” already means to bring together, so “together” and “jointly” are redundant. The single word is best.",
+ "The two companies decided to "+BL+" their resources to build a new factory.");
+add("conc",CONC,["annually,","annually every year,","each year annually,","yearly on an annual basis,"],
+ "“Annually” means “every year.” Adding “every year” or “on an annual basis” repeats the same idea.",
+ "The lecture series, which is held "+BL+" draws scientists from around the world.");
+add("conc",CONC,["dawn.","dawn in the early morning.","the early morning dawn.","dawn, which is early in the morning."],
+ "Dawn is, by definition, early morning. Every other choice says the same thing twice.",
+ "The hikers reached the summit at "+BL);
+gq("conc","The new engine design produces ___ emissions than the old one.",
+ ["fewer","less","lesser","littler"],
+ "Emissions can be counted (one emission, two emissions), so use “fewer.” “Less” is for things you can’t count, like water or time.");
+gq("conc","Scientists are studying how rising temperatures ___ the migration patterns of whales.",
+ ["affect","effect","affects","effects"],
+ "“Affect” is usually the verb (to influence), and “effect” is usually the noun (a result). The subject “temperatures” is plural, so it takes “affect,” not “affects.”");
+
+/* ---- Command of evidence ---- */
+add("evid","Which choice most effectively uses data from the table to support the claim?",
+ ["Average screen time rose from 4.6 hours a day for ages 8–10 to 7.4 hours for ages 11–14 and 8.1 hours for ages 15–18.","Children ages 8–10 averaged 4.6 hours of screen time a day.","Teens ages 15–18 averaged 8.1 hours of screen time a day.","Teens ages 11–14 and 15–18 both averaged more than 7 hours of screen time a day."],
+ "The claim is that screen time INCREASES with age, which needs a trend across all three groups. Only the correct choice shows the rise from youngest to oldest.",
+ "A student claims that daily screen time increases as children get older.<table><tr><th>Age group</th><th>Average daily screen time (hours)</th></tr><tr><td>8–10</td><td>4.6</td></tr><tr><td>11–14</td><td>7.4</td></tr><tr><td>15–18</td><td>8.1</td></tr></table>");
+add("evid","Which quotation from the poem most effectively illustrates the claim?",
+ ["“When sorrow fills the house like smoke, / I walk out to the quiet trees, / and there my aching heart is eased.”","“The city hummed with restless noise / and every window blazed with light.”","“We laughed beneath the summer sun / and raced each other to the shore.”","“The road ran straight between the fields / as far as any eye could see.”"],
+ "The claim joins two ideas: grief (“sorrow,” “aching heart”) and comfort from nature (“quiet trees,” “eased”). Only the correct choice contains both.",
+ "A literary critic claims that the speaker of a poem finds comfort in nature during times of grief.");
+add("evid","Which finding, if true, would most directly support the psychologist’s hypothesis?",
+ ["Students who explained the material to a peer scored higher on a recall test a week later than students who reread it.","Most students said they preferred rereading to explaining material aloud.","Students who explained the material spent more total time studying.","Recall tests are commonly used in memory research."],
+ "The hypothesis compares MEMORY for two study methods. Only the correct choice directly measures memory (a recall test) for both groups. A preference or time spent doesn’t show which method helps memory.",
+ "A psychologist hypothesizes that students who explain new material aloud to a peer remember it better than students who reread it silently.");
+add("evid","Which finding, if true, would most directly weaken the council member’s claim?",
+ ["Reading scores rose just as much in neighboring districts that did not open new libraries.","The new library branch has a large children’s section.","Many students visited the library after school.","Reading scores at local elementary schools rose 9 percent after the branch opened."],
+ "If scores rose equally WITHOUT a new library, something else probably caused the rise, which undercuts the claim that the library was the cause. The last choice supports the claim instead.",
+ "A city council member claims that the new public library branch caused the recent increase in reading scores among local elementary school students.");
+add("evid","Which choice most effectively uses data from the table to support the claim?",
+ ["The heron count rose from 38 in 2019 to 63 in 2022.","There were 42 herons counted in 2018.","The heron count fell from 42 in 2018 to 38 in 2019.","The heron count was 51 in 2020."],
+ "The claim is about an increase SINCE 2019. Only the correct choice compares 2019 with the most recent year.",
+ "A volunteer claims that the number of herons at a wetland has generally increased since 2019.<table><tr><th>Year</th><th>Herons counted</th></tr><tr><td>2018</td><td>42</td></tr><tr><td>2019</td><td>38</td></tr><tr><td>2020</td><td>51</td></tr><tr><td>2021</td><td>57</td></tr><tr><td>2022</td><td>63</td></tr></table>");
+
+/* ---- MATH ---- */
+add("lin","Which inequality describes all solutions of 5x − 7 < 3x + 9?",["x < 8","x > 8","x < 1","x > 1"],
+ "Subtract 3x: 2x − 7 < 9. Add 7: 2x < 16. Divide by 2 (positive, so no flip): x < 8.");
+add("lin","Which inequality describes all solutions of −3x + 4 ≥ 19?",["x ≤ −5","x ≥ −5","x ≤ 5","x ≥ 5"],
+ "Subtract 4: −3x ≥ 15. Dividing by a NEGATIVE number flips the inequality: x ≤ −5.");
+add("lin","What is the sum of all solutions to |2x − 5| = 9?",["5","7","−2","9"],
+ "Split it into two equations: 2x − 5 = 9 gives x = 7, and 2x − 5 = −9 gives x = −2. Sum: 7 + (−2) = 5.");
+add("lin","A line has slope 3 and passes through (2, −1). What is its y-intercept?",["−7","−1","5","7"],
+ "Use y = mx + b: −1 = 3(2) + b → −1 = 6 + b → b = −7.");
+add("lin","The equation y = 12x + 40 gives the total cost y, in dollars, of renting a kayak for x hours. What does 12 represent?",
+ ["The cost per hour of renting the kayak","The fixed fee charged for any rental","The total cost of a 1-hour rental","The number of hours the kayak is rented"],
+ "In y = mx + b, the slope m is the rate of change: the cost goes up $12 for each additional hour. The 40 is the fixed fee.");
+add("lin","What is the x-intercept of the graph of 4x − 3y = 24?",["6","−8","8","4"],
+ "At the x-intercept, y = 0: 4x = 24 → x = 6. (−8 is the y-intercept.)");
+add("lin","How many solutions does 3(2x − 1) = 6x + 5 have?",["Zero","Exactly one","Exactly two","Infinitely many"],
+ "Distribute: 6x − 3 = 6x + 5. Subtract 6x: −3 = 5, which is never true. Same slope with different constants means no solution.");
+add("sys","At a bake sale, cookies cost $2 each and brownies cost $3 each. Maya sold 40 items for a total of $95. How many brownies did she sell?",["15","25","20","35"],
+ "Let c + b = 40 and 2c + 3b = 95. Substitute c = 40 − b: 2(40 − b) + 3b = 95 → 80 + b = 95 → b = 15.");
+add("sys","The system y = 2x + 1 and y = −x + 10 has solution (x, y). What is y?",["7","3","10","4"],
+ "Set them equal: 2x + 1 = −x + 10 → 3x = 9 → x = 3. Then y = 2(3) + 1 = 7.");
+add("sys","For what value of k does the system 3x + 2y = 7 and 6x + ky = 10 have no solution?",["4","2","−4","6"],
+ "No solution means parallel lines: the coefficients are proportional but the constants aren’t. 6/3 = 2, so k = 2·2 = 4. The constants 10/7 ≠ 2, so the lines are parallel but different.");
+add("sys","If x + y = 12 and x − y = 4, what is the value of xy?",["32","48","12","16"],
+ "Add the equations: 2x = 16 → x = 8, so y = 4. Then xy = 32.");
+add("sys","How many solutions does the system y = x² and y = 2x + 3 have?",["2","0","1","Infinitely many"],
+ "Set equal: x² = 2x + 3 → x² − 2x − 3 = 0 → (x − 3)(x + 1) = 0. Two x-values, so two intersection points.");
+add("quad","What are the solutions of x² − 5x − 14 = 0?",["x = 7 and x = −2","x = −7 and x = 2","x = 7 and x = 2","x = −7 and x = −2"],
+ "Find two numbers that multiply to −14 and add to −5: −7 and 2. So (x − 7)(x + 2) = 0 → x = 7 or x = −2.");
+add("quad","What is the minimum value of f(x) = (x − 3)² + 5?",["5","3","−3","−5"],
+ "In vertex form a(x − h)² + k with a > 0, the minimum value is k. Here the vertex is (3, 5), so the minimum is 5.");
+add("quad","How many real solutions does 2x² + 3x + 5 = 0 have?",["Zero","One","Two","Infinitely many"],
+ "Discriminant: b² − 4ac = 9 − 40 = −31. A negative discriminant means no real solutions.");
+add("quad","What is the vertex of the parabola y = x² − 6x + 11?",["(3, 2)","(−3, 2)","(3, 11)","(6, 11)"],
+ "x = −b/(2a) = 6/2 = 3. Then y = 9 − 18 + 11 = 2. Vertex: (3, 2).");
+add("quad","A ball’s height, in feet, t seconds after it is kicked is h(t) = −16t² + 64t. After how many seconds does it hit the ground?",["4","2","8","16"],
+ "Set h = 0: −16t(t − 4) = 0 → t = 0 (the kick) or t = 4. It lands at t = 4. (t = 2 is when it reaches its highest point.)");
+add("quad","If x² + kx + 25 is a perfect square trinomial and k > 0, what is k?",["10","5","25","50"],
+ "(x + 5)² = x² + 10x + 25, so k = 2·5 = 10.");
+add("quad","What is the sum of the solutions of 3x² − 12x + 7 = 0?",["4","−4","7/3","12"],
+ "For ax² + bx + c = 0, the sum of the roots is −b/a = 12/3 = 4.");
+add("func","If f(x) = 2x² − 3x, what is f(−2)?",["14","2","−2","−14"],
+ "f(−2) = 2(4) − 3(−2) = 8 + 6 = 14. Square first, and watch the negative signs.");
+add("func","If f(x) = x + 4 and g(x) = 3x, what is f(g(2))?",["10","18","6","12"],
+ "Work from the inside out: g(2) = 6, then f(6) = 10. (18 is g(f(2)), the other order.)");
+add("func","The graph of y = f(x) is shifted 3 units right and 2 units up. Which equation describes the new graph?",["y = f(x − 3) + 2","y = f(x + 3) + 2","y = f(x − 2) + 3","y = f(x + 3) − 2"],
+ "A shift right by h replaces x with (x − h). A shift up by k adds k outside. So y = f(x − 3) + 2.");
+add("func","What is the average rate of change of f(x) = x² from x = 1 to x = 4?",["5","15","3","8"],
+ "(f(4) − f(1))/(4 − 1) = (16 − 1)/3 = 15/3 = 5.");
+add("func","If f(x) = 3x − 5, what is the value of f⁻¹(7)?",["4","16","2","12"],
+ "f⁻¹(7) is the input that gives an output of 7: 3x − 5 = 7 → x = 4. (16 is f(7).)");
+add("func","The function f is defined by f(x) = |x − 4|. For how many values of x does f(x) = 3?",["2","1","0","3"],
+ "|x − 4| = 3 means x − 4 = 3 or x − 4 = −3, so x = 7 or x = 1. That is two values.");
+add("expo","A town of 20,000 people grows by 3% each year. Which expression gives the population after t years?",["20,000(1.03)ᵗ","20,000(0.03)ᵗ","20,000(1.3)ᵗ","20,000 + 0.03t"],
+ "Growth of r% per year multiplies by (1 + r) each year: 1 + 0.03 = 1.03. So P = 20,000(1.03)ᵗ.");
+add("expo","A car worth $30,000 loses 15% of its value each year. What is it worth after 2 years?",["$21,675","$21,000","$25,500","$22,500"],
+ "Each year it keeps 85%: 30,000 × 0.85² = 30,000 × 0.7225 = $21,675. ($21,000 wrongly subtracts 15% of the original twice.)");
+add("expo","What is the value of 8^(2/3)?",["4","2","16","12"],
+ "8^(2/3) = (∛8)² = 2² = 4.");
+add("expo","Which expression is equivalent to (x³y²)⁴ ÷ (x²y)³?",["x⁶y⁵","x⁹y⁵","xy⁵","x⁶y⁶"],
+ "(x³y²)⁴ = x¹²y⁸ and (x²y)³ = x⁶y³. Dividing subtracts exponents: x¹²⁻⁶y⁸⁻³ = x⁶y⁵.");
+add("expo","A bacteria population doubles every 5 hours. If it starts at 300, how many bacteria are there after 20 hours?",["4,800","2,400","1,200","12,000"],
+ "20 hours is 4 doubling periods: 300 × 2⁴ = 300 × 16 = 4,800.");
+add("expo","If 3^(x + 1) = 81, what is x?",["3","4","27","2"],
+ "81 = 3⁴, so x + 1 = 4 and x = 3.");
+add("poly","What is the remainder when p(x) = x³ − 2x² + 4x − 5 is divided by x − 2?",["3","−5","11","0"],
+ "Remainder theorem: the remainder is p(2) = 8 − 8 + 8 − 5 = 3.");
+add("poly","Which expression is equivalent to (2x − 3)(x² + x − 4)?",["2x³ − x² − 11x + 12","2x³ + 5x² − 5x + 12","2x³ − x² − 5x − 12","2x³ + x² − 11x + 12"],
+ "2x(x² + x − 4) = 2x³ + 2x² − 8x and −3(x² + x − 4) = −3x² − 3x + 12. Combine: 2x³ − x² − 11x + 12.");
+add("poly","If (x + 4) is a factor of x² + kx − 12, what is k?",["1","−1","4","−4"],
+ "If (x + 4) is a factor, then x = −4 is a zero: 16 − 4k − 12 = 0 → 4 = 4k → k = 1. Check: (x + 4)(x − 3) = x² + x − 12. ✓");
+add("poly","What are the zeros of f(x) = x(x − 5)(2x + 3)?",["0, 5, and −3/2","0, −5, and 3/2","5 and −3/2 only","0, 5, and −3"],
+ "Set each factor to 0: x = 0, x − 5 = 0 → x = 5, and 2x + 3 = 0 → x = −3/2.");
+add("poly","Which expression is equivalent to 9x² − 49?",["(3x + 7)(3x − 7)","(3x − 7)²","(9x + 7)(x − 7)","(3x + 49)(3x − 1)"],
+ "This is a difference of squares: (3x)² − 7² = (3x + 7)(3x − 7).");
+add("poly","For x ≠ −2 and x ≠ −3, which expression is equivalent to (x² − 9)/(x² + 5x + 6)?",["(x − 3)/(x + 2)","(x + 3)/(x + 2)","(x − 3)/(x − 2)","−9/(5x + 6)"],
+ "Factor: (x − 3)(x + 3) / ((x + 2)(x + 3)). Cancel (x + 3): (x − 3)/(x + 2). You can only cancel factors, never individual terms.");
+add("pct","A jacket costs $80. It is discounted 25%, and then 8% sales tax is added to the sale price. What is the final price?",["$64.80","$66.40","$60.00","$86.40"],
+ "Sale price: 80 × 0.75 = $60. With tax: 60 × 1.08 = $64.80.");
+add("pct","The ratio of boys to girls in a club is 3 : 5. If the club has 40 members, how many are girls?",["25","15","24","8"],
+ "There are 3 + 5 = 8 parts, so each part is 40/8 = 5 members. Girls: 5 × 5 = 25.");
+add("pct","A price increased from $50 to $65. By what percent did it increase?",["30%","15%","23%","65%"],
+ "Percent change = (65 − 50)/50 = 15/50 = 0.30 = 30%. Always divide by the ORIGINAL value.");
+add("pct","If 40% of a number is 18, what is 75% of the number?",["33.75","30","13.5","24"],
+ "0.4n = 18 → n = 45. Then 0.75 × 45 = 33.75.");
+add("pct","A map uses a scale of 1 inch : 12 miles. Two towns are 4.5 inches apart on the map. How many miles apart are they?",["54","48","16.5","60"],
+ "4.5 × 12 = 54 miles.");
+add("pct","A recipe uses 3 cups of flour for every 2 cups of sugar. How many cups of flour are needed with 5 cups of sugar?",["7.5","6","10","8"],
+ "Set up the proportion 3/2 = f/5 → f = 15/2 = 7.5 cups.");
+add("stat","The mean of five numbers is 12. When a sixth number is added, the mean becomes 13. What is the sixth number?",["18","13","1","15"],
+ "The original sum is 5 × 12 = 60 and the new sum is 6 × 13 = 78. The new number is 78 − 60 = 18.");
+add("stat","What is the median of the data set 4, 7, 7, 9, 12, 15?",["8","7","9","10.5"],
+ "There are six values, so the median is the mean of the 3rd and 4th: (7 + 9)/2 = 8. (9 is the mean of the set.)");
+add("stat","In the data set 3, 5, 8, 10, 40, the value 40 is replaced with 100. Which statistic does NOT change?",["The median","The mean","The range","The standard deviation"],
+ "The middle value is still 8, so the median doesn’t change. The mean, range, and spread all grow because the largest value grew.");
+add("stat","Two classes took the same test. Class A’s scores had a standard deviation of 4 points, and Class B’s had a standard deviation of 11 points. Which statement must be true?",
+ ["Class B’s scores were more spread out than Class A’s.","Class B had a higher average score.","Class A’s scores were more spread out than Class B’s.","Class A had more students than Class B."],
+ "Standard deviation measures spread, not center. A larger standard deviation means the scores are more spread out. It says nothing about averages or class size.");
+add("stat","A researcher randomly selects 500 adults in a city and finds that 62% of them support building a new park. Which conclusion is most appropriate?",
+ ["About 62% of all adults in the city likely support the park, with some margin of error.","Exactly 62% of all adults in the country support the park.","Exactly 310 adults in the city support the park.","The park will definitely be built."],
+ "A random sample can be generalized to the population it was drawn from (the city, not the country), but only approximately, with a margin of error.");
+add("prob","A bag has 4 red, 6 blue, and 5 green marbles. One marble is chosen at random. What is the probability that it is NOT blue?",["3/5","2/5","1/3","4/15"],
+ "There are 15 marbles and 9 are not blue: 9/15 = 3/5. (Or: 1 − 6/15 = 9/15.)");
+add("prob","A fair coin is flipped three times. What is the probability of getting exactly two heads?",["3/8","1/4","1/2","1/8"],
+ "There are 2³ = 8 equally likely outcomes. Exactly two heads: HHT, HTH, THH, which is 3 outcomes. 3/8.");
+add("prob","Two fair six-sided dice are rolled. What is the probability that the sum is 7?",["1/6","1/12","7/36","1/36"],
+ "Pairs that sum to 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1), which is 6 of 36. 6/36 = 1/6.");
+add("prob","Of 200 students surveyed, 120 play a sport. Of those 120, 45 also play an instrument. Of the students who do not play a sport, 35 play an instrument. If a student who plays an instrument is chosen at random, what is the probability that the student plays a sport?",["9/16","3/8","7/16","9/40"],
+ "“Given that the student plays an instrument” means the total is only the instrument players: 45 + 35 = 80. Of those, 45 play a sport: 45/80 = 9/16.");
+add("prob","A spinner has 8 equal sections numbered 1 through 8. What is the probability of spinning a number greater than 5 on two spins in a row?",["9/64","3/8","3/4","1/64"],
+ "P(>5) = 3/8 (6, 7, or 8). The spins are independent, so multiply: (3/8)(3/8) = 9/64.");
+add("geo","What are the center and radius of the circle (x − 2)² + (y + 5)² = 49?",["Center (2, −5), radius 7","Center (−2, 5), radius 7","Center (2, −5), radius 49","Center (−2, 5), radius 49"],
+ "In (x − h)² + (y − k)² = r², the center is (h, k) and the radius is r. Here y + 5 = y − (−5), so the center is (2, −5), and r = √49 = 7.");
+add("geo","The equation x² + y² − 6x + 4y = 12 represents a circle. What is its radius?",["5","12","√12","25"],
+ "Complete the square: (x² − 6x + 9) + (y² + 4y + 4) = 12 + 9 + 4 → (x − 3)² + (y + 2)² = 25. Radius = 5.");
+add("geo","Triangle ABC is similar to triangle DEF, with AB corresponding to DE and BC corresponding to EF. If AB = 6, DE = 15, and BC = 8, what is EF?",["20","17","3.2","12"],
+ "The scale factor is 15/6 = 2.5, so EF = 8 × 2.5 = 20.");
+add("geo","A cylinder has a radius of 3 and a height of 10. What is its volume?",["90π","30π","60π","9π"],
+ "V = πr²h = π(9)(10) = 90π.");
+add("geo","In a circle with radius 9, what is the length of an arc intercepted by a central angle of 120°?",["6π","3π","27π","12π"],
+ "Arc length = (120/360) × 2π(9) = (1/3)(18π) = 6π.");
+add("geo","Two angles are supplementary, and one is 4 times the other. What is the measure of the larger angle?",["144°","36°","72°","135°"],
+ "x + 4x = 180 → x = 36. The larger angle is 4 × 36 = 144°.");
+add("geo","What is the measure of each interior angle of a regular octagon?",["135°","120°","140°","1,080°"],
+ "Sum of interior angles = (8 − 2) × 180 = 1,080°. Each of the 8 equal angles is 1,080/8 = 135°.");
+add("trig","In right triangle ABC, angle C is the right angle, AC = 5, and BC = 12. What is sin A?",["12/13","5/13","5/12","12/5"],
+ "Hypotenuse AB = √(25 + 144) = 13. Sine = opposite/hypotenuse. The side opposite angle A is BC = 12, so sin A = 12/13.");
+add("trig","If sin x° = 0.6, what is the value of cos(90 − x)°?",["0.6","0.8","0.4","1.6"],
+ "Cofunction identity: cos(90° − x) = sin x. So it equals 0.6.");
+add("trig","How many degrees are in 3π/4 radians?",["135°","45°","270°","67.5°"],
+ "Multiply by 180/π: (3π/4)(180/π) = 3 × 45 = 135°.");
+add("trig","In a 30°-60°-90° triangle, the shortest side has length 7. What is the length of the hypotenuse?",["14","7√3","7√2","21"],
+ "The sides are in the ratio x : x√3 : 2x, with the shortest side x opposite 30°. The hypotenuse is 2x = 14.");
+add("trig","A 20-foot ladder leans against a wall, making a 60° angle with the ground. How high up the wall does the ladder reach?",["10√3 feet","10 feet","20√3 feet","10√2 feet"],
+ "The height is opposite the 60° angle: 20 × sin 60° = 20(√3/2) = 10√3 feet.");
+add("trig","If tan θ = 3/4 and θ is acute, what is cos θ?",["4/5","3/5","3/4","5/4"],
+ "Opposite = 3 and adjacent = 4, so the hypotenuse is 5 (a 3-4-5 triangle). cos θ = adjacent/hypotenuse = 4/5.");
+add("word","A train travels 240 miles in 4 hours and then 150 miles in 2 hours. What is its average speed for the whole trip?",["65 mph","62.5 mph","67.5 mph","75 mph"],
+ "Average speed = total distance ÷ total time = 390/6 = 65 mph. Averaging the two speeds (60 and 75) gives 67.5, which is wrong because the trip spends more time at 60.");
+add("word","Pipe A can fill a tank in 6 hours, and pipe B can fill it in 3 hours. Working together, how long do they take to fill the tank?",["2 hours","4.5 hours","9 hours","1.5 hours"],
+ "Rates add: 1/6 + 1/3 = 1/6 + 2/6 = 1/2 tank per hour, so the job takes 2 hours.");
+add("word","A phone plan costs $25 per month plus $0.10 per text. Kai’s bill one month was $38.50. How many texts did Kai send?",["135","385","13","150"],
+ "25 + 0.10t = 38.50 → 0.10t = 13.50 → t = 135.");
+add("word","Maria is 3 times as old as her brother. In 10 years, she will be twice as old as he will be. How old is Maria now?",["30","10","20","40"],
+ "Let b be the brother’s age, so Maria is 3b. Then 3b + 10 = 2(b + 10) → 3b + 10 = 2b + 20 → b = 10. Maria is 30.");
+add("word","A rectangle’s length is 4 more than its width, and its perimeter is 56. What is its area?",["192","160","208","224"],
+ "2(w + w + 4) = 56 → 2w + 4 = 28 → w = 12, so the length is 16. Area = 12 × 16 = 192.");
+add("word","A car travels at 72 kilometers per hour. What is its speed in meters per second?",["20","72","1,200","2"],
+ "72 km/h = 72,000 m per 3,600 s = 20 m/s. (1,200 is meters per MINUTE.)");
+
+/* ---- More vocabulary ---- */
+VOCAB.push(
+["acquiesce","verb","to accept or agree reluctantly, without protest","After hours of debate, the board decided to acquiesce to the students’ request."],
+["adept","adjective","very skilled","She is adept at solving puzzles under pressure."],
+["aloof","adjective","distant and uninvolved","The new student seemed aloof, but she was actually just shy."],
+["apathy","noun","lack of interest or concern","Low turnout was blamed on voter apathy."],
+["articulate","adjective","able to express ideas clearly and effectively","The articulate speaker explained a complicated topic in simple terms."],
+["astute","adjective","sharp at judging situations and people","An astute investor noticed the trend before anyone else."],
+["brevity","noun","shortness; the use of few words","The editor praised the essay for its brevity."],
+["capricious","adjective","given to sudden, unpredictable changes","The capricious weather changed from sunshine to hail in minutes."],
+["circumvent","verb","to find a way around an obstacle or rule","The hackers tried to circumvent the security system."],
+["cogent","adjective","clear, logical, and convincing","The lawyer made a cogent argument that persuaded the jury."],
+["commensurate","adjective","matching in size, amount, or degree","Her salary was commensurate with her experience."],
+["conjecture","noun","an opinion formed without complete evidence","Without data, the theory remained mere conjecture."],
+["contentious","adjective","likely to cause disagreement","The new parking fee was a contentious issue at the town meeting."],
+["copious","adjective","abundant; plentiful","He took copious notes during the lecture."],
+["culminate","verb","to reach a final or highest point","Months of rehearsal will culminate in opening night."],
+["deride","verb","to mock or express contempt for","Critics who deride new ideas are sometimes proven wrong."],
+["didactic","adjective","intended to teach, often with a moral lesson","The fable is didactic, ending with a clear lesson about honesty."],
+["disdain","noun","the feeling that something is unworthy of respect","She looked at the messy kitchen with disdain."],
+["elicit","verb","to draw out a response or reaction","The teacher’s question was meant to elicit discussion."],
+["eloquent","adjective","fluent and persuasive in speaking or writing","The eloquent speech moved many listeners to tears."],
+["embellish","verb","to add details, often untrue, to make something more interesting","He tended to embellish his stories to impress his friends."],
+["enigmatic","adjective","mysterious and difficult to understand","The painting’s enigmatic smile has puzzled viewers for centuries."],
+["exemplary","adjective","serving as an excellent model","Her exemplary attendance earned her an award."],
+["extol","verb","to praise enthusiastically","Reviewers extol the restaurant’s handmade pasta."],
+["fastidious","adjective","very attentive to accuracy and detail","The fastidious editor caught every misplaced comma."],
+["frivolous","adjective","not serious; lacking purpose or value","The judge dismissed the frivolous lawsuit."],
+["hackneyed","adjective","overused and therefore unoriginal","The essay was full of hackneyed phrases that readers had heard a thousand times."],
+["impede","verb","to slow or block progress","Heavy snow continued to impede rescue efforts."],
+["indifferent","adjective","having no particular interest or concern","The cat seemed indifferent to the expensive new toy."],
+["inherent","adjective","existing as a natural, permanent part of something","There are inherent risks in any extreme sport."],
+["innate","adjective","present from birth; natural","Some researchers believe humans have an innate ability to learn language."],
+["insatiable","adjective","impossible to satisfy","Her insatiable curiosity led her to read every book in the library."],
+["laconic","adjective","using very few words","His laconic reply, a single word, ended the conversation."],
+["magnanimous","adjective","generous or forgiving, especially toward a rival","The magnanimous champion praised her opponent’s skill."],
+["malleable","adjective","easily shaped or influenced","Gold is a malleable metal that can be hammered into thin sheets."],
+["mundane","adjective","ordinary; dull","He found the mundane task of sorting files oddly relaxing."],
+["nonchalant","adjective","calm and casual; seeming unconcerned","She gave a nonchalant shrug, as if winning were no big deal."],
+["obscure","adjective","not well known; hard to understand","The poem refers to an obscure Greek myth."],
+["obstinate","adjective","stubbornly refusing to change","The obstinate mule refused to cross the bridge."],
+["opaque","adjective","not see-through; hard to understand","The contract’s opaque language confused even the lawyers."],
+["partisan","adjective","strongly supporting one side or party","The partisan crowd booed every call against the home team."],
+["perfunctory","adjective","done with minimal effort or care","He gave the essay a perfunctory glance before handing it back."],
+["placate","verb","to calm or soothe an upset person","The manager offered a refund to placate the angry customer."],
+["proliferate","verb","to increase rapidly in number","Food trucks began to proliferate downtown after the city relaxed its rules."],
+["rebuke","verb","to criticize sharply","The coach would rebuke players who skipped practice."],
+["replete","adjective","filled or well supplied","The documentary is replete with stunning footage of the deep sea."],
+["spurious","adjective","false, though appearing genuine","The study’s spurious conclusions were based on faulty data."],
+["stoic","adjective","enduring hardship without complaint","The stoic hiker kept walking despite her blistered feet."],
+["tenuous","adjective","very weak or slight","The connection between the two events is tenuous at best."],
+["terse","adjective","brief, sometimes to the point of rudeness","The email was so terse that she worried he was angry."],
+["transient","adjective","lasting only a short time","The pain was transient, fading within minutes."],
+["unprecedented","adjective","never done or known before","The team’s unprecedented winning streak drew national attention."],
+["verbose","adjective","using more words than needed","The verbose report could have been half as long."],
+["wane","verb","to decrease gradually","Interest in the fad began to wane by spring."],
+["zenith","noun","the highest point","At the zenith of its power, the empire stretched across three continents."],
+["anecdote","noun","a short, personal story","The speaker opened with a funny anecdote about her first job."],
+["collaborate","verb","to work together","The two labs agreed to collaborate on the vaccine research."],
+["analogous","adjective","comparable in certain respects","The heart is analogous to a pump."]
+);
+GRAMMAR_CARDS.push(
+["Dashes ( — )","A single dash can introduce an explanation (like a colon). A PAIR of dashes sets off extra information, like a pair of commas.","The answer—surprisingly—was zero."],
+["Introductory elements","Put a comma after an introductory word, phrase, or dependent clause.","After the game ended, we celebrated."],
+["Commas in a list","Separate three or more items with commas. Don’t put a comma before the first item.","She packed water, snacks, and a map."],
+["No comma before “that”","Don’t separate “that” clauses or essential information with commas.","He said that he was tired."],
+["Possessive pronouns","Possessive pronouns NEVER take apostrophes: its, yours, hers, ours, theirs, whose.","The dog wagged its tail."],
+["affect / effect","affect = verb (to influence). effect = noun (a result).","The weather affected the game’s effect on morale."],
+["than / then","than = comparison. then = time or sequence.","She was taller than me back then."],
+["Comparative vs. superlative","Two things → -er / more. Three or more → -est / most.","the better of the two; the best of the three"],
+["Fragments","A sentence needs a subject AND a main verb. An -ing word alone is not a main verb.","✗ The team practicing daily. ✓ The team practiced daily."],
+["who vs. that / which","Use “who” for people and “that” / “which” for things.","the scientist who discovered it; the book that I read"]
+);
+FORMULA_CARDS.push(
+["Inequality sign flip","When you multiply or divide both sides by a NEGATIVE number, flip the inequality sign.","−2x > 6 → x < −3"],
+["Absolute value equations","|ax + b| = c (with c ≥ 0) splits into ax + b = c OR ax + b = −c.","|x − 3| = 5 → x = 8 or −2"],
+["Function composition","f(g(x)): evaluate g first, then plug the result into f.","Inside out."],
+["Function transformations","f(x − h) + k shifts right h and up k. −f(x) reflects over the x-axis; f(−x) over the y-axis.",""],
+["Average rate of change","(f(b) − f(a)) / (b − a)","The slope between two points on the graph."],
+["Completing the square","x² + bx → (x + b/2)² − (b/2)²","Use it to find a circle’s center and radius."],
+["Similar figures","Corresponding sides are proportional. Areas scale by k², volumes by k³.","Scale factor k."],
+["Standard deviation","Measures spread around the mean. More spread out → larger SD.","Adding the same number to every value doesn’t change the SD."],
+["Compound interest","A = P(1 + r/n)ⁿᵗ","n = compounding periods per year."],
+["Unit conversion","Multiply by fractions equal to 1 so that the units cancel.","72 km/h × 1000 m/km × 1 h/3600 s = 20 m/s"]
+);
+DECKS.vocab = VOCAB.map(v=>({id:"v:"+v[0], front:`<div class="word">${v[0]}</div><div class="pos">${v[1]}</div>`, back:`<div class="def">${v[2]}</div><div class="ex">“${v[3]}”</div>`}));
+DECKS.grammar = GRAMMAR_CARDS.map(g=>({id:"g:"+g[0], front:`<div class="word" style="font-size:1.7rem">${g[0]}</div>`, back:`<div class="def">${g[1]}</div>${g[2]?`<div class="ex">${g[2]}</div>`:""}`}));
+DECKS.formulas = FORMULA_CARDS.map(f=>({id:"f:"+f[0], front:`<div class="word" style="font-size:1.7rem">${f[0]}</div>`, back:`<div class="fml">${f[1]}</div>${f[2]?`<div class="ex">${f[2]}</div>`:""}`}));
+
+/* ---- More generators ---- */
+const ITS_ITEMS=[
+ ["The company announced that ___ profits had doubled.",0],["Scientists say ___ likely that the comet will be visible next week.",1],
+ ["The bird returned to ___ nest at dusk.",0],["The committee will announce ___ decision tomorrow.",0],
+ ["Although the museum is small, ___ worth visiting.",1],["The river overflowed ___ banks after the storm.",0],
+ ["The coach believes ___ time to try a new strategy.",1],["Each species has adapted to ___ environment in unique ways.",0],
+ ["If the printer jams again, ___ probably time to replace it.",1],["The city updated ___ recycling rules last spring.",0],
+ ["The experiment failed because ___ design contained a flaw.",0],["Many experts agree that ___ too early to predict the outcome.",1],
+ ["The novel is famous for ___ surprising ending.",0],["Ask the librarian whether ___ possible to renew the book online.",1]
+];
+reg("pron",()=>{
+  const [s,k]=pick(ITS_ITEMS);
+  return k===0
+   ? mk("pron",STD,"its",["it’s","its’","their"],"The blank shows possession (something belonging to it), so use the possessive “its,” which has NO apostrophe. “It’s” always means “it is” or “it has.” “Its’” is never correct.",s.replace("___",BL))
+   : mk("pron",STD,"it’s",["its","its’","it"],"The blank needs “it is” (try reading it as “it is”), so use the contraction “it’s.” “Its” without an apostrophe shows possession. “Its’” is never correct.",s.replace("___",BL));
+});
+const WHO_ITEMS=[
+ ["The engineer ___ designed the bridge received an award.","who"],["The candidate ___ the voters trusted most won easily.","whom"],
+ ["She is the author ___ wrote my favorite novel.","who"],["The doctor ___ I visited last week recommended more sleep.","whom"],
+ ["Anyone ___ finishes early may leave.","who"],["The scientist with ___ we collaborated is based in Kenya.","whom"],
+ ["The students ___ the principal praised had organized the food drive.","whom"],["The players ___ trained hardest improved the most.","who"],
+ ["The pilot ___ the airline hired last year now flies international routes.","whom"],["The volunteers ___ cleaned the beach collected 300 pounds of trash.","who"]
+];
+reg("pron",()=>{
+  const [s,a]=pick(WHO_ITEMS);
+  return mk("pron",STD,a,["who","whom","which","whose"].filter(x=>x!==a),
+    a==="who" ? "The blank is the SUBJECT of its clause: someone does the action. Test it with he/she (“HE designed…”). Subject → “who.” “Which” is for things."
+              : "The blank is the OBJECT of its clause: someone else acts on that person. Test it with him/her (“the voters trusted HIM,” “with HIM”). Object → “whom.”",
+    s.replace("___",BL));
+});
+const FEW_ITEMS=[
+ ["This year the bakery sold ___ loaves of bread than last year.",1],["The new design uses ___ energy than the old model.",0],
+ ["There were ___ errors in the second draft.",1],["Drinking ___ soda can improve your health.",0],
+ ["The town received ___ rainfall in July than in June.",0],["The team scored ___ points in the second half.",1],
+ ["Our new route has ___ traffic lights, so the drive is quicker.",1],["She spent ___ time on the essay than on the project.",0],
+ ["The farm used ___ pesticides this season.",1],["The renovated library has ___ noise than the old one.",0]
+];
+reg("conc",()=>{
+  const [s,c]=pick(FEW_ITEMS);
+  return c ? mk("conc",STD,"fewer",["less","lesser","least"],"The noun is COUNTABLE (you can say one, two, three…), so use “fewer.” “Less” is for things you can’t count, like water, time, or energy.",s.replace("___",BL))
+           : mk("conc",STD,"less",["fewer","lesser","fewest"],"The noun is UNCOUNTABLE (you can’t say “one energy, two energies”), so use “less.” “Fewer” is only for countable nouns.",s.replace("___",BL));
+});
+reg("lin",()=>{
+  const x0=nz(-8,8); let a,c; do{a=nz(-6,6);c=nz(-6,6);}while(a===c);
+  const b=ri(-12,12), d=(a-c)*x0+b, op=pick(["<",">","≤","≥"]);
+  const flip={"<":">",">":"<","≤":"≥","≥":"≤"}, neg=(a-c)<0, res=neg?flip[op]:op;
+  return mk("lin",`Which inequality describes all solutions of ${poly([a,b])} ${op} ${poly([c,d])}?`,`x ${res} ${fmt(x0)}`,
+    [`x ${flip[res]} ${fmt(x0)}`,`x ${res} ${fmt(-x0)}`,`x ${flip[res]} ${fmt(-x0)}`],
+    `Move the x-terms to the left and the constants to the right: ${fmt(a-c)}x ${op} ${fmt(d-b)}. `+(neg?`Dividing by a NEGATIVE number (${fmt(a-c)}) flips the sign: x ${res} ${fmt(x0)}.`:`Divide by ${fmt(a-c)} (positive, so no flip): x ${res} ${fmt(x0)}.`));
+});
+reg("lin",()=>{
+  const h=nz(-7,7), r=ri(1,9), a=pick([1,1,2,3]);
+  const inside=a===1? `x ${h<0?"+ "+(-h):MN+" "+h}` : `${a}x ${h<0?"+ "+(-a*h):MN+" "+(a*h)}`;
+  return mk("lin",`What is the sum of all solutions to |${inside}| = ${a*r}?`,fmt(2*h),[fmt(-2*h),fmt(h),fmt(2*r),fmt(a*r)],
+    `Split into two cases: ${inside} = ${a*r} or ${inside} = ${MN}${a*r}. The solutions are x = ${fmt(h+r)} and x = ${fmt(h-r)}, and their sum is ${fmt(2*h)}.`);
+});
+reg("geo",()=>{
+  const h=nz(-6,6), k=nz(-6,6), r=ri(2,9), D=-2*h, E=-2*k, F=h*h+k*k-r*r;
+  const t=(c,v)=> c===0?"": (c<0?` ${MN} ${-c}${v}`:` + ${c}${v}`);
+  const eq=`x² + y²${t(D,"x")}${t(E,"y")} = ${fmt(-F)}`;
+  return mk("geo",`The equation ${eq} defines a circle in the xy-plane. What is the radius of the circle?`,fmt(r),[fmt(r*r),fmt(Math.abs(F)),fmt(r+1),fmt(2*r)],
+    `Complete the square: (x² ${D<0?MN:"+"} ${Math.abs(D)}x + ${h*h}) + (y² ${E<0?MN:"+"} ${Math.abs(E)}y + ${k*k}) = ${fmt(-F)} + ${h*h} + ${k*k}, so (x ${h<0?"+ "+(-h):MN+" "+h})² + (y ${k<0?"+ "+(-k):MN+" "+k})² = ${r*r}. The radius is √${r*r} = ${r}.`);
+});
+reg("func",()=>{
+  const m=nz(-5,5), b=ri(-9,9), p=nz(-4,4), q=ri(-6,6), a=ri(-4,4);
+  const g=p*a+q, ans=m*g+b, other=p*(m*a+b)+q;
+  return mk("func",`If f(x) = ${poly([m,b])} and g(x) = ${poly([p,q])}, what is f(g(${fmt(a)}))?`,fmt(ans),[fmt(other),fmt((m*a+b)*g),fmt(m*a+b+g),fmt(g)],
+    `Work from the inside out. g(${fmt(a)}) = ${fmt(g)}. Then f(${fmt(g)}) = ${fmt(m)}·${paren(g)} ${b<0?MN+" "+(-b):"+ "+b} = ${fmt(ans)}. (Doing it in the other order, g(f(${fmt(a)})), gives ${fmt(other)}.)`);
+});
+
+/* =====================================================================
+   STORAGE — profiles + per-profile data (every access in try/catch)
+   ===================================================================== */
+const PKEY="prepLab.profiles", UKEY="prepLab.u.", OLDKEY="prepLab.v1", SKEY="prepLab.session";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); return true; }catch(e){ return false; } }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function ssGet(k){ try{ return sessionStorage.getItem(k); }catch(e){ return null; } }
+function ssSet(k,v){ try{ sessionStorage.setItem(k,v); }catch(e){} }
+function ssDel(k){ try{ sessionStorage.removeItem(k); }catch(e){} }
+function parse(s){ try{ return s?JSON.parse(s):null; }catch(e){ return null; } }
+function loadProfiles(){
+  const o=parse(lsGet(PKEY)), p={current:null,list:[]};
+  if(o&&typeof o==="object"){
+    if(Array.isArray(o.list)) p.list=o.list.filter(x=>x&&typeof x.id==="string"&&/^[a-z0-9]+$/i.test(x.id)&&typeof x.name==="string");
+    if(typeof o.current==="string") p.current=o.current;
+  }
+  return p;
+}
+function savePro(){ lsSet(PKEY,JSON.stringify(P)); }
+function DEFSET(){ return {theme:"system",accent:"indigo",size:"m",radius:"round",density:"comfy",pfont:"serif",motion:true,hints:true,autoNext:0,sound:false,showGen:true,mixE:60,timeMult:1,showTimer:true,confirmLeave:true}; }
+function DEF(){ return {profile:{name:"",grade:"9",test:"SAT",target:"",date:"",goal:20,color:0},settings:DEFSET(),stats:{},days:{},streak:{cur:0,best:0},missed:[],cards:{},tests:[]}; }
+function normalize(o){
+  const d=DEF(); if(!o||typeof o!=="object") return d;
+  for(const k of ["stats","days","cards"]) if(o[k]&&typeof o[k]==="object"&&!Array.isArray(o[k])) d[k]=o[k];
+  if(Array.isArray(o.missed)) d.missed=o.missed.filter(m=>m&&TOPICS[m.t]&&Array.isArray(m.c));
+  if(Array.isArray(o.tests)) d.tests=o.tests.filter(t=>t&&t.n>0);
+  if(o.streak&&typeof o.streak==="object") d.streak={cur:+o.streak.cur||0,best:+o.streak.best||0};
+  if(o.profile&&typeof o.profile==="object") Object.assign(d.profile,o.profile);
+  if(o.settings&&typeof o.settings==="object") Object.assign(d.settings,o.settings);
+  for(const k in d.stats){ if(!TOPICS[k]||typeof d.stats[k]!=="object") delete d.stats[k]; }
+  return d;
+}
+function loadUser(id){ return normalize(parse(lsGet(UKEY+id))); }
+let P=loadProfiles(), S=DEF(), UID=null;
+function save(){ if(UID) lsSet(UKEY+UID,JSON.stringify(S)); }
+
 function dkey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function today(){ return dkey(new Date()); }
 function dayStreak(){ let n=0; const d=new Date(); if(!S.days[dkey(d)]) d.setDate(d.getDate()-1); while(S.days[dkey(d)]){ n++; d.setDate(d.getDate()-1); } return n; }
-function rec(q,ok,fromReview){
+function goal(){ return Math.max(1,Number(S.profile.goal)||20); }
+function rec(q,ok,fromReview,quiet){
   const st=S.stats[q.t]||(S.stats[q.t]={n:0,c:0}); st.n++; if(ok) st.c++;
   const d=today(); S.days[d]=(S.days[d]||0)+1;
   S.streak.cur= ok? S.streak.cur+1 : 0; S.streak.best=Math.max(S.streak.best,S.streak.cur);
   if(!ok) addMissed(q); else if(fromReview) removeMissed(q.id);
   save();
+  if(!quiet && S.days[d]===goal()) toast(`Daily goal reached: ${goal()} questions today!`,"good");
 }
 function addMissed(q){ S.missed=S.missed.filter(m=>m.id!==q.id); S.missed.push({id:q.id,t:q.t,s:q.s,q:q.q,c:q.c,a:q.a,e:q.e,p:q.p}); if(S.missed.length>200) S.missed.shift(); }
 function removeMissed(id){ S.missed=S.missed.filter(m=>m.id!==id); }
@@ -1373,7 +2187,7 @@ function topicFor(mode){
   if(mode.kind==="E") return pick(ETOP);
   if(mode.kind==="M") return pick(MTOP);
   if(mode.kind==="smart") return smartTopic();
-  return Math.random()<.6? pick(ETOP) : pick(MTOP);
+  return Math.random()<(S.settings.mixE/100)? pick(ETOP) : pick(MTOP);
 }
 function drawQuestion(mode,seen){
   const t=topicFor(mode);
@@ -1387,71 +2201,292 @@ function drawQuestion(mode,seen){
 }
 
 /* =====================================================================
-   RENDERING
+   UI HELPERS
    ===================================================================== */
-const app=document.getElementById("app");
-let view="home", timerId=null, sess=null, T=null;
-const NAV=[["home","Dashboard"],["practice","Practice"],["test","Timed Test"],["review","Review"],["cards","Flashcards"],["progress","Progress"]];
+const $=id=>document.getElementById(id);
+const app=$("app");
+let view="home", timerId=null, autoTimer=null, sess=null, T=null;
+const NAV=[["home","Home","Dashboard"],["practice","Practice","Practice"],["test","Test","Timed Test"],["review","Review","Review"],["cards","Cards","Flashcards"],["progress","Stats","Progress"],["settings","Settings","Settings"]];
+const TITLES={practice:"Practice",test:"Timed Test",review:"Review",cards:"Flashcards",progress:"Progress",settings:"Settings"};
+const SUBS={practice:"Untimed questions with instant feedback and explanations.",test:"Practice under real-test pacing with a countdown.",review:"The questions you missed, ready for another try.",cards:"Vocabulary, grammar rules, and math formulas.",progress:"How you’re doing, topic by topic.",settings:"Make Prep Lab look and work the way you like."};
+const IC={
+ home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+ practice:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
+ test:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/>',
+ review:'<path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/>',
+ cards:'<rect x="3" y="7" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/>',
+ progress:'<path d="M4 20V11M10 20V5M16 20v-6M21 20H3"/>',
+ settings:'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+ moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+ flame:'<path d="M12 22c4 0 7-2.7 7-7 0-4.5-4-7-4-11-3 2-4 4.5-4 7-1.5-1-2-2.5-2-4-2 2-4 4.5-4 8 0 4.3 3 7 7 7z"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+ check:'<path d="m5 12 5 5L20 7"/>', x:'<path d="M6 6l12 12M18 6 6 18"/>',
+ bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+ book:'<path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-4a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h5z"/>',
+ calc:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/>',
+ shuffle:'<path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>',
+ logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',
+ flag:'<path d="M5 22V4M5 4h12l-2 4 2 4H5"/>',
+ arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>', back:'<path d="M19 12H5M11 18l-6-6 6-6"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ star:'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/>',
+ calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+ skip:'<path d="M5 5l10 7-10 7zM19 5v14"/>',
+ trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+ download:'<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>', upload:'<path d="M12 21V9M7 14l5-5 5 5M4 3h16"/>',
+ trash:'<path d="M4 7h16M10 11v6M14 11v6M5 7l1 13h12l1-13M9 7V4h6v3"/>',
+ users:'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/>'
+};
+function ic(n,s){ s=s||20; return `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||""}</svg>`; }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+const AV=["#4263eb","#12b886","#7048e8","#e64980","#f76707","#1098ad","#f59f00","#2f9e44"];
+function avatar(p,size){ const n=String(p.name||"?").trim()||"?"; const ini=n.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();
+  return `<span class="av" style="background:${AV[(Number(p.color)||0)%AV.length]};width:${size}px;height:${size}px;font-size:${Math.round(size*.4)}px">${esc(ini)}</span>`; }
+function firstName(){ return String(S.profile.name||"").trim().split(/\s+/)[0]||"there"; }
+function gradeLabel(g){ return g==="other"?"Student":g+"th grade"; }
+function testName(){ return S.profile.test==="Both"?"SAT/ACT":S.profile.test; }
+function toast(msg,kind){
+  const box=$("toasts"); if(!box) return; const el=document.createElement("div");
+  el.className="toast "+(kind||""); el.innerHTML=`${ic(kind==="good"?"check":kind==="bad"?"x":"bolt",18)}<span>${esc(msg)}</span>`; box.appendChild(el);
+  setTimeout(()=>{ el.classList.add("out"); setTimeout(()=>el.remove(),320); },2800);
+}
+function ring(p,size,stroke,label,sub,color){
+  p=Math.max(0,Math.min(1,p||0)); const r=(size-stroke)/2, c=2*Math.PI*r, h=size/2;
+  return `<div class="ring" style="width:${size}px;height:${size}px"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${h}" cy="${h}" r="${r}" fill="none" stroke="var(--surface3)" stroke-width="${stroke}"/>${p>0?`<circle class="ringfg" cx="${h}" cy="${h}" r="${r}" fill="none" stroke="${color||"var(--accent)"}" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${c.toFixed(2)}" stroke-dashoffset="${(c*(1-p)).toFixed(2)}" transform="rotate(-90 ${h} ${h})"/>`:""}</svg><div class="ringlbl"><b>${label}</b>${sub?`<small>${sub}</small>`:""}</div></div>`;
+}
+let actx=null;
+function beep(ok){
+  if(!S.settings.sound) return;
+  try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); const t=actx.currentTime;
+    (ok?[660,880]:[300,220]).forEach((f,i)=>{ const o=actx.createOscillator(), g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+      g.gain.setValueAtTime(0.0001,t+i*.09); g.gain.exponentialRampToValueAtTime(0.12,t+i*.09+.02); g.gain.exponentialRampToValueAtTime(0.0001,t+i*.09+.16);
+      o.connect(g); g.connect(actx.destination); o.start(t+i*.09); o.stop(t+i*.09+.18); });
+  }catch(e){}
+}
+
+/* ---------- settings application ---------- */
+const ACC={indigo:["Indigo","#4263eb","#91a7ff"],blue:["Blue","#1c7ed6","#74c0fc"],teal:["Teal","#0c8599","#3bc9db"],green:["Green","#2b8a3e","#69db7c"],violet:["Violet","#7048e8","#b197fc"],rose:["Rose","#d6336c","#f783ac"],orange:["Orange","#d9480f","#ffa94d"]};
+function sysDark(){ try{ return matchMedia("(prefers-color-scheme: dark)").matches; }catch(e){ return false; } }
+function isDark(){ const t=S.settings.theme; return t==="dark"||(t!=="light"&&sysDark()); }
+function applySettings(){
+  const st=S.settings, r=document.documentElement;
+  if(st.theme==="light"||st.theme==="dark") r.setAttribute("data-theme",st.theme); else r.removeAttribute("data-theme");
+  const a=ACC[st.accent]||ACC.indigo, dk=isDark();
+  r.style.setProperty("--accent",dk?a[2]:a[1]); r.style.setProperty("--accent-deep",a[1]); r.style.setProperty("--accent-ink",dk?"#0e1220":"#ffffff");
+  r.style.fontSize=({s:"15px",m:"16px",l:"17.5px",xl:"19px"})[st.size]||"16px";
+  const rad=({round:[18,12],soft:[12,8],sharp:[5,4]})[st.radius]||[18,12];
+  r.style.setProperty("--r",rad[0]+"px"); r.style.setProperty("--rs",rad[1]+"px");
+  const cmp=st.density==="compact"; r.style.setProperty("--pad",cmp?"16px":"24px"); r.style.setProperty("--gap",cmp?"12px":"18px");
+  r.style.setProperty("--pfont",st.pfont==="sans"?'-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif':'Georgia,"Iowan Old Style","Times New Roman",serif');
+  r.classList.toggle("nomotion",!st.motion);
+}
+try{ matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{ applySettings(); if(UID) renderNav(); }); }catch(e){}
+function quickTheme(){ S.settings.theme=isDark()?"light":"dark"; save(); applySettings(); renderNav(); if(view==="settings") rSettings(); }
+
+/* =====================================================================
+   NAVIGATION
+   ===================================================================== */
 function renderNav(){
-  document.getElementById("nav").innerHTML=NAV.map(([k,l])=>`<button class="${view===k?"on":""}" onclick="go('${k}')">${l}${k==="review"&&S.missed.length?`<span class="badge">${S.missed.length}</span>`:""}</button>`).join("");
+  const badge=k=>k==="review"&&S.missed.length?`<span class="badge">${S.missed.length>99?"99+":S.missed.length}</span>`:"";
+  const td=S.days[today()]||0, g=goal();
+  $("side").innerHTML=`<div class="brand"><span class="logo">${ic("star",19)}</span><div><b>Prep Lab</b><small>SAT · ACT</small></div></div>
+    <div class="navlist">${NAV.map(([k,,l])=>`<button class="navi ${view===k?"on":""}" onclick="go('${k}')" ${view===k?'aria-current="page"':""}>${ic(k)}<span>${l}</span>${badge(k)}</button>`).join("")}</div>
+    <div class="sidefoot">
+      <div class="goalmini"><div class="row"><span>Today’s goal</span><span class="muted">${Math.min(td,g)}/${g}</span></div><div class="bar thin"><i class="${td>=g?"g":""}" style="width:${Math.min(100,Math.round(100*td/g))}%"></i></div></div>
+      <button class="me" onclick="go('settings')" title="Profile and settings">${avatar(S.profile,34)}<span><b>${esc(S.profile.name)}</b><small>${gradeLabel(S.profile.grade)} · ${esc(testName())}</small></span></button>
+    </div>`;
+  $("tabbar").innerHTML=NAV.map(([k,s])=>`<button class="${view===k?"on":""}" onclick="go('${k}')" aria-label="${s}" ${view===k?'aria-current="page"':""}>${ic(k,22)}<span>${s}</span>${badge(k)}</button>`).join("");
+  $("topbar").innerHTML=`<div class="tt">${view==="home"?`<div class="mbrand"><span class="logo sm">${ic("star",15)}</span>Prep Lab</div>`:`<h1>${TITLES[view]}</h1><p>${SUBS[view]}</p>`}</div>
+    <div class="tr"><button class="iconbtn" onclick="quickTheme()" title="Switch to ${isDark()?"light":"dark"} mode" aria-label="Switch to ${isDark()?"light":"dark"} mode">${ic(isDark()?"sun":"moon")}</button><button class="iconbtn avbtn" onclick="go('settings')" aria-label="Profile and settings">${avatar(S.profile,36)}</button></div>`;
 }
+function clearAuto(){ if(autoTimer){ clearTimeout(autoTimer); autoTimer=null; } }
 function go(v){
-  if(T && !T.done && v!=="test"){ if(!confirm("Leave the timed test? Your answers on this test will be lost.")) return; stopTimer(); T=null; }
-  view=v; renderNav(); render(); window.scrollTo(0,0);
+  if(T && !T.done && v!=="test"){ if(S.settings.confirmLeave && !confirm("Leave the timed test? Your answers on this test will be lost.")) return; stopTimer(); T=null; }
+  clearAuto(); view=v; renderNav(); render(); window.scrollTo(0,0);
 }
-function render(){ ({home:rHome,practice:rPractice,test:rTest,review:rReview,cards:rCards,progress:rProgress})[view](); }
+function render(){ ({home:rHome,practice:rPractice,test:rTest,review:rReview,cards:rCards,progress:rProgress,settings:rSettings})[view](); }
 function secTag(q){ return `<span class="tag ${q.s==="M"?"m":""}">${q.s==="M"?"Math":"English"} · ${TOPICS[q.t].n}</span>`; }
 function choicesHTML(q,picked,reveal,fn){
   return `<div class="choices">${q.c.map((c,i)=>{ let cls="choice";
-    if(reveal){ if(i===q.a) cls+=" correct"; else if(i===picked) cls+=" wrong"; } else if(i===picked) cls+=" sel";
+    if(reveal){ if(i===q.a) cls+=" correct"; else if(i===picked) cls+=" wrong"; else cls+=" dim"; } else if(i===picked) cls+=" sel";
     return `<button class="${cls}" ${reveal?"disabled":""} onclick="${fn}(${i})"><span class="letter">${"ABCD"[i]}</span><span>${c}</span></button>`; }).join("")}</div>`;
 }
 function qBody(q){ return `${q.p?`<div class="passage">${q.p}</div>`:""}<p class="stem">${q.q}</p>`; }
+function tile(i,k,v,s,cls){ return `<div class="tile"><span class="ti ${cls||""}">${ic(i,19)}</span><div style="min-width:0"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div></div>`; }
+function qk(onclick,i,title,desc,cls){ return `<button class="qk" onclick="${onclick}"><span class="ti ${cls||""}">${ic(i,19)}</span><span><b>${title}</b><span class="d">${desc}</span></span></button>`; }
 
-/* ---------- Dashboard ---------- */
+/* =====================================================================
+   SIGN-UP / PROFILE PICKER
+   ===================================================================== */
+let SU={grade:"9",test:"SAT",goal:20};
+function suPick(el,key,val){ SU[key]=val; [...el.parentNode.children].forEach(b=>b.classList.toggle("on",b===el));
+  if(key==="test"){ const t=$("su-target"); if(t) t.placeholder= val==="ACT"?"e.g. 32 (1–36)":"e.g. 1450 (400–1600)"; } }
+function segPick(key,opts){ return `<div class="seg full" role="group">${opts.map(([v,l])=>`<button type="button" class="${SU[key]===v?"on":""}" onclick="suPick(this,'${key}',${typeof v==="string"?`'${v}'`:v})">${l}</button>`).join("")}</div>`; }
+function brandBlock(){ return `<div class="brand"><span class="logo">${ic("star",20)}</span><div><b>Prep Lab</b><small>SAT · ACT</small></div></div>`; }
+function showAuth(mode){
+  stopTimer(); clearAuto();
+  $("shell").hidden=true; $("tabbar").hidden=true; const a=$("auth"); a.hidden=false;
+  if(mode==="pick"&&P.list.length){
+    a.innerHTML=`<div class="auth one"><div class="auth-card">
+      <div class="row center">${brandBlock()}</div>
+      <div style="text-align:center"><h2>Welcome back</h2><p class="muted">Who’s studying today?</p></div>
+      <div class="plist">${P.list.map(p=>{ const u=loadUser(p.id); let n=0; for(const k in u.stats) n+=u.stats[k].n||0;
+        return `<button class="pitem" onclick="signIn('${p.id}')">${avatar(p,44)}<span><b>${esc(p.name)}</b><small>${n} question${n===1?"":"s"} answered</small></span>${ic("arrow",18)}</button>`; }).join("")}</div>
+      <label class="chk"><input type="checkbox" id="pk-remember" checked> Keep me signed in on this device</label>
+      <button class="btn block" onclick="showAuth('signup')">${ic("plus",18)} Create a new profile</button>
+    </div></div>`;
+    return;
+  }
+  SU={grade:"9",test:"SAT",goal:20};
+  a.innerHTML=`<div class="auth">
+    <div class="auth-art">${brandBlock()}
+      <h1>Your personal SAT &amp; ACT coach.</h1>
+      <p>Practice a little every day, and Prep Lab keeps track of what you’ve mastered and what needs work.</p>
+      <ul class="feat">
+        <li><span class="fi">${ic("book",17)}</span><span>${BANK.length} hand-written questions, plus endless new ones generated on the fly</span></li>
+        <li><span class="fi">${ic("test",17)}</span><span>Timed tests with real SAT pacing and full explanations</span></li>
+        <li><span class="fi">${ic("cards",17)}</span><span>${DECKS.vocab.length+DECKS.grammar.length+DECKS.formulas.length} flashcards: vocabulary, grammar rules, and formulas</span></li>
+        <li><span class="fi">${ic("progress",17)}</span><span>Progress tracking, streaks, and a daily goal</span></li>
+      </ul>
+    </div>
+    <form class="auth-card" onsubmit="createProfile(event)" novalidate>
+      <div><h2>Create your profile</h2><p class="muted">Takes about 20 seconds. No email or password needed.</p></div>
+      <label class="fl">What should we call you?<input class="inp" id="su-name" maxlength="30" autocomplete="given-name" placeholder="Your first name"></label>
+      <div class="fl"><span>Grade</span>${segPick("grade",[["9","9th"],["10","10th"],["11","11th"],["12","12th"],["other","Other"]])}</div>
+      <div class="fl"><span>Which test are you preparing for?</span>${segPick("test",[["SAT","SAT"],["ACT","ACT"],["Both","Both"]])}</div>
+      <div class="two">
+        <label class="fl"><span>Target score <em>optional</em></span><input class="inp" id="su-target" inputmode="numeric" maxlength="4" placeholder="e.g. 1450 (400–1600)"></label>
+        <label class="fl"><span>Test date <em>optional</em></span><input class="inp" id="su-date" type="date"></label>
+      </div>
+      <div class="fl"><span>Daily goal <em>questions per day</em></span>${segPick("goal",[[10,"10"],[20,"20"],[30,"30"],[50,"50"]])}</div>
+      <label class="chk"><input type="checkbox" id="su-remember" checked> Keep me signed in on this device</label>
+      <p class="err" id="su-err" role="alert"></p>
+      <button class="btn pri lg block" type="submit">Get started ${ic("arrow",18)}</button>
+      ${P.list.length?`<button type="button" class="btn ghost block" onclick="showAuth('pick')">I already have a profile</button>`:""}
+      <p class="fine">Your profile and progress are saved only in this browser.</p>
+    </form></div>`;
+  setTimeout(()=>{ const n=$("su-name"); if(n) n.focus(); },50);
+}
+function checkTarget(v,test){
+  v=String(v||"").trim(); if(!v) return "";
+  const n=Number(v); if(!Number.isInteger(n)) return null;
+  if(test==="ACT") return n>=1&&n<=36? String(n) : null;
+  return n>=400&&n<=1600? String(n) : null;
+}
+function createProfile(e){
+  if(e) e.preventDefault();
+  const err=$("su-err"), name=($("su-name").value||"").trim().replace(/\s+/g," ");
+  if(!name){ err.textContent="Please enter your name."; $("su-name").focus(); return; }
+  const target=checkTarget($("su-target").value,SU.test);
+  if(target===null){ err.textContent= SU.test==="ACT"?"ACT scores range from 1 to 36.":"SAT scores range from 400 to 1600."; $("su-target").focus(); return; }
+  const id="p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  const old=!P.list.length? parse(lsGet(OLDKEY)) : null;
+  S= old? normalize(old) : DEF();
+  if(old && old.theme) S.settings.theme=old.theme;
+  S.profile={name,grade:SU.grade,test:SU.test,target,date:$("su-date").value||"",goal:SU.goal,color:P.list.length%AV.length};
+  P.list.push({id,name,color:S.profile.color});
+  if($("su-remember").checked){ P.current=id; ssDel(SKEY); } else { P.current=null; ssSet(SKEY,id); }
+  UID=id; save(); savePro(); if(old) lsDel(OLDKEY);
+  enterApp(); toast(old?`Welcome, ${name}! Your earlier progress was moved into your profile.`:`Welcome to Prep Lab, ${name}!`,"good");
+}
+function signIn(id){
+  const p=P.list.find(x=>x.id===id); if(!p) return;
+  const rem=$("pk-remember"); if(!rem||rem.checked){ P.current=id; ssDel(SKEY); } else { P.current=null; ssSet(SKEY,id); }
+  savePro(); UID=id; S=loadUser(id); if(!S.profile.name) S.profile.name=p.name;
+  enterApp(); toast(`Welcome back, ${firstName()}!`,"good");
+}
+function enterApp(){
+  const a=$("auth"); a.hidden=true; a.innerHTML="";
+  $("shell").hidden=false; $("tabbar").hidden=false;
+  sess=null; T=null; FC.order=[]; FC.i=0; FC.filter="all";
+  applySettings(); view="home"; renderNav(); render(); window.scrollTo(0,0);
+}
+function signOut(){
+  if(T&&!T.done&&!confirm("Leave the timed test? Your answers on this test will be lost.")) return;
+  stopTimer(); clearAuto(); T=null; sess=null;
+  P.current=null; ssDel(SKEY); savePro(); UID=null; S=DEF(); applySettings();
+  showAuth(P.list.length?"pick":"signup"); window.scrollTo(0,0);
+}
+function setRemember(on){ if(on){ P.current=UID; ssDel(SKEY); } else { P.current=null; ssSet(SKEY,UID); } savePro(); rSettings(); toast(on?"You’ll stay signed in on this device.":"You’ll be asked to choose your profile next time.","good"); }
+function deleteProfile(){
+  if(!confirm(`Delete the profile “${S.profile.name}” and ALL of its progress? This cannot be undone.`)) return;
+  lsDel(UKEY+UID); P.list=P.list.filter(p=>p.id!==UID); savePro(); toast("Profile deleted"); signOut();
+}
+
+/* =====================================================================
+   DASHBOARD
+   ===================================================================== */
 const TIPS=[
  "On SAT Reading & Writing, read the question first so you know what to look for in the passage.",
  "For punctuation questions, first decide whether each side of the blank is an independent clause.",
  "On “Words in Context,” predict your own word for the blank before looking at the choices.",
  "When two choices are both grammatical, the shorter one is usually correct.",
  "For transitions, name the relationship (contrast, cause, addition, example) before you look at the options.",
- "On math, plug the answer choices back in when you’re stuck — it’s a legitimate strategy.",
- "Percent changes multiply: a 20% increase then a 20% decrease does NOT return to the original.",
- "If a question says “given,” you’re working with conditional probability — shrink the denominator.",
+ "On math, plugging the answer choices back in is a legitimate strategy when you’re stuck.",
+ "Percent changes multiply: a 20% increase followed by a 20% decrease does NOT return to the original.",
+ "If a question says “given,” you’re working with conditional probability. Shrink the denominator.",
  "For rhetorical synthesis, the right answer achieves the stated GOAL, not just any true fact.",
  "Outliers pull the mean much more than the median.",
- "When a modifier opens a sentence, the very next noun must be the thing it describes."
+ "When a modifier opens a sentence, the very next noun must be the thing it describes.",
+ "Dividing an inequality by a negative number flips the sign. It’s one of the most common traps.",
+ "Possessive pronouns (its, theirs, whose) never take apostrophes.",
+ "Short daily sessions beat one long cram. Consistency is what moves your score."
 ];
+function greet(){ const h=new Date().getHours(); return h<5?"Burning the midnight oil":h<12?"Good morning":h<18?"Good afternoon":"Good evening"; }
+function countdown(){ const d=S.profile.date; if(!d) return null; const t=new Date(d+"T00:00:00"); if(isNaN(t)) return null; const now=new Date(); now.setHours(0,0,0,0); return Math.round((t-now)/864e5); }
 function rHome(){
-  const t=totals(), te=totals("E"), tm=totals("M"), ds=dayStreak(), td=S.days[today()]||0;
-  const weak=Object.keys(TOPICS).filter(k=>S.stats[k]&&S.stats[k].n>=3).sort((a,b)=>acc(a)-acc(b))[0];
+  const t=totals(), te=totals("E"), tm=totals("M"), ds=dayStreak(), td=S.days[today()]||0, g=goal(), cd=countdown();
+  const cdTxt= cd===null? `<a href="#" onclick="go('settings');return false">Add your test date</a> to see a countdown.`
+    : cd>1? `<b>${cd} days</b> until your ${esc(testName())}.` : cd===1? `Your ${esc(testName())} is <b>tomorrow</b>. Review lightly and get some sleep!`
+    : cd===0? `<b>Test day!</b> You’ve got this.` : `Your test date has passed. <a href="#" onclick="go('settings');return false">Update it</a>.`;
+  const weak=Object.keys(TOPICS).filter(k=>S.stats[k]&&S.stats[k].n>=3).sort((a,b)=>acc(a)-acc(b)).slice(0,3);
   const learn=Object.values(S.cards).reduce((n,d)=>n+Object.values(d).filter(v=>v==="learn").length,0);
+  const sline=(l,x,cls)=>`<div class="sline"><span>${l}</span><div class="bar"><i class="${cls}" style="width:${x.n?x.p:0}%"></i></div><span class="n">${x.n?x.p+"%":"—"}</span></div>`;
   app.innerHTML=`
-  <section class="panel">
-    <h2>Welcome back${td?" — "+td+" answered today":""}</h2>
-    <p class="muted">Endless SAT &amp; ACT practice: ${BANK.length} hand-written questions plus unlimited generated grammar, vocabulary, and math problems. Every answer comes with an explanation.</p>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">${greet()}</p>
+      <h1>${esc(firstName())}, ready to practice?</h1>
+      <p class="sub">${cdTxt}${S.profile.target?` Target score: <b>${esc(S.profile.target)}</b>.`:""}</p>
+      <div class="row" style="margin-top:20px"><button class="btn pri lg" onclick="startPractice('smart')">${ic("bolt",18)} Start Smart Mix</button><button class="btn lg" onclick="go('test')">${ic("test",18)} Timed test</button></div>
+    </div>
+    <div class="hero-r">${ring(td/g,136,12,`${td}<span>/${g}</span>`,"today",td>=g?"var(--good)":"")}
+      <small class="muted" style="max-width:150px">${td>=g?"Daily goal complete. Nice work!":`${g-td} more to hit your daily goal`}</small></div>
   </section>
   <div class="tiles">
-    <div class="tile"><div class="k">Answered</div><div class="v">${t.n}</div><div class="s">${t.p}% correct overall</div></div>
-    <div class="tile"><div class="k">English</div><div class="v">${te.n?te.p+"%":"—"}</div><div class="s">${te.n} questions</div></div>
-    <div class="tile"><div class="k">Math</div><div class="v">${tm.n?tm.p+"%":"—"}</div><div class="s">${tm.n} questions</div></div>
-    <div class="tile"><div class="k">Day streak</div><div class="v">${ds}</div><div class="s">Best answer streak: ${S.streak.best}</div></div>
+    ${tile("check","Answered",t.n,t.n?`${t.p}% correct overall`:"Let’s get started")}
+    ${tile("flame","Day streak",ds,ds?`day${ds===1?"":"s"} in a row`:"Practice today to start one","hot")}
+    ${tile("trophy","Best answer streak",S.streak.best,`Current: ${S.streak.cur}`,"good")}
+    ${tile("review","To review",S.missed.length,S.missed.length?"missed questions saved":"Nothing waiting","bad")}
   </div>
-  <h3>Jump in</h3>
+  <h3 class="h-sec">Jump in</h3>
   <div class="quick">
-    <button class="qk" onclick="startPractice('smart')"><b>Smart Mix</b><span>Focuses on your weakest topics, weighted toward English.</span></button>
-    <button class="qk" onclick="go('test')"><b>Timed Test</b><span>A mixed section under real time pressure.</span></button>
-    ${weak?`<button class="qk" onclick="startPractice('topic','${weak}')"><b>Fix a weak spot</b><span>${TOPICS[weak].n} — ${acc(weak)}% so far.</span></button>`:`<button class="qk" onclick="startPractice('E')"><b>All English</b><span>Grammar, transitions, vocabulary, reading.</span></button>`}
-    <button class="qk" onclick="go('review')"><b>Review missed</b><span>${S.missed.length} question${S.missed.length===1?"":"s"} waiting.</span></button>
-    <button class="qk" onclick="go('cards')"><b>Flashcards</b><span>${learn? learn+" cards marked “still learning.”" : "Vocabulary, grammar rules, and formulas."}</span></button>
+    ${qk("startPractice('smart')","bolt","Smart Mix","Targets your weakest topics, weighted toward English.")}
+    ${qk("startPractice('E')","book","All English","Grammar, transitions, vocabulary, and reading.","eng")}
+    ${qk("startPractice('M')","calc","All Math","Algebra, functions, geometry, trig, and data.","math")}
+    ${qk("go('review')","review",`Review missed`,`${S.missed.length} question${S.missed.length===1?"":"s"} waiting.`,"bad")}
+    ${qk("go('cards')","cards","Flashcards",learn?`${learn} card${learn===1?"":"s"} marked “still learning.”`:"Vocabulary, grammar rules, and formulas.","hot")}
+    ${qk("go('progress')","progress","Your progress","Accuracy by topic and your 14-day history.","good")}
   </div>
-  <h3>Tip of the day</h3>
-  <div class="tip">${TIPS[new Date().getDate()%TIPS.length]}</div>`;
+  <div class="grid2" style="margin-top:var(--gap)">
+    <section class="panel"><h3>Section strength</h3>
+      ${sline("English",te,barCls(te.n?te.p:null))}${sline("Math",tm,barCls(tm.n?tm.p:null))}
+      <div style="margin-top:14px">${weak.length?`<div class="muted mini" style="margin-bottom:4px">Focus next</div>`+weak.map(k=>`<div class="wk"><span><b>${TOPICS[k].n}</b> <span class="muted">· ${acc(k)}%</span></span><button class="btn sm" onclick="startPractice('topic','${k}')">Practice</button></div>`).join("")
+        :`<p class="muted mini">Answer at least 3 questions in a topic and your weakest areas will show up here.</p>`}</div>
+    </section>
+    <section class="panel"><h3>Tip of the day</h3><div class="tipbox">${TIPS[Math.floor(Date.now()/864e5)%TIPS.length]}</div>
+      <p class="muted mini" style="margin-top:14px">${BANK.length} hand-written questions · ${Object.values(GEN).reduce((n,a)=>n+a.length,0)} question generators · ${DECKS.vocab.length} vocabulary words</p></section>
+  </div>`;
 }
 
-/* ---------- Practice ---------- */
+/* =====================================================================
+   PRACTICE
+   ===================================================================== */
+const PRAISE=["Correct!","Nice work!","Exactly right!","Nailed it!","Great job!","You got it!"];
 function startPractice(kind,topic){
-  sess={mode:{kind,topic},seen:new Set(),n:0,c:0,q:null,picked:null,answered:false,queue:null};
+  clearAuto();
+  sess={mode:{kind,topic},seen:new Set(),n:0,c:0,q:null,picked:null,answered:false,queue:null,praise:""};
   if(kind==="review"){ sess.queue=shuffle(S.missed.slice()); if(!sess.queue.length){ sess=null; go("review"); return; } }
   nextQ(); view= kind==="review"?"review":"practice"; renderNav(); render(); window.scrollTo(0,0);
 }
@@ -1460,197 +2495,319 @@ function nextQ(){
   else sess.q=drawQuestion(sess.mode,sess.seen);
   sess.picked=null; sess.answered=false;
 }
-function modeLabel(m){ return m.kind==="topic"?TOPICS[m.topic].n : {E:"All English",M:"All Math",X:"Mixed (60% English)",smart:"Smart Mix",review:"Review missed"}[m.kind]; }
+function modeLabel(m){ return m.kind==="topic"?TOPICS[m.topic].n : {E:"All English",M:"All Math",X:"Mixed",smart:"Smart Mix",review:"Review"}[m.kind]; }
 function pAnswer(i){
   if(!sess||sess.answered) return; sess.picked=i; sess.answered=true; const ok=i===sess.q.a;
-  sess.n++; if(ok) sess.c++; rec(sess.q,ok,sess.mode.kind==="review"); renderNav(); render();
-  const fb=document.querySelector(".fb"); if(fb&&fb.getBoundingClientRect().bottom>innerHeight) fb.scrollIntoView({behavior:"smooth",block:"nearest"});
+  sess.praise=pick(PRAISE); sess.n++; if(ok) sess.c++; rec(sess.q,ok,sess.mode.kind==="review"); beep(ok); renderNav(); render();
+  const fb=document.querySelector(".fb"); if(fb&&fb.getBoundingClientRect().bottom>innerHeight) fb.scrollIntoView({behavior:S.settings.motion?"smooth":"auto",block:"nearest"});
+  const last=sess.mode.kind==="review"&&!sess.queue.length;
+  if(ok && S.settings.autoNext && !last){ clearAuto(); const s=sess; autoTimer=setTimeout(()=>{ autoTimer=null; if(sess===s&&sess.answered) pNext(); },S.settings.autoNext); }
 }
-function pNext(){ if(!sess) return; nextQ(); render(); window.scrollTo({top:0,behavior:"smooth"}); }
-function endPractice(){ const r=sess&&sess.mode.kind==="review"; sess=null; if(r) go("review"); else render(); }
+function pNext(){ if(!sess) return; clearAuto(); nextQ(); render(); window.scrollTo({top:0,behavior:S.settings.motion?"smooth":"auto"}); }
+function pSkip(){ if(!sess||sess.answered) return; nextQ(); render(); }
+function endPractice(){ clearAuto(); const r=sess&&sess.mode.kind==="review"; sess=null; if(r) go("review"); else render(); window.scrollTo(0,0); }
 function practiceScreen(){
-  const q=sess.q, ok=sess.picked===q.a;
-  return `<div class="qtop"><button class="ghost" onclick="endPractice()">← ${sess.mode.kind==="review"?"Back to review":"Choose topic"}</button>
-    <div class="score">${modeLabel(sess.mode)} · ${sess.c}/${sess.n} correct${S.streak.cur>1?` · streak ${S.streak.cur}`:""}</div></div>
+  const q=sess.q, ok=sess.picked===q.a, rv=sess.mode.kind==="review", st=S.settings;
+  return `<div class="qwrap"><div class="pbar">
+    <button class="btn ghost sm" onclick="endPractice()">${ic("back",16)} ${rv?"Back to review":"All topics"}</button>
+    <div class="pmeta"><span class="pill">${modeLabel(sess.mode)}</span><span class="pill">${ic("check",14)} ${sess.c}/${sess.n}</span>${S.streak.cur>1?`<span class="pill hot">${ic("flame",14)} ${S.streak.cur} in a row</span>`:""}</div>
+  </div>
   <article class="qcard">
-    <div class="tags">${secTag(q)}${q.gen?`<span class="tag soft">Generated</span>`:""}${sess.mode.kind==="review"?`<span class="tag soft">${sess.queue.length} left after this</span>`:""}</div>
+    <div class="tags">${secTag(q)}${q.gen&&st.showGen?`<span class="tag soft">Generated</span>`:""}${rv?`<span class="tag soft">${sess.queue.length} left after this</span>`:""}<span class="qnum">#${sess.answered?sess.n:sess.n+1}</span></div>
     ${qBody(q)}
     ${choicesHTML(q,sess.picked,sess.answered,"pAnswer")}
-    ${sess.answered?`<div class="fb"><div class="res ${ok?"ok":"no"}">${ok?"Correct!":"Not quite — the answer is "+"ABCD"[q.a]+"."}</div><div>${q.e}</div></div>
-      <div class="actions"><span class="muted mini">${!ok?"Saved to your Review list.":sess.mode.kind==="review"?"Removed from your Review list.":""}</span>
-      ${sess.mode.kind==="review"&&!sess.queue.length?`<button class="btn pri" onclick="endPractice()">Finish review</button>`:`<button class="btn pri" onclick="pNext()">Next question →</button>`}</div>`
-      :`<p class="hint">Press <kbd>1</kbd>–<kbd>4</kbd> or <kbd>A</kbd>–<kbd>D</kbd> to answer.</p>`}
-  </article>`;
+    ${sess.answered?`<div class="fb ${ok?"ok":"no"}"><div class="res">${ic(ok?"check":"x",18)} ${ok?sess.praise:"Not quite. The answer is "+"ABCD"[q.a]+"."}</div><div>${q.e}</div></div>
+      <div class="actions"><span class="muted mini">${!ok?"Saved to your Review list.":rv?"Removed from your Review list.":(st.autoNext?"Next question coming up…":"")}</span>
+      ${rv&&!sess.queue.length?`<button class="btn pri" onclick="endPractice()">Finish review ${ic("check",16)}</button>`:`<button class="btn pri" onclick="pNext()">Next question ${ic("arrow",16)}</button>`}</div>`
+      :`<div class="actions"><span class="hint">${st.hints?`Press <kbd>1</kbd>–<kbd>4</kbd> or <kbd>A</kbd>–<kbd>D</kbd> to answer${rv?"":", <kbd>S</kbd> to skip"}`:""}</span>${rv?"":`<button class="btn ghost sm" onclick="pSkip()">Skip ${ic("skip",14)}</button>`}</div>`}
+  </article></div>`;
 }
-function topicBtn(k){ const a=acc(k), s=S.stats[k];
+function topicBtn(k){ const a=acc(k), s=S.stats[k], nb=BANK.filter(q=>q.t===k).length;
   return `<button class="topic ${TOPICS[k].s==="M"?"m":""}" onclick="startPractice('topic','${k}')"><b>${TOPICS[k].n}</b>
-    <span class="meta">${s&&s.n?`${a}% · ${s.n} answered`:"Not started"}${GEN[k]?" · endless":""}</span><div class="bar"><i class="${barCls(a)}" style="width:${a||0}%"></i></div></button>`; }
+    <span class="meta"><span>${s&&s.n?`${a}% · ${s.n} answered`:"Not started"}</span><span>${nb}${GEN[k]?"+ ∞":""}</span></span><div class="bar thin"><i class="${barCls(a)}" style="width:${a||0}%"></i></div></button>`; }
 function rPractice(){
   if(sess && sess.mode.kind!=="review"){ app.innerHTML=practiceScreen(); return; }
-  app.innerHTML=`<section class="panel"><h2>Practice</h2><p class="muted">Untimed practice with instant feedback. Questions you miss are saved for review. Topics marked “endless” mix hand-written questions with freshly generated ones.</p>
-  <div class="mixrow" style="margin-top:14px">
-    <button class="qk" onclick="startPractice('smart')"><b>Smart Mix</b><span>Targets weak topics</span></button>
-    <button class="qk" onclick="startPractice('X')"><b>Mixed</b><span>60% English · 40% Math</span></button>
-    <button class="qk" onclick="startPractice('E')"><b>All English</b><span>Reading &amp; Writing</span></button>
-    <button class="qk" onclick="startPractice('M')"><b>All Math</b><span>Algebra through trig</span></button>
+  const mx=S.settings.mixE;
+  app.innerHTML=`<div class="quick">
+    ${qk("startPractice('smart')","bolt","Smart Mix","Targets your weakest topics.")}
+    ${qk("startPractice('X')","shuffle","Mixed",`${mx}% English · ${100-mx}% Math`,"good")}
+    ${qk("startPractice('E')","book","All English","Reading &amp; Writing","eng")}
+    ${qk("startPractice('M')","calc","All Math","Algebra through trig","math")}
   </div>
-  <h3>English topics</h3><div class="topics">${ETOP.map(topicBtn).join("")}</div>
-  <h3>Math topics</h3><div class="topics">${MTOP.map(topicBtn).join("")}</div></section>`;
+  <div class="ph"><h3 class="h-sec">English topics</h3><span class="muted mini">“+ ∞” = endless generated questions</span></div>
+  <div class="topics">${ETOP.map(topicBtn).join("")}</div>
+  <h3 class="h-sec">Math topics</h3><div class="topics">${MTOP.map(topicBtn).join("")}</div>`;
 }
 
-/* ---------- Timed test ---------- */
+/* =====================================================================
+   TIMED TEST
+   ===================================================================== */
 let testCfg={n:20,mix:"X"};
 function stopTimer(){ if(timerId){ clearInterval(timerId); timerId=null; } }
+function estSecs(n,mix){ const ne= mix==="E"?n : mix==="M"?0 : Math.round(n*S.settings.mixE/100); return Math.round((ne*71+(n-ne)*95)*(Number(S.settings.timeMult)||1)); }
 function startTest(){
-  const seen=new Set(), qs=[]; const n=testCfg.n;
-  if(testCfg.mix==="X"){ const ne=Math.round(n*.6); for(let i=0;i<ne;i++) qs.push(drawQuestion({kind:"E"},seen)); for(let i=ne;i<n;i++) qs.push(drawQuestion({kind:"M"},seen)); }
+  const seen=new Set(), qs=[], n=testCfg.n;
+  if(testCfg.mix==="X"){ const ne=Math.round(n*S.settings.mixE/100); for(let i=0;i<ne;i++) qs.push(drawQuestion({kind:"E"},seen)); for(let i=ne;i<n;i++) qs.push(drawQuestion({kind:"M"},seen)); }
   else for(let i=0;i<n;i++) qs.push(drawQuestion({kind:testCfg.mix},seen));
-  const secs=qs.reduce((s,q)=>s+(q.s==="E"?71:95),0);
-  T={qs,ans:qs.map(()=>null),idx:0,secs,end:Date.now()+secs*1000,start:Date.now(),done:false};
-  stopTimer(); timerId=setInterval(tick,500); render();
+  const secs=Math.round(qs.reduce((s,q)=>s+(q.s==="E"?71:95),0)*(Number(S.settings.timeMult)||1));
+  T={qs,ans:qs.map(()=>null),flag:qs.map(()=>false),idx:0,secs,end:Date.now()+secs*1000,start:Date.now(),done:false,mix:testCfg.mix};
+  stopTimer(); timerId=setInterval(tick,500); render(); window.scrollTo(0,0);
 }
-function fmtTime(s){ s=Math.max(0,Math.ceil(s)); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
-function tick(){ if(!T||T.done){ stopTimer(); return; } const left=(T.end-Date.now())/1000; const el=document.getElementById("timer");
-  if(el){ el.textContent=fmtTime(left); el.classList.toggle("low",left<60); } if(left<=0) submitTest(true); }
+function fmtTime(s){ s=Math.max(0,Math.ceil(s)); const h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=String(s%60).padStart(2,"0"); return h?`${h}:${String(m).padStart(2,"0")}:${x}`:`${m}:${x}`; }
+function tick(){ if(!T||T.done){ stopTimer(); return; } const left=(T.end-Date.now())/1000; const el=$("timerv");
+  if(el&&S.settings.showTimer){ el.textContent=fmtTime(left); $("timer").classList.toggle("low",left<60); } if(left<=0) submitTest(true); }
 function tAnswer(i){ if(!T||T.done) return; T.ans[T.idx]=i; render(); }
 function tGo(i){ if(!T) return; T.idx=Math.max(0,Math.min(T.qs.length-1,i)); render(); }
+function tFlag(){ if(!T||T.done) return; T.flag[T.idx]=!T.flag[T.idx]; render(); }
 function submitTest(auto){
   if(!T||T.done) return;
   if(!auto){ const un=T.ans.filter(a=>a===null).length; if(un && !confirm(`You have ${un} unanswered question${un>1?"s":""}. Submit anyway?`)) return; }
-  stopTimer(); T.done=true; T.used=Math.round((Date.now()-T.start)/1000);
-  T.qs.forEach((q,i)=>rec(q,T.ans[i]===q.a,false));
+  stopTimer(); T.done=true; T.used=Math.min(T.secs,Math.round((Date.now()-T.start)/1000));
+  const before=S.days[today()]||0;
+  T.qs.forEach((q,i)=>rec(q,T.ans[i]===q.a,false,true));
   const c=T.qs.filter((q,i)=>T.ans[i]===q.a).length;
-  S.tests.push({d:today(),c,n:T.qs.length,mix:testCfg.mix}); if(S.tests.length>50) S.tests.shift(); save();
+  S.tests.push({d:today(),c,n:T.qs.length,mix:T.mix}); if(S.tests.length>50) S.tests.shift(); save();
+  if(auto) toast("Time’s up! Your test was submitted.");
+  if(before<goal() && (S.days[today()]||0)>=goal()) toast(`Daily goal reached: ${goal()} questions today!`,"good");
   renderNav(); render(); window.scrollTo(0,0);
 }
+const MIXN={X:"Mixed",E:"English",M:"Math"};
 function rTest(){
   if(!T){
-    const est=testCfg.mix==="E"?testCfg.n*71:testCfg.mix==="M"?testCfg.n*95:Math.round(testCfg.n*.6)*71+(testCfg.n-Math.round(testCfg.n*.6))*95;
-    const last=S.tests.slice(-5).reverse();
-    app.innerHTML=`<section class="panel"><h2>Timed Test</h2><p class="muted">Simulates test pressure: about 71 seconds per Reading &amp; Writing question and 95 seconds per Math question (the real SAT pacing). You can skip around and change answers until you submit. Explanations appear at the end.</p>
-      <div class="field"><label>Number of questions</label><div class="seg">${[10,20,30,44].map(n=>`<button class="${testCfg.n===n?"on":""}" onclick="testCfg.n=${n};rTest()">${n}</button>`).join("")}</div></div>
-      <div class="field"><label>Content</label><div class="seg">${[["X","Mixed (60% English)"],["E","English only"],["M","Math only"]].map(([k,l])=>`<button class="${testCfg.mix===k?"on":""}" onclick="testCfg.mix='${k}';rTest()">${l}</button>`).join("")}</div></div>
-      <p>Time limit: <b>${fmtTime(est)}</b></p>
-      <div class="row" style="margin-top:12px"><button class="btn pri" onclick="startTest()">Start test</button></div></section>
-      ${last.length?`<section class="panel"><h3 style="margin-top:0">Recent tests</h3>${last.map(t=>`<div class="row" style="justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0"><span>${t.d} · ${{X:"Mixed",E:"English",M:"Math"}[t.mix]}</span><b>${t.c}/${t.n} (${Math.round(100*t.c/t.n)}%)</b></div>`).join("")}</section>`:""}`;
+    const last=S.tests.slice(-6).reverse(), mt=Number(S.settings.timeMult)||1;
+    app.innerHTML=`<div class="grid2" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)">
+      <section class="panel"><h3>Set up your test</h3>
+        <p class="muted mini" style="margin-top:-6px">About 71 seconds per Reading &amp; Writing question and 95 per Math question, the real SAT pacing. You can skip around, flag questions, and change answers until you submit.</p>
+        <div class="h-sec" style="margin-top:18px">Length</div>
+        <div class="opts">${[10,20,30,44].map(n=>`<button class="opt ${testCfg.n===n?"on":""}" onclick="testCfg.n=${n};rTest()"><b>${n}</b><span>questions · ${fmtTime(estSecs(n,testCfg.mix))}</span></button>`).join("")}</div>
+        <div class="h-sec">Content</div>
+        <div class="seg">${[["X",`Mixed (${S.settings.mixE}% English)`],["E","English only"],["M","Math only"]].map(([k,l])=>`<button class="${testCfg.mix===k?"on":""}" onclick="testCfg.mix='${k}';rTest()">${l}</button>`).join("")}</div>
+        <div class="row between" style="margin-top:24px">
+          <span class="muted mini">${ic("test",16)}</span>
+          <span style="flex:1" class="mini">Time limit <b>${fmtTime(estSecs(testCfg.n,testCfg.mix))}</b>${mt!==1?` · includes ${mt}× extra time`:""} · <a href="#" onclick="go('settings');return false">timing options</a></span>
+          <button class="btn pri lg" onclick="startTest()">Start test ${ic("arrow",18)}</button>
+        </div>
+      </section>
+      <section class="panel"><h3>Recent tests</h3>
+        ${last.length?last.map(t=>{ const p=Math.round(100*t.c/t.n); return `<div class="hist"><span><b>${t.c}/${t.n}</b> <span class="muted">· ${MIXN[t.mix]||"Mixed"} · ${t.d.slice(5)}</span></span><span style="width:90px"><div class="bar thin"><i class="${barCls(p)}" style="width:${p}%"></i></div></span><b style="width:42px;text-align:right">${p}%</b></div>`; }).join("")
+          :`<p class="muted mini">No tests yet. Your scores will appear here.</p>`}
+      </section></div>`;
     return;
   }
   if(!T.done){
-    const q=T.qs[T.idx], left=(T.end-Date.now())/1000, answered=T.ans.filter(a=>a!==null).length;
-    app.innerHTML=`<div class="testbar"><div><b>Question ${T.idx+1}</b> <span class="muted">of ${T.qs.length} · ${answered} answered</span></div>
-      <div id="timer" class="timer ${left<60?"low":""}">${fmtTime(left)}</div><button class="btn pri sm" onclick="submitTest()">Submit</button></div>
-      <div class="qnav">${T.qs.map((x,i)=>`<button class="${T.ans[i]!==null?"ans":""} ${i===T.idx?"cur":""}" onclick="tGo(${i})">${i+1}</button>`).join("")}</div>
-      <article class="qcard"><div class="tags">${secTag(q)}</div>${qBody(q)}${choicesHTML(q,T.ans[T.idx],false,"tAnswer")}
-      <div class="actions"><button class="btn" onclick="tGo(${T.idx-1})" ${T.idx===0?"disabled":""}>← Previous</button>
-      ${T.idx<T.qs.length-1?`<button class="btn pri" onclick="tGo(${T.idx+1})">Next →</button>`:`<button class="btn pri" onclick="submitTest()">Submit test</button>`}</div></article>`;
+    const q=T.qs[T.idx], left=(T.end-Date.now())/1000, answered=T.ans.filter(a=>a!==null).length, n=T.qs.length, st=S.settings;
+    app.innerHTML=`<div class="qwrap">
+      <div class="testbar"><div class="tb-l"><b>Question ${T.idx+1}</b> <span class="muted">of ${n} · ${answered} answered</span><div class="bar thin"><i style="width:${Math.round(100*answered/n)}%"></i></div></div>
+        <div id="timer" class="timer ${st.showTimer&&left<60?"low":""}">${ic("test",20)}<span id="timerv">${st.showTimer?fmtTime(left):`<span class="muted mini">hidden</span>`}</span></div>
+        <button class="btn pri sm" onclick="submitTest()">Submit</button></div>
+      <div class="qnav">${T.qs.map((x,i)=>`<button class="${T.ans[i]!==null?"ans":""} ${i===T.idx?"cur":""} ${T.flag[i]?"fl":""}" onclick="tGo(${i})" aria-label="Question ${i+1}${T.flag[i]?", flagged":""}">${i+1}</button>`).join("")}</div>
+      <article class="qcard"><div class="tags">${secTag(q)}<button class="btn ghost sm flagbtn ${T.flag[T.idx]?"on":""}" style="margin-left:auto" onclick="tFlag()">${ic("flag",14)} ${T.flag[T.idx]?"Flagged":"Flag for review"}</button></div>
+      ${qBody(q)}${choicesHTML(q,T.ans[T.idx],false,"tAnswer")}
+      <div class="actions"><button class="btn" onclick="tGo(${T.idx-1})" ${T.idx===0?"disabled":""}>${ic("back",16)} Previous</button>
+      ${st.hints?`<span class="hint"><kbd>←</kbd> <kbd>→</kbd> move · <kbd>F</kbd> flag</span>`:""}
+      ${T.idx<n-1?`<button class="btn pri" onclick="tGo(${T.idx+1})">Next ${ic("arrow",16)}</button>`:`<button class="btn pri" onclick="submitTest()">Submit test</button>`}</div></article></div>`;
     return;
   }
-  const c=T.qs.filter((q,i)=>T.ans[i]===q.a).length, n=T.qs.length;
+  const c=T.qs.filter((q,i)=>T.ans[i]===q.a).length, n=T.qs.length, pct=Math.round(100*c/n);
   const part=s=>{ const idx=T.qs.map((q,i)=>i).filter(i=>T.qs[i].s===s); const k=idx.filter(i=>T.ans[i]===T.qs[i].a).length; return idx.length?`${k}/${idx.length}`:"—"; };
-  app.innerHTML=`<section class="panel"><h2>Test results</h2>
-    <div class="row" style="gap:28px;align-items:flex-end"><div><div class="big">${Math.round(100*c/n)}%</div><div class="muted">${c} of ${n} correct</div></div>
-    <div><b>English</b><br>${part("E")}</div><div><b>Math</b><br>${part("M")}</div><div><b>Time used</b><br>${fmtTime(T.used)} of ${fmtTime(T.secs)}</div></div>
-    <div class="row" style="margin-top:16px"><button class="btn pri" onclick="T=null;startTest()">New test</button><button class="btn" onclick="T=null;rTest()">Change settings</button>${S.missed.length?`<button class="btn" onclick="T=null;go('review')">Review missed (${S.missed.length})</button>`:""}</div></section>
-    <section class="panel"><h3 style="margin-top:0">Question by question</h3>
-    ${T.qs.map((q,i)=>{ const a=T.ans[i], ok=a===q.a; return `<details class="rv"><summary><span class="dot ${a===null?"skip":ok?"":"no"}"></span>${i+1}. ${TOPICS[q.t].n} <span class="muted mini">— ${a===null?"skipped":ok?"correct":"incorrect"}</span></summary>
+  const msg= pct>=90?"Outstanding!":pct>=75?"Strong work!":pct>=60?"Solid. Keep building.":"Every miss is something to learn. Review them below.";
+  app.innerHTML=`<section class="panel"><div class="resgrid">
+      ${ring(c/n,140,13,pct+"%",`${c} of ${n}`,pct>=80?"var(--good)":pct>=60?"var(--accent)":pct>=40?"var(--warn)":"var(--bad)")}
+      <div style="flex:1;min-width:220px"><h2 style="font-size:1.5rem">${msg}</h2>
+        <div class="row" style="gap:28px;margin-top:12px"><div class="stat"><b>${part("E")}</b><span>English</span></div><div class="stat"><b>${part("M")}</b><span>Math</span></div><div class="stat"><b>${fmtTime(T.used)}</b><span>of ${fmtTime(T.secs)} used</span></div></div>
+        <div class="row" style="margin-top:18px"><button class="btn pri" onclick="T=null;startTest()">New test</button><button class="btn" onclick="T=null;rTest()">Change settings</button>${S.missed.length?`<button class="btn" onclick="T=null;go('review')">Review missed (${S.missed.length})</button>`:""}</div></div>
+    </div></section>
+    <section class="panel"><h3>Question by question</h3>
+    ${T.qs.map((q,i)=>{ const a=T.ans[i], ok=a===q.a; return `<details class="rv"><summary><span class="dot ${a===null?"skip":ok?"":"no"}"></span>${i+1}. ${TOPICS[q.t].n} <span class="muted mini">· ${a===null?"skipped":ok?"correct":"incorrect"}${T.flag[i]?" · flagged":""}</span></summary>
       <div class="body">${qBody(q)}${choicesHTML(q,a,true,"void")}<div class="fb">${q.e}</div></div></details>`; }).join("")}</section>`;
 }
 
-/* ---------- Review ---------- */
+/* =====================================================================
+   REVIEW
+   ===================================================================== */
 function rReview(){
   if(sess && sess.mode.kind==="review"){ if(!sess.q){ sess=null; } else { app.innerHTML=practiceScreen(); return; } }
-  const by={}; S.missed.forEach(m=>{ by[m.t]=(by[m.t]||0)+1; });
-  app.innerHTML=`<section class="panel"><h2>Review missed questions</h2>
-  ${S.missed.length?`<p class="muted">You have <b>${S.missed.length}</b> question${S.missed.length>1?"s":""} to review. Answer one correctly and it leaves the list; miss it again and it stays.</p>
-    <div class="row" style="margin:14px 0"><button class="btn pri" onclick="startPractice('review')">Start review</button><button class="btn bad" onclick="if(confirm('Clear all missed questions?')){S.missed=[];save();renderNav();rReview();}">Clear list</button></div>
-    <table class="prog"><tr><th>Topic</th><th style="text-align:right">Missed</th></tr>${Object.keys(by).sort((a,b)=>by[b]-by[a]).map(k=>`<tr><td>${TOPICS[k].n}</td><td class="n">${by[k]}</td></tr>`).join("")}</table>`
-  :`<p class="muted">Nothing to review — questions you miss in Practice or a Timed Test will show up here.</p><div class="row" style="margin-top:12px"><button class="btn pri" onclick="startPractice('smart')">Practice now</button></div>`}
-  </section>`;
+  const by={}; S.missed.forEach(m=>{ by[m.t]=(by[m.t]||0)+1; }); const mx=Math.max(1,...Object.values(by));
+  app.innerHTML= S.missed.length? `<div class="grid2">
+    <section class="panel"><div class="row" style="gap:16px;align-items:center">${ring(1,96,10,String(S.missed.length),"to review","var(--bad)")}
+      <div style="flex:1;min-width:180px"><h3 style="margin-bottom:4px">Ready when you are</h3><p class="muted mini">Answer a question correctly and it leaves the list. Miss it again and it stays for another round.</p></div></div>
+      <div class="row" style="margin-top:18px"><button class="btn pri lg" onclick="startPractice('review')">${ic("review",18)} Start review</button>
+      <button class="btn ghost" onclick="if(confirm('Clear all ${S.missed.length} missed questions?')){S.missed=[];save();renderNav();rReview();}">Clear list</button></div></section>
+    <section class="panel"><h3>Missed by topic</h3><table class="prog">${Object.keys(by).sort((a,b)=>by[b]-by[a]).map(k=>`<tr><td>${TOPICS[k].n}</td><td style="width:35%"><div class="bar thin"><i class="r" style="width:${Math.round(100*by[k]/mx)}%"></i></div></td><td class="n"><b>${by[k]}</b></td></tr>`).join("")}</table></section></div>`
+  : `<section class="panel" style="text-align:center;padding:48px 24px"><div style="display:grid;place-items:center;margin-bottom:12px"><span class="ti good" style="width:56px;height:56px;border-radius:16px">${ic("check",28)}</span></div>
+      <h3 style="font-size:1.2rem">Nothing to review</h3><p class="muted">Questions you miss in Practice or a Timed Test will show up here.</p>
+      <div class="row" style="justify-content:center;margin-top:16px"><button class="btn pri" onclick="startPractice('smart')">${ic("bolt",18)} Practice now</button></div></section>`;
 }
 
-/* ---------- Flashcards ---------- */
+/* =====================================================================
+   FLASHCARDS
+   ===================================================================== */
 const FC={deck:"vocab",filter:"all",order:[],i:0};
-function fcState(id){ return (S.cards[FC.deck]||{})[id]; }
 function fcBuild(shuf){ const d=DECKS[FC.deck], m=S.cards[FC.deck]||{};
-  let list=d.filter(c=> FC.filter==="all" || (FC.filter==="learn"&&m[c.id]==="learn") || (FC.filter==="notknown"&&m[c.id]!=="know"));
+  const list=d.filter(c=> FC.filter==="all" || (FC.filter==="learn"&&m[c.id]==="learn") || (FC.filter==="notknown"&&m[c.id]!=="know"));
   FC.order=(shuf?shuffle(list):list).map(c=>c.id); FC.i=0; }
 function fcSet(deck){ FC.deck=deck; FC.filter="all"; fcBuild(false); rCards(); }
 function fcFilter(f){ FC.filter=f; fcBuild(false); rCards(); }
-function fcFlip(){ const el=document.getElementById("card3d"); if(el) el.classList.toggle("flipped"); }
+function fcFlip(){ const el=$("card3d"); if(el) el.classList.toggle("flipped"); }
 function fcMove(d){ if(!FC.order.length) return; FC.i=(FC.i+d+FC.order.length)%FC.order.length; rCards(); }
 function fcMark(v){ if(!FC.order.length) return; const id=FC.order[FC.i]; (S.cards[FC.deck]=S.cards[FC.deck]||{})[id]=v; save(); fcMove(1); }
 function fcReset(){ if(confirm(`Reset “know it / still learning” marks for ${DECK_NAMES[FC.deck]}?`)){ S.cards[FC.deck]={}; save(); fcBuild(false); rCards(); } }
 function rCards(){
   if(!FC.order.length && FC.filter==="all") fcBuild(false);
-  const d=DECKS[FC.deck], m=S.cards[FC.deck]||{}; const know=d.filter(c=>m[c.id]==="know").length, learn=d.filter(c=>m[c.id]==="learn").length;
+  const d=DECKS[FC.deck], m=S.cards[FC.deck]||{};
   const card=FC.order.length? d.find(c=>c.id===FC.order[FC.i]) : null; const st=card?m[card.id]:null;
   const stp=st?`<span class="pillst ${st}">${st==="know"?"Know it":"Still learning"}</span>`:"";
-  app.innerHTML=`<div class="fcwrap"><section class="panel">
-    <div class="row" style="justify-content:space-between"><h2 style="margin:0">Flashcards</h2><span class="muted mini">${know} known · ${learn} learning · ${d.length} total</span></div>
-    <div class="bar" style="margin:10px 0 14px"><i class="g" style="width:${Math.round(100*know/d.length)}%"></i></div>
-    <div class="seg" style="margin-bottom:8px">${Object.keys(DECKS).map(k=>`<button class="${FC.deck===k?"on":""}" onclick="fcSet('${k}')">${DECK_NAMES[k]}</button>`).join("")}</div>
-    <div class="seg">${[["all","All cards"],["notknown","Not known yet"],["learn","Still learning"]].map(([k,l])=>`<button class="${FC.filter===k?"on":""}" onclick="fcFilter('${k}')">${l}</button>`).join("")}</div>
+  app.innerHTML=`<div class="fcwrap">
+    <div class="decks">${Object.keys(DECKS).map(k=>{ const mm=S.cards[k]||{}, kn=DECKS[k].filter(c=>mm[c.id]==="know").length;
+      return `<button class="deck ${FC.deck===k?"on":""}" onclick="fcSet('${k}')"><b>${DECK_NAMES[k]}</b><small>${kn}/${DECKS[k].length} known</small><div class="bar thin"><i class="g" style="width:${Math.round(100*kn/DECKS[k].length)}%"></i></div></button>`; }).join("")}</div>
+    <div class="row between"><div class="seg">${[["all","All"],["notknown","Not known yet"],["learn","Still learning"]].map(([k,l])=>`<button class="${FC.filter===k?"on":""}" onclick="fcFilter('${k}')">${l}</button>`).join("")}</div>
+      <span class="row" style="gap:6px"><button class="btn sm ghost" onclick="fcBuild(true);rCards()">${ic("shuffle",15)} Shuffle</button><button class="btn sm ghost" onclick="fcReset()">Reset</button></span></div>
     ${card?`<div class="card3d" id="card3d" tabindex="0" onclick="fcFlip()" role="button" aria-label="Flip card">
-      <div class="inner"><div class="face front"><span class="lbl">${DECK_NAMES[FC.deck]}</span><span class="st">${stp}</span>${card.front}<div class="muted mini" style="margin-top:18px">Click or press Space to flip</div></div>
+      <div class="inner"><div class="face front"><span class="lbl">${DECK_NAMES[FC.deck]} · ${FC.i+1}/${FC.order.length}</span><span class="st">${stp}</span>${card.front}<div class="fliphint">${S.settings.hints?"Tap or press Space to flip":"Tap to flip"}</div></div>
       <div class="face back"><span class="lbl">Answer</span><span class="st">${stp}</span>${card.back}</div></div></div>
-      <div class="fcctl"><button class="btn" onclick="fcMove(-1)">← Prev</button><button class="btn" onclick="fcFlip()">Flip</button><button class="btn" onclick="fcMove(1)">Next →</button></div>
-      <div class="fcctl" style="margin-top:10px"><button class="btn bad" onclick="fcMark('learn')">Still learning <kbd>L</kbd></button><button class="btn good" onclick="fcMark('know')">Know it <kbd>K</kbd></button></div>
-      <div class="row" style="justify-content:space-between;margin-top:16px"><span class="muted mini">Card ${FC.i+1} of ${FC.order.length}</span>
-      <span class="row"><button class="btn sm" onclick="fcBuild(true);rCards()">Shuffle</button><button class="btn sm" onclick="fcReset()">Reset marks</button></span></div>`
-    :`<p class="muted" style="margin-top:20px">No cards match this filter. ${FC.filter==="learn"?"Mark cards as “still learning” to build a focused review pile.":"You know every card in this deck — nice work!"}</p>`}
-  </section></div>`;
-}
-
-/* ---------- Progress ---------- */
-function rProgress(){
-  const t=totals(), te=totals("E"), tm=totals("M");
-  const days=[]; for(let i=13;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push([d,S.days[dkey(d)]||0]); }
-  const mx=Math.max(5,...days.map(x=>x[1]));
-  const row=k=>{ const s=S.stats[k], a=acc(k); return `<tr><td>${TOPICS[k].n}</td><td style="width:40%"><div class="bar"><i class="${barCls(a)}" style="width:${a||0}%"></i></div></td><td class="n">${s&&s.n?a+"%":"—"}</td><td class="n muted">${s?s.c+"/"+s.n:"0/0"}</td><td class="n"><button class="btn sm" onclick="startPractice('topic','${k}')">Practice</button></td></tr>`; };
-  const tested=Object.keys(TOPICS).filter(k=>S.stats[k]&&S.stats[k].n>=3).sort((a,b)=>acc(a)-acc(b));
-  const cardsKnown=Object.keys(DECKS).map(k=>{ const m=S.cards[k]||{}; return `${DECK_NAMES[k]}: ${DECKS[k].filter(c=>m[c.id]==="know").length}/${DECKS[k].length}`; }).join(" · ");
-  app.innerHTML=`<div class="tiles">
-    <div class="tile"><div class="k">Total answered</div><div class="v">${t.n}</div><div class="s">${t.p}% accuracy</div></div>
-    <div class="tile"><div class="k">Day streak</div><div class="v">${dayStreak()}</div><div class="s">consecutive days practiced</div></div>
-    <div class="tile"><div class="k">Answer streak</div><div class="v">${S.streak.cur}</div><div class="s">Best ever: ${S.streak.best}</div></div>
-    <div class="tile"><div class="k">Tests taken</div><div class="v">${S.tests.length}</div><div class="s">${S.tests.length?"Last: "+Math.round(100*S.tests[S.tests.length-1].c/S.tests[S.tests.length-1].n)+"%":"None yet"}</div></div>
-  </div>
-  <section class="panel" style="margin-top:18px"><div class="grid2"><div><h3 style="margin-top:0">Last 14 days</h3>
-    <div class="chart">${days.map(([d,n])=>`<div class="c" title="${dkey(d)}: ${n} questions"><i style="height:${Math.round(100*n/mx)}%"></i><span>${d.getDate()}</span></div>`).join("")}</div></div>
-    <div><h3 style="margin-top:0">Focus next</h3>${tested.length?tested.slice(0,3).map(k=>`<p>• <b>${TOPICS[k].n}</b> <span class="muted">(${acc(k)}%)</span></p>`).join(""):`<p class="muted">Answer at least 3 questions in a topic to see suggestions.</p>`}
-    <p class="muted mini" style="margin-top:10px">Flashcards known — ${cardsKnown}</p></div></div></section>
-  <section class="panel"><h3 style="margin-top:0">English — ${te.n?te.p+"%":"no data"} <span class="muted mini">(${te.n} answered)</span></h3>
-    <table class="prog">${ETOP.map(row).join("")}</table>
-    <h3>Math — ${tm.n?tm.p+"%":"no data"} <span class="muted mini">(${tm.n} answered)</span></h3>
-    <table class="prog">${MTOP.map(row).join("")}</table>
-    <div class="row" style="margin-top:18px"><button class="btn bad sm" onclick="if(confirm('Erase ALL progress, missed questions, and flashcard marks? This cannot be undone.')){const th=S.theme;S=DEF();S.theme=th;save();renderNav();rProgress();}">Reset all progress</button></div></section>`;
+      <div class="fcctl"><button class="btn" onclick="fcMove(-1)" aria-label="Previous card">${ic("back",16)}</button><button class="btn bad" onclick="fcMark('learn')">Still learning${S.settings.hints?" <kbd>L</kbd>":""}</button><button class="btn good" onclick="fcMark('know')">Know it${S.settings.hints?" <kbd>K</kbd>":""}</button><button class="btn" onclick="fcMove(1)" aria-label="Next card">${ic("arrow",16)}</button></div>`
+    :`<section class="panel" style="text-align:center;margin-top:16px"><p class="muted">${FC.filter==="learn"?"No cards marked “still learning” yet. Mark cards as you study to build a focused pile.":"You know every card in this deck. Nice work!"}</p><button class="btn" onclick="fcFilter('all')">Show all cards</button></section>`}
+  </div>`;
 }
 
 /* =====================================================================
-   THEME + KEYBOARD + INIT
+   PROGRESS
    ===================================================================== */
-function applyTheme(){ const r=document.documentElement; if(S.theme) r.setAttribute("data-theme",S.theme); else r.removeAttribute("data-theme"); }
-document.getElementById("themeBtn").onclick=()=>{
-  const dark= S.theme? S.theme==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-  S.theme= dark?"light":"dark"; save(); applyTheme();
-};
+function rProgress(){
+  const t=totals(), te=totals("E"), tm=totals("M");
+  const days=[]; for(let i=13;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push([d,S.days[dkey(d)]||0,i===0]); }
+  const mx=Math.max(goal(),5,...days.map(x=>x[1]));
+  const row=k=>{ const s=S.stats[k], a=acc(k); return `<tr><td>${TOPICS[k].n}</td><td style="width:34%"><div class="bar thin"><i class="${barCls(a)}" style="width:${a||0}%"></i></div></td><td class="n"><b>${s&&s.n?a+"%":"—"}</b></td><td class="n muted">${s?s.c+"/"+s.n:"0/0"}</td><td class="n"><button class="btn sm ghost" onclick="startPractice('topic','${k}')" aria-label="Practice ${TOPICS[k].n}">${ic("arrow",15)}</button></td></tr>`; };
+  const lastT=S.tests[S.tests.length-1];
+  app.innerHTML=`<div class="tiles">
+    ${tile("check","Total answered",t.n,`${t.p}% accuracy`)}
+    ${tile("flame","Day streak",dayStreak(),"consecutive days","hot")}
+    ${tile("trophy","Answer streak",S.streak.cur,`Best ever: ${S.streak.best}`,"good")}
+    ${tile("test","Tests taken",S.tests.length,lastT?`Last: ${Math.round(100*lastT.c/lastT.n)}%`:"None yet","eng")}
+  </div>
+  <section class="panel"><div class="ph"><h3>Last 14 days</h3><span class="muted mini">Daily goal: ${goal()}</span></div>
+    <div class="chart">${days.map(([d,n,isT])=>`<div class="c ${isT?"today":""}" title="${dkey(d)}: ${n} question${n===1?"":"s"}"><i style="height:${Math.round(100*n/mx)}%;${n>=goal()?"background:var(--good)":""}"></i><span>${d.getDate()}</span></div>`).join("")}</div></section>
+  <div class="grid2">
+    <section class="panel"><div class="ph"><h3>English</h3><b>${te.n?te.p+"%":"—"}</b></div><table class="prog">${ETOP.map(row).join("")}</table></section>
+    <section class="panel"><div class="ph"><h3>Math</h3><b>${tm.n?tm.p+"%":"—"}</b></div><table class="prog">${MTOP.map(row).join("")}</table></section>
+  </div>
+  <section class="panel" style="margin-top:var(--gap)"><h3>Flashcards</h3>${Object.keys(DECKS).map(k=>{ const mm=S.cards[k]||{}, kn=DECKS[k].filter(c=>mm[c.id]==="know").length, p=Math.round(100*kn/DECKS[k].length);
+    return `<div class="sline" style="grid-template-columns:130px 1fr 70px"><span>${DECK_NAMES[k]}</span><div class="bar"><i class="g" style="width:${p}%"></i></div><span class="n">${kn}/${DECKS[k].length}</span></div>`; }).join("")}</section>`;
+}
+
+/* =====================================================================
+   SETTINGS
+   ===================================================================== */
+function setRow(title,desc,ctl,stack){ return `<div class="setrow ${stack?"stack":""}"><div class="sl"><b>${title}</b>${desc?`<small>${desc}</small>`:""}</div><div class="sc">${ctl}</div></div>`; }
+function segCtl(key,opts){ const cur=S.settings[key]; return `<div class="seg">${opts.map(([v,l])=>`<button class="${cur===v?"on":""}" onclick="setSet('${key}',${typeof v==="string"?`'${v}'`:v})">${l}</button>`).join("")}</div>`; }
+function swCtl(key){ const on=!!S.settings[key]; return `<button class="sw ${on?"on":""}" role="switch" aria-checked="${on}" aria-label="${key}" onclick="setSet('${key}',${!on})"><i></i></button>`; }
+function setSet(k,v){ S.settings[k]=v; save(); applySettings(); renderNav(); rSettings(); }
+function setProf(k,v,rerender){
+  if(k==="name"){ v=String(v||"").trim().replace(/\s+/g," ").slice(0,30); if(!v){ toast("Your name can’t be empty","bad"); rSettings(); return; } }
+  if(k==="target"){ const t=checkTarget(v,S.profile.test); if(t===null){ toast(S.profile.test==="ACT"?"ACT scores range from 1 to 36":"SAT scores range from 400 to 1600","bad"); rSettings(); return; } v=t; }
+  S.profile[k]=v;
+  const p=P.list.find(x=>x.id===UID); if(p){ p.name=S.profile.name; p.color=S.profile.color; savePro(); }
+  save(); renderNav(); if(rerender) rSettings();
+}
+function profSeg(key,opts){ const cur=S.profile[key]; return `<div class="seg">${opts.map(([v,l])=>`<button class="${String(cur)===String(v)?"on":""}" onclick="setProf('${key}',${typeof v==="string"?`'${v}'`:v},true)">${l}</button>`).join("")}</div>`; }
+function rSettings(){
+  const st=S.settings, pr=S.profile, remembered=P.current===UID;
+  app.innerHTML=`<div class="setgrid">
+  <section class="panel wide"><h3>Profile</h3>
+    <div class="profhead">${avatar(pr,60)}<div style="min-width:0"><b>${esc(pr.name)}</b><span class="muted mini">${gradeLabel(pr.grade)} · preparing for the ${esc(testName())}</span>
+      <div class="swatches" style="margin-top:8px">${AV.map((c,i)=>`<button class="swatch ${(Number(pr.color)||0)===i?"on":""}" style="background:${c}" onclick="setProf('color',${i},true)" aria-label="Avatar color ${i+1}"></button>`).join("")}</div></div></div>
+    <div class="profgrid">
+      <label class="fl">Name<input class="inp" value="${esc(pr.name)}" maxlength="30" onchange="setProf('name',this.value,true)"></label>
+      <label class="fl"><span>Target score <em>${pr.test==="ACT"?"1–36":"400–1600"}</em></span><input class="inp" value="${esc(pr.target)}" inputmode="numeric" maxlength="4" placeholder="Optional" onchange="setProf('target',this.value)"></label>
+      <label class="fl"><span>Test date <em>optional</em></span><input class="inp" type="date" value="${esc(pr.date)}" onchange="setProf('date',this.value)"></label>
+    </div>
+    ${setRow("Grade","",profSeg("grade",[["9","9th"],["10","10th"],["11","11th"],["12","12th"],["other","Other"]]),true)}
+    ${setRow("Test","Which exam you’re preparing for.",profSeg("test",[["SAT","SAT"],["ACT","ACT"],["Both","Both"]]),true)}
+    ${setRow("Daily goal","Questions per day. Shown on your dashboard ring.",profSeg("goal",[[10,"10"],[20,"20"],[30,"30"],[50,"50"],[75,"75"]]),true)}
+  </section>
+
+  <section class="panel"><h3>Appearance</h3>
+    ${setRow("Theme","",segCtl("theme",[["system","Auto"],["light","Light"],["dark","Dark"]]))}
+    ${setRow("Accent color","",`<div class="swatches">${Object.keys(ACC).map(k=>`<button class="swatch ${st.accent===k?"on":""}" style="background:${ACC[k][isDark()?2:1]}" onclick="setSet('accent','${k}')" aria-label="${ACC[k][0]}" title="${ACC[k][0]}"></button>`).join("")}</div>`,true)}
+    ${setRow("Text size","",segCtl("size",[["s","S"],["m","M"],["l","L"],["xl","XL"]]))}
+    ${setRow("Corners","",segCtl("radius",[["round","Round"],["soft","Soft"],["sharp","Sharp"]]))}
+    ${setRow("Spacing","Compact fits more on screen.",segCtl("density",[["comfy","Roomy"],["compact","Compact"]]))}
+    ${setRow("Passage font","Font used for reading passages.",segCtl("pfont",[["serif","Serif"],["sans","Sans"]]))}
+    ${setRow("Animations","Card flips, fades, and transitions.",swCtl("motion"))}
+  </section>
+
+  <section class="panel"><h3>Practice</h3>
+    ${setRow("Auto-advance","Move on automatically after a correct answer.",segCtl("autoNext",[[0,"Off"],[1200,"1s"],[2000,"2s"],[3000,"3s"]]))}
+    ${setRow("Mixed-mode balance","Share of English questions in Mixed practice and tests.",segCtl("mixE",[[50,"50%"],[60,"60%"],[70,"70%"],[80,"80%"]]))}
+    ${setRow("Keyboard hints","Show shortcut keys under questions.",swCtl("hints"))}
+    ${setRow("Sound effects","A short chime for right and wrong answers.",swCtl("sound"))}
+    ${setRow("“Generated” label","Tag questions that were created on the fly.",swCtl("showGen"))}
+    <h3 style="margin-top:20px">Timed tests</h3>
+    ${setRow("Extra time","Multiply the time limit (for accommodations or warm-ups).",segCtl("timeMult",[[1,"1×"],[1.25,"1.25×"],[1.5,"1.5×"],[2,"2×"]]))}
+    ${setRow("Show countdown","Turn off to practice without watching the clock.",swCtl("showTimer"))}
+    ${setRow("Confirm before leaving","Ask before abandoning a test in progress.",swCtl("confirmLeave"))}
+  </section>
+
+  <section class="panel wide"><h3>Account &amp; data</h3>
+    ${setRow("Stay signed in","Skip the profile screen when you open Prep Lab on this device.",`<button class="sw ${remembered?"on":""}" role="switch" aria-checked="${remembered}" aria-label="Stay signed in" onclick="setRemember(${!remembered})"><i></i></button>`)}
+    ${setRow("Back up progress","Download your progress as a file, or restore it from one.",`<div class="row"><button class="btn sm" onclick="exportData()">${ic("download",15)} Download</button><label class="btn sm" style="cursor:pointer">${ic("upload",15)} Restore<input type="file" accept=".json,application/json" hidden onchange="importData(this)"></label></div>`,true)}
+    ${setRow("Switch profile","Sign out to let someone else use Prep Lab on this device.",`<button class="btn sm" onclick="signOut()">${ic("users",15)} Switch / sign out</button>`,true)}
+    ${setRow("Reset progress","Erase answers, streaks, missed questions, and flashcard marks. Keeps your profile and settings.",`<button class="btn sm bad" onclick="resetProgress()">Reset progress</button>`,true)}
+    ${setRow("Delete profile","Permanently remove this profile from this device.",`<button class="btn sm bad" onclick="deleteProfile()">${ic("trash",15)} Delete</button>`,true)}
+    <p class="muted mini" style="margin-top:10px">Everything is stored only in this browser. Clearing your browser data will erase it, so download a backup now and then.</p>
+  </section></div>`;
+}
+function resetProgress(){
+  if(!confirm("Erase ALL progress, missed questions, and flashcard marks for this profile? This cannot be undone.")) return;
+  const keep={profile:S.profile,settings:S.settings}; S=DEF(); S.profile=keep.profile; S.settings=keep.settings; save(); sess=null; T=null; renderNav(); rSettings(); toast("Progress reset");
+}
+function exportData(){
+  try{
+    const blob=new Blob([JSON.stringify({app:"prepLab",v:2,exported:new Date().toISOString(),data:S})],{type:"application/json"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+    a.download="prep-lab-"+(String(S.profile.name).replace(/[^a-z0-9]+/gi,"-").toLowerCase()||"profile")+"-"+today()+".json";
+    document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500);
+    toast("Backup downloaded","good");
+  }catch(e){ toast("Couldn’t create the backup file","bad"); }
+}
+function importData(inp){
+  const f=inp.files&&inp.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{ const o=parse(rd.result), d=o&&o.data?o.data:o;
+    if(!d||typeof d!=="object"||!d.stats){ toast("That file isn’t a Prep Lab backup","bad"); return; }
+    if(!confirm("Replace this profile’s progress with the backup?")) return;
+    const prof=S.profile; S=normalize(d); S.profile=prof; save(); applySettings(); renderNav(); rSettings(); toast("Backup restored","good"); };
+  rd.onerror=()=>toast("Couldn’t read that file","bad");
+  rd.readAsText(f); inp.value="";
+}
+
+/* =====================================================================
+   KEYBOARD + INIT
+   ===================================================================== */
 document.addEventListener("keydown",e=>{
-  if(e.metaKey||e.ctrlKey||e.altKey) return;
+  if(!UID || e.metaKey||e.ctrlKey||e.altKey) return;
   const tag=(e.target.tagName||"").toLowerCase(); if(tag==="input"||tag==="textarea"||tag==="select") return;
   const k=e.key.toLowerCase(); const idx="1234".indexOf(k)>=0?"1234".indexOf(k):"abcd".indexOf(k);
   if((view==="practice"||view==="review") && sess && sess.q){
     if(!sess.answered && idx>=0 && idx<sess.q.c.length){ e.preventDefault(); pAnswer(idx); }
+    else if(!sess.answered && k==="s" && sess.mode.kind!=="review"){ e.preventDefault(); pSkip(); }
     else if(sess.answered && k==="enter"){ e.preventDefault(); if(sess.mode.kind==="review"&&!sess.queue.length) endPractice(); else pNext(); }
   } else if(view==="test" && T && !T.done){
     if(idx>=0 && idx<T.qs[T.idx].c.length){ e.preventDefault(); tAnswer(idx); }
     else if(k==="arrowright"){ tGo(T.idx+1); } else if(k==="arrowleft"){ tGo(T.idx-1); }
+    else if(k==="f"){ tFlag(); }
   } else if(view==="cards"){
-    if(k===" "||k==="enter"){ e.preventDefault(); fcFlip(); }
+    if(k===" "||(k==="enter"&&e.target.tagName!=="BUTTON")){ e.preventDefault(); fcFlip(); }
     else if(k==="arrowright") fcMove(1); else if(k==="arrowleft") fcMove(-1);
     else if(k==="k") fcMark("know"); else if(k==="l") fcMark("learn");
   }
 });
-applyTheme(); renderNav(); render();
+(function init(){
+  const id=P.current||ssGet(SKEY);
+  if(id && P.list.some(p=>p.id===id)){ UID=id; S=loadUser(id); if(!S.profile.name){ const p=P.list.find(x=>x.id===id); S.profile.name=p.name; } enterApp(); }
+  else { applySettings(); showAuth(P.list.length?"pick":"signup"); }
+})();
 </script>
 </body>
 </html>
+
