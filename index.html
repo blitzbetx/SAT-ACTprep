@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Prep Lab: free SAT and ACT practice with explanations, timed tests, flashcards, and progress tracking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=JetBrains+Mono:wght@500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <title>Prep Lab — SAT & ACT</title>
 <style>
 :root{
@@ -15,7 +19,10 @@
   --shadow:0 1px 2px rgba(22,27,46,.05),0 6px 20px rgba(22,27,46,.05);
   --shadow-lg:0 12px 40px rgba(22,27,46,.13);
   --r:18px; --rs:12px; --pad:24px; --gap:18px;
-  --pfont:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --ufont:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  --hfont:"Fraunces",Georgia,"Times New Roman",serif;
+  --pfont:"Literata",Georgia,"Times New Roman",serif;
+  --mfont:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
@@ -39,11 +46,12 @@
 *{box-sizing:border-box}
 html{font-size:16px;-webkit-text-size-adjust:100%}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:var(--ufont);font-size:1rem;line-height:1.55;-webkit-font-smoothing:antialiased}
 [hidden]{display:none!important}
 button{font:inherit;color:inherit;cursor:pointer}
 a{color:var(--accent);font-weight:600}
-h1,h2,h3{line-height:1.2;margin:0;letter-spacing:-.015em}
+h1,h2,h3,.brand b,.tile .v,.ringlbl b,.opt b,.face .word,.stat b{font-family:var(--hfont);font-optical-sizing:auto}
+h1,h2,h3{line-height:1.2;margin:0;letter-spacing:-.01em}
 p{margin:.35rem 0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ic{flex:none;display:block}
@@ -250,7 +258,23 @@ details.rv summary::-webkit-details-marker{display:none}
 
 /* ---------- flashcards ---------- */
 .fcwrap{max-width:680px;margin:0 auto}
-.decks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.decks{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px;margin-bottom:14px}
+.deck.new{border-style:dashed;display:flex;flex-direction:column;align-items:flex-start;gap:2px;color:var(--muted)}
+.deck.new:hover{color:var(--accent);border-color:var(--accent)}
+.deck b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.face .word.cw{font-size:clamp(1.3rem,4.2vw,2rem);overflow-wrap:anywhere}
+.face .def{overflow-wrap:anywhere}
+textarea.inp{resize:vertical;min-height:72px;line-height:1.45}
+details.paste summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+details.paste summary::-webkit-details-marker{display:none}
+.clist{display:grid;gap:6px}
+.citem{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:var(--rs);background:var(--surface)}
+.citem.on{border-color:var(--accent);background:var(--accent-soft)}
+.citem .cn{width:24px;text-align:center;color:var(--muted);font-size:.8rem;font-weight:700;flex:none}
+.citem .ct{flex:1;min-width:0;display:flex;flex-direction:column}
+.citem .ct b,.citem .ct span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.citem .ct span{color:var(--muted);font-size:.88rem}
+.confetti{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:200}
 .deck{border:1.5px solid var(--line);background:var(--surface);border-radius:var(--rs);padding:12px 14px;text-align:left;transition:border-color .15s,background .15s;color:var(--ink);min-width:0}
 .deck:hover{border-color:var(--line2)}
 .deck.on{border-color:var(--accent);background:var(--accent-soft)}
@@ -269,7 +293,7 @@ details.rv summary::-webkit-details-marker{display:none}
 .face .st{position:absolute;top:13px;right:16px}
 .face .def{font-size:1.15rem;font-weight:620}
 .face .ex{color:var(--muted);font-style:italic;margin-top:12px;font-family:var(--pfont)}
-.face .fml{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1.08rem;background:var(--surface2);padding:10px 14px;border-radius:10px;margin-top:6px}
+.face .fml{font-family:var(--mfont);font-size:1.08rem;background:var(--surface2);padding:10px 14px;border-radius:10px;margin-top:6px}
 .face .fliphint{margin-top:20px;color:var(--muted);font-size:.8rem}
 .fcctl{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
 .pillst{font-size:.72rem;font-weight:750;padding:3px 9px;border-radius:20px}
@@ -300,7 +324,7 @@ table.prog .bar{margin:0;min-width:70px}
 .sc{flex:none;max-width:62%;display:flex;justify-content:flex-end}
 .profhead{display:flex;align-items:center;gap:16px;margin-bottom:16px}
 .profhead b{font-size:1.2rem;display:block}
-.profgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.profgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 
 /* ---------- sign-up / profile picker ---------- */
 .authwrap{min-height:100vh;display:grid;place-items:center;padding:28px 16px;background:radial-gradient(1100px 600px at 0% -10%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 60%),radial-gradient(900px 500px at 110% 110%,color-mix(in srgb,var(--eng) 14%,transparent),transparent 60%),var(--bg)}
@@ -377,6 +401,12 @@ table.prog .bar{margin:0;min-width:70px}
   .deck{padding:10px}
   .deck small{display:none}
   .auth{border-radius:20px}
+}
+@media (hover:none) and (pointer:coarse){ kbd{display:none} }
+@media (max-width:640px){
+  .fcctl{flex-wrap:nowrap;gap:6px}
+  .fcctl .btn{padding:10px 12px;flex:1 1 auto}
+  .fcctl .btn[aria-label]{flex:0 0 auto}
 }
 @media (max-width:820px){
   .auth{grid-template-columns:1fr}
@@ -1962,6 +1992,139 @@ add("word","A rectangle’s length is 4 more than its width, and its perimeter i
 add("word","A car travels at 72 kilometers per hour. What is its speed in meters per second?",["20","72","1,200","2"],
  "72 km/h = 72,000 m per 3,600 s = 20 m/s. (1,200 is meters per MINUTE.)");
 
+/* ---- Challenge set: harder, test-style questions ---- */
+gq("punc","In 1903, the Wright brothers achieved the first powered, controlled airplane ___ a flight that lasted just twelve seconds.",
+ ["flight:","flight;","flight, and","flight. A"],
+ "What follows the blank is a phrase that explains the first flight, not a full sentence. A colon (or a dash) can introduce an explanation after a complete clause. A semicolon or period would leave a fragment, and “and” creates a faulty compound.");
+gq("punc","The ___ which had been closed for renovations since spring, reopened to the public in October.",
+ ["gallery,","gallery","gallery;","gallery—"],
+ "“Which had been closed… since spring” is nonessential, and it already ends with a comma. It needs a matching comma before it. A dash would not match the closing comma.");
+gq("punc","Researchers have identified three factors that influence bird ___ the availability of food, changes in day length, and shifts in temperature.",
+ ["migration:","migration;","migration, being","migration, these are"],
+ "A complete clause comes before the blank, and a list of the three factors follows. A colon introduces it. “These are” after a comma creates a comma splice.");
+gq("punc","Octavia Butler’s novel <i>Kindred</i> blends science fiction with historical ___ protagonist travels back in time to a plantation in antebellum Maryland.",
+ ["fiction; its","fiction, its","fiction its","fiction, and, its"],
+ "Both halves are independent clauses, so a semicolon joins them correctly. A comma alone is a comma splice, and “and,” with commas on both sides, is incorrect.");
+gq("punc","The ___ discovered in 2015 in South Africa’s Rising Star cave system, has been named <i>Homo naledi</i>.",
+ ["species,","species","species;","species—"],
+ "“Discovered in 2015 in South Africa’s Rising Star cave system” is a nonessential phrase closed by a comma, so it must also open with one.");
+gq("sva","The number of students enrolled in computer science courses ___ tripled over the past decade.",
+ ["has","have","are","were"],
+ "“The number” is singular, so it takes the singular “has.” Compare: “A number of students HAVE,” where the phrase means “many” and is plural.");
+gq("sva","According to recent estimates, there ___ more than eight million species of animals on Earth.",
+ ["are","is","was","has been"],
+ "In a “there is/there are” sentence, the subject comes after the verb: “more than eight million species” is plural, so “are.”");
+gq("sva","The professor, as well as her two research assistants, ___ presenting at the conference next week.",
+ ["is","are","were","have been"],
+ "“As well as her two research assistants” is an interrupting phrase, not part of the subject. The subject is “The professor,” which is singular, so the verb is “is.”");
+gq("sva","Not one of the hundreds of applicants ___ the necessary qualifications.",
+ ["has","have","are having","were having"],
+ "The subject is “one” (singular). “Of the hundreds of applicants” is a prepositional phrase, so ignore it. Singular → “has.”");
+gq("pron","When Maya called her sister last night, ___ was in the middle of a violin lesson.",
+ ["her sister","she","her","they"],
+ "“She” is ambiguous here: it could mean Maya or her sister. Only naming “her sister” makes the meaning clear. On the SAT, an ambiguous pronoun is an error.");
+gq("pron","The orchestra’s musicians tuned ___ instruments before the conductor arrived.",
+ ["their","its","his or her","it’s"],
+ "The pronoun refers to “musicians” (plural), not to “orchestra,” so use the plural “their.”");
+add("mod",STD,["the historian finally identified the scribe who had written them.","the scribe who had written them was finally identified by the historian.","the identity of the scribe was finally revealed.","finally the scribe’s identity became known to the historian."],
+ "Who studied the manuscripts for years? The historian, so “the historian” must come right after the opening phrase.",
+ "Having studied the ancient manuscripts for years, "+BL);
+add("para",STD,["timed each of her rebuttals.","she timed each of her rebuttals.","timing each of her rebuttals.","her rebuttals were timed."],
+ "The list is “researched…, practiced…, and ___.” The last item must also be a past-tense verb with the same subject: “timed.”",
+ "To prepare for the debate, Lena researched both sides of the issue, practiced her opening statement, and "+BL);
+gq("tense","Archaeologists believe that the ancient city ___ abandoned sometime around 900 CE, though the exact cause remains unknown.",
+ ["was","is","will be","has been"],
+ "“Around 900 CE” is a specific, finished time in the past, so use the simple past “was.” The present perfect (“has been”) doesn’t work with a specific past date.");
+add("trans",TRN,["Surprisingly","Predictably","Similarly","As expected"],
+ "The policy was EXPECTED to be unpopular, but most employees approved of it. That result goes against expectations, so “Surprisingly” fits.",
+ "Company leaders expected the new four-day schedule to be unpopular with employees. "+BL+", a survey conducted three months later found that 78 percent of employees approved of it.");
+add("trans",TRN,["by contrast","for example","similarly","as a result"],
+ "Copernicus’s view (the Sun at the center) is the opposite of the earlier belief (Earth at the center), so “by contrast” fits.",
+ "Many early astronomers believed that Earth sat motionless at the center of the universe. Copernicus, "+BL+", argued that Earth and the other planets orbit the Sun.");
+add("trans",TRN,["Additionally","Consequently","Nevertheless","In other words"],
+ "Elasticity is a second, separate impressive property of spider silk, added to its strength. “Additionally” signals that addition. “In other words” would mean the two sentences say the same thing.",
+ "Spider silk is extraordinarily strong; by weight, some types are tougher than steel. "+BL+", it is remarkably elastic, able to stretch considerably before it breaks.");
+add("wic",WIC,["persuasive","tedious","ambiguous","perfunctory"],
+ "Critics “conceded she had made a compelling case,” so the speech must have been convincing, or “persuasive.”",
+ "The senator’s speech was so "+BL+" that even her longtime critics conceded she had made a compelling case.");
+add("wic",WIC,["corroborated","undermined","obscured","dismissed"],
+ "The theory moved from skepticism to wide acceptance, so the evidence must have SUPPORTED it. “Corroborated” means confirmed or supported.",
+ "Although the theory was initially met with skepticism, a growing body of evidence has "+BL+" it, and it is now widely accepted.");
+add("wic",WIC,["nuanced","flattering","superficial","hostile"],
+ "Showing both brilliance AND serious flaws is a balanced, subtle portrait. That is “nuanced.” “Flattering” and “hostile” are one-sided.",
+ "The biography presents a "+BL+" portrait of the inventor, acknowledging his brilliance while also examining his serious flaws.");
+add("wic",WIC,["barren","lush","crowded","vibrant"],
+ "“Despite” signals a contrast with “teems with life,” so the desert must LOOK lifeless: “barren.”",
+ "Despite its "+BL+" appearance, the desert ecosystem teems with life, much of which emerges only at night.");
+const P10="Eliza had always measured her town by its sounds: the noon whistle from the mill, the church bells on Sunday, the freight train that rattled the dishes every evening at six. When the mill closed, the whistle stopped first. Within a year the train no longer came, and the town, Eliza thought, had grown so quiet that she could hear it holding its breath.";
+add("read","Which choice best describes the effect of the final sentence of the text?",
+ ["It suggests that the town is tense and uncertain about its future.","It shows that Eliza prefers quiet towns to noisy ones.","It indicates that the mill will soon reopen.","It explains why the freight train stopped running."],
+ "“Holding its breath” personifies the town as waiting anxiously, which suggests tension and uncertainty after the losses. Nothing says Eliza likes quiet or that the mill will reopen.",P10);
+add("read","Based on the text, why did the town become quieter?",
+ ["The mill’s closing led to the loss of familiar sounds, including the whistle and, later, the train.","Eliza began to lose her hearing.","A new law banned loud noises in the town.","Residents asked the railroad to stop its evening train."],
+ "The text links the changes in order: the mill closed, the whistle stopped, and within a year the train no longer came. The other choices aren’t supported.",P10);
+add("read","Which choice most logically completes the text?",
+ ["parents may choose empty pools to reduce the risk that their offspring will be eaten.","tadpoles grow faster when they share pools with other tadpoles.","parents cannot tell the difference between empty and occupied pools.","tree hollows are the only places where tadpoles can survive."],
+ "Parents pick empty pools more often than chance, and tadpoles of these species eat one another. The logical conclusion is that parents avoid occupied pools to protect their young. The third choice contradicts the observation.",
+ "Some species of tropical frogs carry their tadpoles on their backs from where the eggs hatch to small pools of water in tree hollows. Researchers observed that parents choose pools without other tadpoles far more often than chance would predict. Because tadpoles of these species are known to eat one another, the researchers concluded that "+BL);
+add("synth","The student wants to emphasize how long the Great Wall took to build. "+SYN,
+ ["Construction of the Great Wall of China spanned more than two thousand years, from the 7th century BCE to the 17th century CE.",
+  "A 2012 survey found that the Great Wall, including all of its branches, is about 21,000 kilometers long.",
+  "The best-preserved sections of the Great Wall were built during the Ming dynasty.",
+  "The Great Wall was built using earth, wood, brick, and stone."],
+ "The goal is the LENGTH OF TIME. Only the correct choice gives the span of centuries. The second choice is about physical length, which is a common trap.",
+ NOTES(["The Great Wall of China was built and rebuilt by many dynasties.","Construction began as early as the 7th century BCE and continued into the 17th century CE.","A 2012 survey measured all of its branches at about 21,000 kilometers.","Its best-preserved sections date from the Ming dynasty.","Builders used earth, wood, brick, and stone."]));
+add("synth","The student wants to emphasize a similarity between the two scientists. "+SYN,
+ ["Both Rosalind Franklin and Dorothy Hodgkin were British chemists who used X-ray crystallography to study the structures of molecules.",
+  "Dorothy Hodgkin won the Nobel Prize in Chemistry in 1964.",
+  "Rosalind Franklin studied DNA, while Dorothy Hodgkin studied penicillin and vitamin B12.",
+  "Rosalind Franklin lived from 1920 to 1958."],
+ "A SIMILARITY must mention both scientists and something they share. The third choice mentions both but shows a DIFFERENCE (“while”).",
+ NOTES(["Rosalind Franklin (1920–1958) was a British chemist.","Franklin used X-ray crystallography to study the structure of DNA.","Dorothy Hodgkin (1910–1994) was a British chemist.","Hodgkin used X-ray crystallography to find the structures of penicillin and vitamin B12.","Hodgkin won the 1964 Nobel Prize in Chemistry."]));
+add("evid","Which choice most effectively uses data from the table to support the student’s claim?",
+ ["Port Arden had both the highest average annual rainfall (1,200 mm) and the most rainy days (160).","Dry Creek had the lowest average annual rainfall (600 mm).","Millbrook averaged 120 rainy days per year.","Port Arden averaged 1,200 mm of rain per year, while Millbrook averaged 900 mm."],
+ "The claim links two measurements for one city: the most rainfall AND the most rainy days. Only the correct choice gives both numbers for the same city.",
+ "A student claims that, of the three towns studied, the town with the highest average annual rainfall also has the most rainy days.<table><tr><th>Town</th><th>Avg. annual rainfall (mm)</th><th>Avg. rainy days</th></tr><tr><td>Port Arden</td><td>1,200</td><td>160</td></tr><tr><td>Millbrook</td><td>900</td><td>120</td></tr><tr><td>Dry Creek</td><td>600</td><td>85</td></tr></table>");
+add("conc",CONC,["Because","Due to the fact that","Owing to the fact that","In view of the fact that"],
+ "All four choices mean the same thing, but “Because” says it in one word. The others are wordy.",
+ BL+" the road was icy, the school bus arrived an hour late.");
+add("lin","A line in the xy-plane is perpendicular to the line 2x + 5y = 10. What is the slope of the line?",["5/2","−2/5","2/5","−5/2"],
+ "Rewrite 2x + 5y = 10 as y = −(2/5)x + 2, so its slope is −2/5. A perpendicular slope is the negative reciprocal: 5/2.");
+add("sys","If 3x + 4y = 22 and 2x − y = 0, what is the value of x + y?",["6","2","4","8"],
+ "From 2x − y = 0, y = 2x. Substitute: 3x + 8x = 22 → x = 2, so y = 4. Then x + y = 6.");
+add("sys","A theater sold adult tickets for $12 and student tickets for $8. It sold 3 times as many student tickets as adult tickets and collected $1,440 in all. How many student tickets did it sell?",["120","40","160","90"],
+ "Let a = adult tickets, so student tickets = 3a. Then 12a + 8(3a) = 1,440 → 36a = 1,440 → a = 40. Student tickets: 3 × 40 = 120.");
+add("quad","The equation x² + bx + 16 = 0 has exactly one real solution, and b > 0. What is the value of b?",["8","4","16","32"],
+ "Exactly one solution means the discriminant is 0: b² − 4(1)(16) = 0 → b² = 64 → b = 8 (since b > 0).");
+add("quad","What is the maximum value of y = −2(x + 1)² + 7?",["7","−1","1","−2"],
+ "In vertex form, the vertex is (−1, 7). Since a = −2 < 0, the parabola opens down, so the maximum value is 7.");
+add("func","For what value of x is f(x) = (x + 3)/(x − 2) undefined?",["2","−3","3","−2"],
+ "A fraction is undefined when its denominator is 0: x − 2 = 0 → x = 2. (At x = −3 the function equals 0, which is fine.)");
+add("func","If g(x) = 4 − x², what is g(g(1))?",["−5","3","5","−9"],
+ "g(1) = 4 − 1 = 3. Then g(3) = 4 − 9 = −5.");
+add("expo","A quantity starts at 500 and decreases by 20% every 3 years. Which equation gives its value y after t years?",["y = 500(0.8)^(t/3)","y = 500(0.2)^(t/3)","y = 500(0.8)^(3t)","y = 500(1.2)^(t/3)"],
+ "Losing 20% means keeping 80%, so the factor is 0.8. It applies once every 3 years, so the exponent is t/3.");
+add("expo","If 2^(3x) = 32^(x − 1), what is x?",["5/2","5","2/5","−5/2"],
+ "Write 32 as 2⁵: 2^(3x) = 2^(5x − 5). Set the exponents equal: 3x = 5x − 5 → x = 5/2.");
+add("poly","Let p(x) = 2x³ + kx² − 5x + 6. If p(1) = 0, what is the value of k?",["−3","3","−1","9"],
+ "p(1) = 2 + k − 5 + 6 = k + 3. Setting k + 3 = 0 gives k = −3.");
+add("pct","A store raises a price by 20% and later lowers the new price by 20%. The final price is what percent of the original price?",["96%","100%","104%","80%"],
+ "Multiply the factors: 1.20 × 0.80 = 0.96, so the final price is 96% of the original. The changes don’t cancel because the 20% decrease is taken from a larger number.");
+add("stat","A data set of 10 values has a mean of 30. If the value 75 is removed, what is the mean of the remaining 9 values?",["25","30","22.5","27"],
+ "The total is 10 × 30 = 300. Removing 75 leaves 225 for 9 values, and 225/9 = 25.");
+add("prob","In a class of 30 students, 18 take Spanish, 12 take French, and 5 take both. How many students take neither language?",["5","0","10","25"],
+ "Students taking at least one language: 18 + 12 − 5 = 25. Subtract the 5 who take both because they were counted twice. Neither: 30 − 25 = 5.");
+add("geo","A right triangle has legs of length 9 and 12. What is the length of the altitude drawn to the hypotenuse?",["7.2","10.5","6","9.6"],
+ "The hypotenuse is 15 (a 3-4-5 triangle scaled by 3). The area is ½(9)(12) = 54, and also ½(15)(h) = 54, so h = 108/15 = 7.2.");
+add("geo","A sphere has a volume of 36π cubic units. What is its radius?",["3","9","6","√27"],
+ "(4/3)πr³ = 36π → r³ = 27 → r = 3.");
+add("trig","In right triangle PQR, angle R is the right angle and cos P = 8/17. What is tan Q?",["8/15","15/8","8/17","15/17"],
+ "cos P = PR/PQ = 8/17, so take PR = 8 and PQ = 17. Then QR = √(289 − 64) = 15. For angle Q, the opposite side is PR = 8 and the adjacent side is QR = 15, so tan Q = 8/15.");
+add("word","Ana can paint a fence alone in 4 hours. Working together, Ana and Ben take 2.4 hours. How long would Ben take to paint it alone?",["6 hours","1.6 hours","3.2 hours","8 hours"],
+ "Rates add: 1/4 + 1/b = 1/2.4 = 5/12. So 1/b = 5/12 − 3/12 = 2/12 = 1/6, and Ben takes 6 hours.");
+add("word","A cyclist rides 30 km at 15 km/h, then returns along the same route at 10 km/h. What is the average speed for the round trip?",["12 km/h","12.5 km/h","13 km/h","25 km/h"],
+ "Total distance = 60 km. Total time = 30/15 + 30/10 = 2 + 3 = 5 hours. Average speed = 60/5 = 12 km/h, not the simple average of 12.5.");
+
 /* ---- More vocabulary ---- */
 VOCAB.push(
 ["acquiesce","verb","to accept or agree reluctantly, without protest","After hours of debate, the board decided to acquiesce to the students’ request."],
@@ -2141,8 +2304,8 @@ function loadProfiles(){
   return p;
 }
 function savePro(){ lsSet(PKEY,JSON.stringify(P)); }
-function DEFSET(){ return {theme:"system",accent:"indigo",size:"m",radius:"round",density:"comfy",pfont:"serif",motion:true,hints:true,autoNext:0,sound:false,showGen:true,mixE:60,timeMult:1,showTimer:true,confirmLeave:true}; }
-function DEF(){ return {profile:{name:"",grade:"9",test:"SAT",target:"",date:"",goal:20,color:0},settings:DEFSET(),stats:{},days:{},streak:{cur:0,best:0},missed:[],cards:{},tests:[]}; }
+function DEFSET(){ return {theme:"system",accent:"indigo",size:"m",radius:"round",density:"comfy",pfont:"serif",motion:true,hints:true,autoNext:0,sound:false,showGen:true,confetti:true,ufont:"jakarta",hfont:"fraunces",mixE:60,timeMult:1,showTimer:true,confirmLeave:true}; }
+function DEF(){ return {profile:{name:"",email:"",remind:true,secret:"",grade:"9",test:"SAT",target:"",date:"",goal:20,color:0},settings:DEFSET(),stats:{},days:{},streak:{cur:0,best:0},missed:[],cards:{},tests:[],custom:[]}; }
 function normalize(o){
   const d=DEF(); if(!o||typeof o!=="object") return d;
   for(const k of ["stats","days","cards"]) if(o[k]&&typeof o[k]==="object"&&!Array.isArray(o[k])) d[k]=o[k];
@@ -2152,11 +2315,36 @@ function normalize(o){
   if(o.profile&&typeof o.profile==="object") Object.assign(d.profile,o.profile);
   if(o.settings&&typeof o.settings==="object") Object.assign(d.settings,o.settings);
   for(const k in d.stats){ if(!TOPICS[k]||typeof d.stats[k]!=="object") delete d.stats[k]; }
+  const okId=x=>typeof x==="string"&&/^[a-z0-9]+$/i.test(x);
+  if(Array.isArray(o.custom)) d.custom=o.custom.filter(s=>s&&okId(s.id)&&typeof s.name==="string"&&Array.isArray(s.cards)).slice(0,50)
+    .map(s=>({id:s.id,name:s.name.slice(0,40)||"My set",cards:s.cards.filter(c=>c&&okId(c.id)&&typeof c.f==="string"&&typeof c.b==="string").slice(0,500).map(c=>({id:c.id,f:c.f.slice(0,200),b:c.b.slice(0,400),x:typeof c.x==="string"?c.x.slice(0,200):""}))}));
+  if(typeof d.profile.email!=="string") d.profile.email="";
+  if(!d.profile.secret) d.profile.secret=rid();
   return d;
 }
 function loadUser(id){ return normalize(parse(lsGet(UKEY+id))); }
 let P=loadProfiles(), S=DEF(), UID=null;
 function save(){ if(UID) lsSet(UKEY+UID,JSON.stringify(S)); }
+function rid(){ try{ const a=new Uint8Array(18); crypto.getRandomValues(a); return Array.from(a,b=>(b%36).toString(36)).join(""); }catch(e){ return (Date.now().toString(36)+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2)).replace(/[^a-z0-9]/g,"").slice(0,18); } }
+function validEmail(e){ return typeof e==="string" && e.length<=120 && /^[^\s@<>()"',;:\\]+@[^\s@<>()"',;:\\]+\.[a-z]{2,}$/i.test(e); }
+
+/* ---------- daily email reminders ----------
+   The emails are sent by a small Google Apps Script service (see reminder-service.gs).
+   Paste that service's web-app URL between the quotes to switch reminders on. */
+const REMINDER_URL="https://script.google.com/macros/s/AKfycbwfqJExY91GNIvVgidZGGay0-CvrFDyd94ItOCD9r21Clhydrz9ydxDrVbFBCOK5DZj/exec";
+let syncT=null, OPTIN=false;
+function userTZ(){ try{ return Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC"; }catch(e){ return "UTC"; } }
+function syncReminder(now){ if(!REMINDER_URL||!UID||!validEmail(S.profile.email)) return; if(syncT) clearTimeout(syncT); syncT=setTimeout(()=>{ syncT=null; doSync(); }, now?0:4000); }
+function doSync(over){
+  if(!REMINDER_URL||!UID) return;
+  try{
+    const p=S.profile;
+    const body=Object.assign({v:1,email:p.email,secret:p.secret,name:String(p.name||"").trim().split(/\s+/)[0].slice(0,30),tz:userTZ(),goal:goal(),day:today(),count:S.days[today()]||0,reminders:!!p.remind,optin:OPTIN},over||{}); OPTIN=false;
+    if(!validEmail(body.email)) return;
+    fetch(REMINDER_URL,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)}).catch(()=>{});
+  }catch(e){}
+}
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden"&&syncT){ clearTimeout(syncT); syncT=null; doSync(); } });
 
 function dkey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function today(){ return dkey(new Date()); }
@@ -2167,8 +2355,8 @@ function rec(q,ok,fromReview,quiet){
   const d=today(); S.days[d]=(S.days[d]||0)+1;
   S.streak.cur= ok? S.streak.cur+1 : 0; S.streak.best=Math.max(S.streak.best,S.streak.cur);
   if(!ok) addMissed(q); else if(fromReview) removeMissed(q.id);
-  save();
-  if(!quiet && S.days[d]===goal()) toast(`Daily goal reached: ${goal()} questions today!`,"good");
+  save(); syncReminder();
+  if(!quiet && S.days[d]===goal()) goalReached();
 }
 function addMissed(q){ S.missed=S.missed.filter(m=>m.id!==q.id); S.missed.push({id:q.id,t:q.t,s:q.s,q:q.q,c:q.c,a:q.a,e:q.e,p:q.p}); if(S.missed.length>200) S.missed.shift(); }
 function removeMissed(id){ S.missed=S.missed.filter(m=>m.id!==id); }
@@ -2265,6 +2453,40 @@ function beep(ok){
   }catch(e){}
 }
 
+function goalReached(){ toast(`Daily goal reached: ${goal()} questions today!`,"good"); syncReminder(true); if(S.settings.confetti) confetti(); }
+function confetti(preview){
+  if(!S.settings.motion){ if(preview) toast("Turn on Animations to see the confetti"); return; }
+  try{
+    const old=document.querySelector(".confetti"); if(old) old.remove();
+    const cv=document.createElement("canvas"); cv.className="confetti"; cv.setAttribute("aria-hidden","true"); document.body.appendChild(cv);
+    const W=innerWidth, H=innerHeight, dpr=Math.min(2,window.devicePixelRatio||1); cv.width=W*dpr; cv.height=H*dpr;
+    const ctx=cv.getContext("2d"); ctx.scale(dpr,dpr);
+    const acc=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#4263eb";
+    const cols=[acc,"#f59f00","#12b886","#e64980","#7048e8","#fd7e14","#15aabf","#fab005"], ps=[];
+    const N=Math.min(220,Math.round(W/5)+80);
+    for(let i=0;i<N;i++){ const side=i%3, x= side===0?-10 : side===1? W+10 : W*(.3+Math.random()*.4);
+      const vx= side===0? 5+Math.random()*9 : side===1? -(5+Math.random()*9) : (Math.random()-.5)*8;
+      ps.push({x, y: side===2? H+10 : H*(.55+Math.random()*.3), vx, vy:-(10+Math.random()*(H/55)), w:6+Math.random()*6, h:9+Math.random()*8,
+        r:Math.random()*6.28, vr:(Math.random()-.5)*.3, c:cols[i%cols.length], round:Math.random()<.25, sw:Math.random()*6.28, d:Math.random()*120}); }
+    const t0=performance.now(), LIFE=4600;
+    function frame(t){
+      const el=t-t0; ctx.clearRect(0,0,W,H); let alive=0;
+      for(const p of ps){
+        if(el<p.d) { alive++; continue; }
+        p.vy+=.3; p.vx*=.986; if(p.vy>3.4) p.vy=3.4; p.sw+=.08;
+        p.x+=p.vx+Math.sin(p.sw)*.9; p.y+=p.vy; p.r+=p.vr;
+        if(p.y<H+30) alive++;
+        ctx.save(); ctx.globalAlpha=Math.max(0,Math.min(1,(LIFE-el)/900)); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.fillStyle=p.c;
+        if(p.round){ ctx.beginPath(); ctx.arc(0,0,p.w/2.4,0,6.283); ctx.fill(); }
+        else { const s=Math.abs(Math.cos(p.sw*1.7)); ctx.fillRect(-p.w/2,-p.h*s/2,p.w,p.h*s+1); }
+        ctx.restore();
+      }
+      if(alive&&el<LIFE) requestAnimationFrame(frame); else cv.remove();
+    }
+    requestAnimationFrame(frame);
+  }catch(e){}
+}
+
 /* ---------- settings application ---------- */
 const ACC={indigo:["Indigo","#4263eb","#91a7ff"],blue:["Blue","#1c7ed6","#74c0fc"],teal:["Teal","#0c8599","#3bc9db"],green:["Green","#2b8a3e","#69db7c"],violet:["Violet","#7048e8","#b197fc"],rose:["Rose","#d6336c","#f783ac"],orange:["Orange","#d9480f","#ffa94d"]};
 function sysDark(){ try{ return matchMedia("(prefers-color-scheme: dark)").matches; }catch(e){ return false; } }
@@ -2278,7 +2500,11 @@ function applySettings(){
   const rad=({round:[18,12],soft:[12,8],sharp:[5,4]})[st.radius]||[18,12];
   r.style.setProperty("--r",rad[0]+"px"); r.style.setProperty("--rs",rad[1]+"px");
   const cmp=st.density==="compact"; r.style.setProperty("--pad",cmp?"16px":"24px"); r.style.setProperty("--gap",cmp?"12px":"18px");
-  r.style.setProperty("--pfont",st.pfont==="sans"?'-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif':'Georgia,"Iowan Old Style","Times New Roman",serif');
+  const UF={jakarta:'"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif',atkinson:'"Atkinson Hyperlegible",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif',system:'-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'};
+  const uf=UF[st.ufont]||UF.jakarta;
+  r.style.setProperty("--ufont",uf);
+  r.style.setProperty("--hfont",st.hfont==="ui"?uf:'"Fraunces",Georgia,"Times New Roman",serif');
+  r.style.setProperty("--pfont",st.pfont==="sans"?uf:st.pfont==="georgia"?'Georgia,"Iowan Old Style","Times New Roman",serif':'"Literata",Georgia,"Times New Roman",serif');
   r.classList.toggle("nomotion",!st.motion);
 }
 try{ matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{ applySettings(); if(UID) renderNav(); }); }catch(e){}
@@ -2338,6 +2564,20 @@ function showAuth(mode){
     </div></div>`;
     return;
   }
+  if(mode==="email"){
+    a.innerHTML=`<div class="auth one"><form class="auth-card" onsubmit="saveEmail(event)" novalidate>
+      <div class="row center">${brandBlock()}</div>
+      <div style="text-align:center"><h2>One quick thing, ${esc(firstName())}</h2><p class="muted">Add your email to your profile. If you haven’t hit your daily goal by 9:30 PM, we’ll send you a friendly reminder.</p></div>
+      <label class="fl">Email<input class="inp" id="em-email" type="email" maxlength="120" autocomplete="email" inputmode="email" placeholder="you@example.com"></label>
+      <label class="chk"><input type="checkbox" id="em-remind" checked> Email me at 9:30 PM if I haven’t reached my daily goal</label>
+      <p class="err" id="em-err" role="alert"></p>
+      <button class="btn pri lg block" type="submit">Continue ${ic("arrow",18)}</button>
+      <button type="button" class="btn ghost block" onclick="signOut()">Switch profile</button>
+      <p class="fine">Every reminder email has an unsubscribe link.</p>
+    </form></div>`;
+    setTimeout(()=>{ const n=$("em-email"); if(n) n.focus(); },50);
+    return;
+  }
   SU={grade:"9",test:"SAT",goal:20};
   a.innerHTML=`<div class="auth">
     <div class="auth-art">${brandBlock()}
@@ -2347,12 +2587,15 @@ function showAuth(mode){
         <li><span class="fi">${ic("book",17)}</span><span>${BANK.length} hand-written questions, plus endless new ones generated on the fly</span></li>
         <li><span class="fi">${ic("test",17)}</span><span>Timed tests with real SAT pacing and full explanations</span></li>
         <li><span class="fi">${ic("cards",17)}</span><span>${DECKS.vocab.length+DECKS.grammar.length+DECKS.formulas.length} flashcards: vocabulary, grammar rules, and formulas</span></li>
-        <li><span class="fi">${ic("progress",17)}</span><span>Progress tracking, streaks, and a daily goal</span></li>
+        <li><span class="fi">${ic("progress",17)}</span><span>Progress tracking, streaks, and a daily goal, with a 9:30 PM reminder if you haven’t hit it</span></li>
       </ul>
     </div>
     <form class="auth-card" onsubmit="createProfile(event)" novalidate>
-      <div><h2>Create your profile</h2><p class="muted">Takes about 20 seconds. No email or password needed.</p></div>
-      <label class="fl">What should we call you?<input class="inp" id="su-name" maxlength="30" autocomplete="given-name" placeholder="Your first name"></label>
+      <div><h2>Create your profile</h2><p class="muted">Takes about 20 seconds. No password needed.</p></div>
+      <div class="two">
+        <label class="fl">What should we call you?<input class="inp" id="su-name" maxlength="30" autocomplete="given-name" placeholder="Your first name"></label>
+        <label class="fl">Email<input class="inp" id="su-email" type="email" maxlength="120" autocomplete="email" inputmode="email" placeholder="you@example.com"></label>
+      </div>
       <div class="fl"><span>Grade</span>${segPick("grade",[["9","9th"],["10","10th"],["11","11th"],["12","12th"],["other","Other"]])}</div>
       <div class="fl"><span>Which test are you preparing for?</span>${segPick("test",[["SAT","SAT"],["ACT","ACT"],["Both","Both"]])}</div>
       <div class="two">
@@ -2360,11 +2603,12 @@ function showAuth(mode){
         <label class="fl"><span>Test date <em>optional</em></span><input class="inp" id="su-date" type="date"></label>
       </div>
       <div class="fl"><span>Daily goal <em>questions per day</em></span>${segPick("goal",[[10,"10"],[20,"20"],[30,"30"],[50,"50"]])}</div>
+      <label class="chk"><input type="checkbox" id="su-remind" checked> Email me at 9:30 PM if I haven’t reached my daily goal</label>
       <label class="chk"><input type="checkbox" id="su-remember" checked> Keep me signed in on this device</label>
       <p class="err" id="su-err" role="alert"></p>
       <button class="btn pri lg block" type="submit">Get started ${ic("arrow",18)}</button>
       ${P.list.length?`<button type="button" class="btn ghost block" onclick="showAuth('pick')">I already have a profile</button>`:""}
-      <p class="fine">Your profile and progress are saved only in this browser.</p>
+      <p class="fine">Your progress is saved in this browser. Your email is only used for daily reminders, and every email has an unsubscribe link.</p>
     </form></div>`;
   setTimeout(()=>{ const n=$("su-name"); if(n) n.focus(); },50);
 }
@@ -2380,15 +2624,27 @@ function createProfile(e){
   if(!name){ err.textContent="Please enter your name."; $("su-name").focus(); return; }
   const target=checkTarget($("su-target").value,SU.test);
   if(target===null){ err.textContent= SU.test==="ACT"?"ACT scores range from 1 to 36.":"SAT scores range from 400 to 1600."; $("su-target").focus(); return; }
+  const email=($("su-email").value||"").trim().toLowerCase();
+  if(!validEmail(email)){ err.textContent="Please enter a valid email address."; $("su-email").focus(); return; }
+  if(emailTaken(email,null)){ err.textContent="There’s already a profile with this email on this device. Choose “I already have a profile.”"; return; }
   const id="p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
   const old=!P.list.length? parse(lsGet(OLDKEY)) : null;
   S= old? normalize(old) : DEF();
   if(old && old.theme) S.settings.theme=old.theme;
-  S.profile={name,grade:SU.grade,test:SU.test,target,date:$("su-date").value||"",goal:SU.goal,color:P.list.length%AV.length};
+  S.profile={name,email,remind:$("su-remind").checked,secret:rid(),grade:SU.grade,test:SU.test,target,date:$("su-date").value||"",goal:SU.goal,color:P.list.length%AV.length};
   P.list.push({id,name,color:S.profile.color});
   if($("su-remember").checked){ P.current=id; ssDel(SKEY); } else { P.current=null; ssSet(SKEY,id); }
-  UID=id; save(); savePro(); if(old) lsDel(OLDKEY);
+  UID=id; save(); savePro(); if(old) lsDel(OLDKEY); OPTIN=true;
   enterApp(); toast(old?`Welcome, ${name}! Your earlier progress was moved into your profile.`:`Welcome to Prep Lab, ${name}!`,"good");
+}
+function emailTaken(v,except){ return P.list.some(p=>p.id!==except && loadUser(p.id).profile.email===v); }
+function saveEmail(e){
+  if(e) e.preventDefault();
+  const v=($("em-email").value||"").trim().toLowerCase(), err=$("em-err");
+  if(!validEmail(v)){ err.textContent="Please enter a valid email address."; return; }
+  if(emailTaken(v,UID)){ err.textContent="Another profile on this device already uses that email."; return; }
+  S.profile.email=v; S.profile.remind=$("em-remind").checked; if(!S.profile.secret) S.profile.secret=rid(); save(); OPTIN=true;
+  enterApp(); toast("Thanks, you’re all set!","good");
 }
 function signIn(id){
   const p=P.list.find(x=>x.id===id); if(!p) return;
@@ -2400,7 +2656,9 @@ function enterApp(){
   const a=$("auth"); a.hidden=true; a.innerHTML="";
   $("shell").hidden=false; $("tabbar").hidden=false;
   sess=null; T=null; FC.order=[]; FC.i=0; FC.filter="all";
-  applySettings(); view="home"; renderNav(); render(); window.scrollTo(0,0);
+  applySettings();
+  if(!validEmail(S.profile.email)){ showAuth("email"); return; }
+  view="home"; renderNav(); render(); window.scrollTo(0,0); syncReminder(true);
 }
 function signOut(){
   if(T&&!T.done&&!confirm("Leave the timed test? Your answers on this test will be lost.")) return;
@@ -2411,7 +2669,7 @@ function signOut(){
 function setRemember(on){ if(on){ P.current=UID; ssDel(SKEY); } else { P.current=null; ssSet(SKEY,UID); } savePro(); rSettings(); toast(on?"You’ll stay signed in on this device.":"You’ll be asked to choose your profile next time.","good"); }
 function deleteProfile(){
   if(!confirm(`Delete the profile “${S.profile.name}” and ALL of its progress? This cannot be undone.`)) return;
-  lsDel(UKEY+UID); P.list=P.list.filter(p=>p.id!==UID); savePro(); toast("Profile deleted"); signOut();
+  doSync({reminders:false}); lsDel(UKEY+UID); P.list=P.list.filter(p=>p.id!==UID); savePro(); toast("Profile deleted"); signOut();
 }
 
 /* =====================================================================
@@ -2568,7 +2826,7 @@ function submitTest(auto){
   const c=T.qs.filter((q,i)=>T.ans[i]===q.a).length;
   S.tests.push({d:today(),c,n:T.qs.length,mix:T.mix}); if(S.tests.length>50) S.tests.shift(); save();
   if(auto) toast("Time’s up! Your test was submitted.");
-  if(before<goal() && (S.days[today()]||0)>=goal()) toast(`Daily goal reached: ${goal()} questions today!`,"good");
+  if(before<goal() && (S.days[today()]||0)>=goal()) goalReached(); else syncReminder(true);
   renderNav(); render(); window.scrollTo(0,0);
 }
 const MIXN={X:"Mixed",E:"English",M:"Math"};
@@ -2642,34 +2900,117 @@ function rReview(){
 /* =====================================================================
    FLASHCARDS
    ===================================================================== */
-const FC={deck:"vocab",filter:"all",order:[],i:0};
-function fcBuild(shuf){ const d=DECKS[FC.deck], m=S.cards[FC.deck]||{};
+const FC={deck:"vocab",filter:"all",order:[],i:0,edit:false,editCard:null};
+function customSet(key){ return typeof key==="string"&&key.startsWith("c:")? (S.custom.find(s=>"c:"+s.id===key)||null) : null; }
+function deckList(){ return Object.keys(DECKS).map(k=>({key:k,name:DECK_NAMES[k],custom:false})).concat(S.custom.map(s=>({key:"c:"+s.id,name:s.name,custom:true}))); }
+function deckName(key){ return DECK_NAMES[key]||(customSet(key)||{}).name||"Flashcards"; }
+function deckCards(key){
+  if(DECKS[key]) return DECKS[key];
+  const s=customSet(key); if(!s) return [];
+  return s.cards.map(c=>({id:c.id,front:`<div class="word cw">${esc(c.f)}</div>`,back:`<div class="def">${esc(c.b)}</div>${c.x?`<div class="ex">${esc(c.x)}</div>`:""}`}));
+}
+function fcValid(){ if(!DECKS[FC.deck]&&!customSet(FC.deck)){ FC.deck="vocab"; FC.edit=false; FC.editCard=null; FC.order=[]; } }
+function fcBuild(shuf){ const d=deckCards(FC.deck), m=S.cards[FC.deck]||{};
   const list=d.filter(c=> FC.filter==="all" || (FC.filter==="learn"&&m[c.id]==="learn") || (FC.filter==="notknown"&&m[c.id]!=="know"));
   FC.order=(shuf?shuffle(list):list).map(c=>c.id); FC.i=0; }
-function fcSet(deck){ FC.deck=deck; FC.filter="all"; fcBuild(false); rCards(); }
+function fcSet(deck){ FC.deck=deck; FC.filter="all"; FC.edit=false; FC.editCard=null; fcValid(); fcBuild(false); rCards(); }
 function fcFilter(f){ FC.filter=f; fcBuild(false); rCards(); }
 function fcFlip(){ const el=$("card3d"); if(el) el.classList.toggle("flipped"); }
 function fcMove(d){ if(!FC.order.length) return; FC.i=(FC.i+d+FC.order.length)%FC.order.length; rCards(); }
 function fcMark(v){ if(!FC.order.length) return; const id=FC.order[FC.i]; (S.cards[FC.deck]=S.cards[FC.deck]||{})[id]=v; save(); fcMove(1); }
-function fcReset(){ if(confirm(`Reset “know it / still learning” marks for ${DECK_NAMES[FC.deck]}?`)){ S.cards[FC.deck]={}; save(); fcBuild(false); rCards(); } }
+function fcReset(){ if(confirm(`Reset “know it / still learning” marks for ${deckName(FC.deck)}?`)){ S.cards[FC.deck]={}; save(); fcBuild(false); rCards(); } }
+
+/* ---- your own sets ---- */
+function fcNewSet(){
+  if(S.custom.length>=50){ toast("You can have up to 50 sets","bad"); return; }
+  let n=1; while(S.custom.some(s=>s.name==="My set "+n)) n++;
+  const s={id:rid().slice(0,12),name:"My set "+n,cards:[]}; S.custom.push(s); save();
+  FC.deck="c:"+s.id; FC.filter="all"; FC.edit=true; FC.editCard=null; FC.order=[]; rCards(); window.scrollTo(0,0);
+  setTimeout(()=>{ const el=$("set-name"); if(el){ el.focus(); el.select(); } },30);
+}
+function fcEditOpen(){ FC.edit=true; FC.editCard=null; rCards(); window.scrollTo(0,0); }
+function fcEditClose(){ FC.edit=false; FC.editCard=null; FC.filter="all"; fcBuild(false); rCards(); window.scrollTo(0,0); }
+function fcRename(v){ const s=customSet(FC.deck); if(!s) return; v=String(v||"").trim().replace(/\s+/g," ").slice(0,40);
+  if(!v){ toast("Give your set a name","bad"); rCards(); return; } s.name=v; save(); rCards(); }
+function fcSaveCard(e){
+  if(e) e.preventDefault(); const s=customSet(FC.deck); if(!s) return;
+  const f=$("cf-f").value.trim().slice(0,200), b=$("cf-b").value.trim().slice(0,400), x=$("cf-x").value.trim().slice(0,200);
+  if(!f||!b){ $("cf-err").textContent="Fill in both the front and the back."; return; }
+  const ed=FC.editCard&&s.cards.find(c=>c.id===FC.editCard);
+  if(ed){ ed.f=f; ed.b=b; ed.x=x; toast("Card updated","good"); }
+  else { if(s.cards.length>=500){ $("cf-err").textContent="A set can hold up to 500 cards."; return; } s.cards.push({id:rid().slice(0,12),f,b,x}); toast("Card added","good"); }
+  FC.editCard=null; save(); rCards(); const el=$("cf-f"); if(el) el.focus();
+}
+function fcEditCard(id){ FC.editCard=id; rCards(); const el=$("cf-f"); if(el){ el.scrollIntoView({block:"center",behavior:S.settings.motion?"smooth":"auto"}); el.focus(); } }
+function fcDelCard(id){
+  const s=customSet(FC.deck); if(!s) return; const c=s.cards.find(x=>x.id===id);
+  if(!c||!confirm(`Delete the card “${c.f.slice(0,60)}”?`)) return;
+  s.cards=s.cards.filter(x=>x.id!==id); if(S.cards[FC.deck]) delete S.cards[FC.deck][id]; if(FC.editCard===id) FC.editCard=null; save(); rCards();
+}
+function fcBulk(){
+  const s=customSet(FC.deck); if(!s) return;
+  const lines=$("cf-bulk").value.split(/\r?\n/).map(l=>l.trim()).filter(Boolean); let added=0, skipped=0;
+  for(const l of lines){
+    const m=l.match(/^(.+?)(?:\t+|\s+[-–—=]+\s+|\s*:\s+)(.+)$/);
+    if(!m||s.cards.length>=500){ skipped++; continue; }
+    s.cards.push({id:rid().slice(0,12),f:m[1].trim().slice(0,200),b:m[2].trim().slice(0,400),x:""}); added++;
+  }
+  save(); rCards();
+  if(added) toast(`Added ${added} card${added===1?"":"s"}${skipped?` · skipped ${skipped} line${skipped===1?"":"s"}`:""}`,"good");
+  else toast("No cards found. Put a dash, colon, or tab between each term and definition.","bad");
+}
+function fcDeleteSet(){
+  const s=customSet(FC.deck); if(!s) return;
+  if(!confirm(`Delete the set “${s.name}” and its ${s.cards.length} card${s.cards.length===1?"":"s"}? This cannot be undone.`)) return;
+  S.custom=S.custom.filter(x=>x!==s); delete S.cards["c:"+s.id]; save();
+  FC.deck="vocab"; FC.edit=false; FC.editCard=null; FC.filter="all"; fcBuild(false); rCards(); toast("Set deleted");
+}
+function fcEditor(){
+  const s=customSet(FC.deck), ed=FC.editCard?s.cards.find(c=>c.id===FC.editCard):null, n=s.cards.length;
+  return `<div class="fcwrap">
+  <div class="pbar"><button class="btn ghost sm" onclick="fcEditClose()">${ic("back",16)} ${n?"Study this set":"Back to flashcards"}</button><span class="pill">${n} card${n===1?"":"s"}</span></div>
+  <section class="panel"><label class="fl">Set name<input class="inp" id="set-name" value="${esc(s.name)}" maxlength="40" onchange="fcRename(this.value)"></label></section>
+  <section class="panel"><h3>${ed?"Edit card":"Add a card"}</h3>
+    <form onsubmit="fcSaveCard(event)" novalidate style="display:grid;gap:12px">
+      <div class="two"><label class="fl"><span>Front <em>term or question</em></span><textarea class="inp" id="cf-f" rows="3" maxlength="200">${ed?esc(ed.f):""}</textarea></label>
+      <label class="fl"><span>Back <em>definition or answer</em></span><textarea class="inp" id="cf-b" rows="3" maxlength="400">${ed?esc(ed.b):""}</textarea></label></div>
+      <label class="fl"><span>Example or hint <em>optional</em></span><input class="inp" id="cf-x" maxlength="200" value="${ed?esc(ed.x):""}"></label>
+      <p class="err" id="cf-err" role="alert"></p>
+      <div class="row"><button class="btn pri" type="submit">${ic(ed?"check":"plus",16)} ${ed?"Save changes":"Add card"}</button>${ed?`<button class="btn ghost" type="button" onclick="FC.editCard=null;rCards()">Cancel</button>`:""}</div>
+    </form></section>
+  <section class="panel"><details class="paste"><summary>${ic("upload",16)} <b>Paste a list</b> <span class="muted mini">· add many cards at once</span></summary>
+    <p class="muted mini" style="margin:10px 0 8px">One card per line. Put a dash, a colon, or a tab between the term and its definition.</p>
+    <textarea class="inp" id="cf-bulk" rows="6" placeholder="ubiquitous - found everywhere&#10;photosynthesis: how plants turn light into food&#10;mitochondria — the powerhouse of the cell"></textarea>
+    <div class="row" style="margin-top:10px"><button class="btn" onclick="fcBulk()">${ic("plus",16)} Add these cards</button></div></details></section>
+  <section class="panel"><h3>Cards in this set</h3>
+    ${n?`<div class="clist">${s.cards.map((c,i)=>`<div class="citem ${FC.editCard===c.id?"on":""}"><span class="cn">${i+1}</span><div class="ct"><b>${esc(c.f)}</b><span>${esc(c.b)}</span></div><button class="btn ghost sm" onclick="fcEditCard('${c.id}')">Edit</button><button class="btn ghost sm" onclick="fcDelCard('${c.id}')" aria-label="Delete card">${ic("trash",15)}</button></div>`).join("")}</div>`
+      :`<p class="muted mini">No cards yet. Add your first one above, or paste a whole list.</p>`}
+  </section>
+  <div class="row between"><span class="muted mini">Your sets are saved with your profile and included in backups.</span><button class="btn bad sm" onclick="fcDeleteSet()">${ic("trash",15)} Delete this set</button></div></div>`;
+}
 function rCards(){
+  fcValid();
+  const cs=customSet(FC.deck);
+  if(FC.edit&&cs){ app.innerHTML=fcEditor(); return; }
+  FC.edit=false;
   if(!FC.order.length && FC.filter==="all") fcBuild(false);
-  const d=DECKS[FC.deck], m=S.cards[FC.deck]||{};
+  const d=deckCards(FC.deck), m=S.cards[FC.deck]||{};
   const card=FC.order.length? d.find(c=>c.id===FC.order[FC.i]) : null; const st=card?m[card.id]:null;
   const stp=st?`<span class="pillst ${st}">${st==="know"?"Know it":"Still learning"}</span>`:"";
   app.innerHTML=`<div class="fcwrap">
-    <div class="decks">${Object.keys(DECKS).map(k=>{ const mm=S.cards[k]||{}, kn=DECKS[k].filter(c=>mm[c.id]==="know").length;
-      return `<button class="deck ${FC.deck===k?"on":""}" onclick="fcSet('${k}')"><b>${DECK_NAMES[k]}</b><small>${kn}/${DECKS[k].length} known</small><div class="bar thin"><i class="g" style="width:${Math.round(100*kn/DECKS[k].length)}%"></i></div></button>`; }).join("")}</div>
+    <div class="decks">${deckList().map(dk=>{ const k=dk.key, cards=deckCards(k), mm=S.cards[k]||{}, kn=cards.filter(c=>mm[c.id]==="know").length;
+      return `<button class="deck ${FC.deck===k?"on":""}" onclick="fcSet('${k}')"><b>${esc(dk.name)}</b><small>${dk.custom?`Your set · `:""}${kn}/${cards.length} known</small><div class="bar thin"><i class="g" style="width:${cards.length?Math.round(100*kn/cards.length):0}%"></i></div></button>`; }).join("")}
+      <button class="deck new" onclick="fcNewSet()">${ic("plus",18)}<b>New set</b><small>Make your own cards</small></button></div>
     <div class="row between"><div class="seg">${[["all","All"],["notknown","Not known yet"],["learn","Still learning"]].map(([k,l])=>`<button class="${FC.filter===k?"on":""}" onclick="fcFilter('${k}')">${l}</button>`).join("")}</div>
-      <span class="row" style="gap:6px"><button class="btn sm ghost" onclick="fcBuild(true);rCards()">${ic("shuffle",15)} Shuffle</button><button class="btn sm ghost" onclick="fcReset()">Reset</button></span></div>
+      <span class="row" style="gap:6px">${cs?`<button class="btn sm" onclick="fcEditOpen()">${ic("practice",15)} Edit set</button>`:""}<button class="btn sm ghost" onclick="fcBuild(true);rCards()">${ic("shuffle",15)} Shuffle</button><button class="btn sm ghost" onclick="fcReset()">Reset</button></span></div>
     ${card?`<div class="card3d" id="card3d" tabindex="0" onclick="fcFlip()" role="button" aria-label="Flip card">
-      <div class="inner"><div class="face front"><span class="lbl">${DECK_NAMES[FC.deck]} · ${FC.i+1}/${FC.order.length}</span><span class="st">${stp}</span>${card.front}<div class="fliphint">${S.settings.hints?"Tap or press Space to flip":"Tap to flip"}</div></div>
+      <div class="inner"><div class="face front"><span class="lbl">${esc(deckName(FC.deck))} · ${FC.i+1}/${FC.order.length}</span><span class="st">${stp}</span>${card.front}<div class="fliphint">${S.settings.hints?"Tap or press Space to flip":"Tap to flip"}</div></div>
       <div class="face back"><span class="lbl">Answer</span><span class="st">${stp}</span>${card.back}</div></div></div>
       <div class="fcctl"><button class="btn" onclick="fcMove(-1)" aria-label="Previous card">${ic("back",16)}</button><button class="btn bad" onclick="fcMark('learn')">Still learning${S.settings.hints?" <kbd>L</kbd>":""}</button><button class="btn good" onclick="fcMark('know')">Know it${S.settings.hints?" <kbd>K</kbd>":""}</button><button class="btn" onclick="fcMove(1)" aria-label="Next card">${ic("arrow",16)}</button></div>`
+    : cs&&!cs.cards.length? `<section class="panel" style="text-align:center;margin-top:16px"><h3>“${esc(cs.name)}” is empty</h3><p class="muted">Add some cards to start studying this set.</p><div class="row" style="justify-content:center;margin-top:12px"><button class="btn pri" onclick="fcEditOpen()">${ic("plus",16)} Add cards</button></div></section>`
     :`<section class="panel" style="text-align:center;margin-top:16px"><p class="muted">${FC.filter==="learn"?"No cards marked “still learning” yet. Mark cards as you study to build a focused pile.":"You know every card in this deck. Nice work!"}</p><button class="btn" onclick="fcFilter('all')">Show all cards</button></section>`}
   </div>`;
 }
-
 /* =====================================================================
    PROGRESS
    ===================================================================== */
@@ -2691,8 +3032,8 @@ function rProgress(){
     <section class="panel"><div class="ph"><h3>English</h3><b>${te.n?te.p+"%":"—"}</b></div><table class="prog">${ETOP.map(row).join("")}</table></section>
     <section class="panel"><div class="ph"><h3>Math</h3><b>${tm.n?tm.p+"%":"—"}</b></div><table class="prog">${MTOP.map(row).join("")}</table></section>
   </div>
-  <section class="panel" style="margin-top:var(--gap)"><h3>Flashcards</h3>${Object.keys(DECKS).map(k=>{ const mm=S.cards[k]||{}, kn=DECKS[k].filter(c=>mm[c.id]==="know").length, p=Math.round(100*kn/DECKS[k].length);
-    return `<div class="sline" style="grid-template-columns:130px 1fr 70px"><span>${DECK_NAMES[k]}</span><div class="bar"><i class="g" style="width:${p}%"></i></div><span class="n">${kn}/${DECKS[k].length}</span></div>`; }).join("")}</section>`;
+  <section class="panel" style="margin-top:var(--gap)"><h3>Flashcards</h3>${deckList().map(dk=>{ const k=dk.key, cs=deckCards(k), mm=S.cards[k]||{}, kn=cs.filter(c=>mm[c.id]==="know").length, p=cs.length?Math.round(100*kn/cs.length):0;
+    return `<div class="sline" style="grid-template-columns:130px 1fr 70px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(dk.name)}</span><div class="bar"><i class="g" style="width:${p}%"></i></div><span class="n">${kn}/${cs.length}</span></div>`; }).join("")}</section>`;
 }
 
 /* =====================================================================
@@ -2704,10 +3045,16 @@ function swCtl(key){ const on=!!S.settings[key]; return `<button class="sw ${on?
 function setSet(k,v){ S.settings[k]=v; save(); applySettings(); renderNav(); rSettings(); }
 function setProf(k,v,rerender){
   if(k==="name"){ v=String(v||"").trim().replace(/\s+/g," ").slice(0,30); if(!v){ toast("Your name can’t be empty","bad"); rSettings(); return; } }
+  if(k==="email"){ v=String(v||"").trim().toLowerCase();
+    if(!validEmail(v)){ toast("Please enter a valid email address","bad"); rSettings(); return; }
+    if(emailTaken(v,UID)){ toast("Another profile on this device uses that email","bad"); rSettings(); return; }
+    if(S.profile.email&&v!==S.profile.email) doSync({email:S.profile.email,reminders:false}); }
   if(k==="target"){ const t=checkTarget(v,S.profile.test); if(t===null){ toast(S.profile.test==="ACT"?"ACT scores range from 1 to 36":"SAT scores range from 400 to 1600","bad"); rSettings(); return; } v=t; }
   S.profile[k]=v;
   const p=P.list.find(x=>x.id===UID); if(p){ p.name=S.profile.name; p.color=S.profile.color; savePro(); }
   save(); renderNav(); if(rerender) rSettings();
+  if(k==="remind"&&v) OPTIN=true;
+  if(k==="email"||k==="goal"||k==="remind"||k==="name") syncReminder(true);
 }
 function profSeg(key,opts){ const cur=S.profile[key]; return `<div class="seg">${opts.map(([v,l])=>`<button class="${String(cur)===String(v)?"on":""}" onclick="setProf('${key}',${typeof v==="string"?`'${v}'`:v},true)">${l}</button>`).join("")}</div>`; }
 function rSettings(){
@@ -2718,12 +3065,14 @@ function rSettings(){
       <div class="swatches" style="margin-top:8px">${AV.map((c,i)=>`<button class="swatch ${(Number(pr.color)||0)===i?"on":""}" style="background:${c}" onclick="setProf('color',${i},true)" aria-label="Avatar color ${i+1}"></button>`).join("")}</div></div></div>
     <div class="profgrid">
       <label class="fl">Name<input class="inp" value="${esc(pr.name)}" maxlength="30" onchange="setProf('name',this.value,true)"></label>
+      <label class="fl">Email<input class="inp" type="email" value="${esc(pr.email)}" maxlength="120" autocomplete="email" onchange="setProf('email',this.value,true)"></label>
       <label class="fl"><span>Target score <em>${pr.test==="ACT"?"1–36":"400–1600"}</em></span><input class="inp" value="${esc(pr.target)}" inputmode="numeric" maxlength="4" placeholder="Optional" onchange="setProf('target',this.value)"></label>
       <label class="fl"><span>Test date <em>optional</em></span><input class="inp" type="date" value="${esc(pr.date)}" onchange="setProf('date',this.value)"></label>
     </div>
     ${setRow("Grade","",profSeg("grade",[["9","9th"],["10","10th"],["11","11th"],["12","12th"],["other","Other"]]),true)}
     ${setRow("Test","Which exam you’re preparing for.",profSeg("test",[["SAT","SAT"],["ACT","ACT"],["Both","Both"]]),true)}
     ${setRow("Daily goal","Questions per day. Shown on your dashboard ring.",profSeg("goal",[[10,"10"],[20,"20"],[30,"30"],[50,"50"],[75,"75"]]),true)}
+    ${setRow("Daily email reminder",REMINDER_URL?`At 9:30 PM your time (${esc(userTZ().replace(/_/g," "))}), only if you haven’t reached your goal yet. The first time, confirm using the email we send you.`:"Email reminders aren’t switched on for this site yet.",`<button class="sw ${pr.remind?"on":""}" role="switch" aria-checked="${!!pr.remind}" aria-label="Daily email reminder" onclick="setProf('remind',${!pr.remind},true)"><i></i></button>`)}
   </section>
 
   <section class="panel"><h3>Appearance</h3>
@@ -2732,7 +3081,9 @@ function rSettings(){
     ${setRow("Text size","",segCtl("size",[["s","S"],["m","M"],["l","L"],["xl","XL"]]))}
     ${setRow("Corners","",segCtl("radius",[["round","Round"],["soft","Soft"],["sharp","Sharp"]]))}
     ${setRow("Spacing","Compact fits more on screen.",segCtl("density",[["comfy","Roomy"],["compact","Compact"]]))}
-    ${setRow("Passage font","Font used for reading passages.",segCtl("pfont",[["serif","Serif"],["sans","Sans"]]))}
+    ${setRow("App font","“Easy-read” is designed for maximum legibility.",segCtl("ufont",[["jakarta","Modern"],["atkinson","Easy-read"],["system","System"]]))}
+    ${setRow("Heading font","",segCtl("hfont",[["fraunces","Serif"],["ui","Match app"]]))}
+    ${setRow("Passage font","Font used for reading passages.",segCtl("pfont",[["serif","Literata"],["georgia","Georgia"],["sans","Sans"]]))}
     ${setRow("Animations","Card flips, fades, and transitions.",swCtl("motion"))}
   </section>
 
@@ -2742,6 +3093,7 @@ function rSettings(){
     ${setRow("Keyboard hints","Show shortcut keys under questions.",swCtl("hints"))}
     ${setRow("Sound effects","A short chime for right and wrong answers.",swCtl("sound"))}
     ${setRow("“Generated” label","Tag questions that were created on the fly.",swCtl("showGen"))}
+    ${setRow("Goal confetti","Celebrate when you reach your daily goal.",`<div class="row" style="gap:8px;flex-wrap:nowrap"><button class="btn sm ghost" onclick="confetti(true)">Preview</button>${swCtl("confetti")}</div>`)}
     <h3 style="margin-top:20px">Timed tests</h3>
     ${setRow("Extra time","Multiply the time limit (for accommodations or warm-ups).",segCtl("timeMult",[[1,"1×"],[1.25,"1.25×"],[1.5,"1.5×"],[2,"2×"]]))}
     ${setRow("Show countdown","Turn off to practice without watching the clock.",swCtl("showTimer"))}
@@ -2752,14 +3104,14 @@ function rSettings(){
     ${setRow("Stay signed in","Skip the profile screen when you open Prep Lab on this device.",`<button class="sw ${remembered?"on":""}" role="switch" aria-checked="${remembered}" aria-label="Stay signed in" onclick="setRemember(${!remembered})"><i></i></button>`)}
     ${setRow("Back up progress","Download your progress as a file, or restore it from one.",`<div class="row"><button class="btn sm" onclick="exportData()">${ic("download",15)} Download</button><label class="btn sm" style="cursor:pointer">${ic("upload",15)} Restore<input type="file" accept=".json,application/json" hidden onchange="importData(this)"></label></div>`,true)}
     ${setRow("Switch profile","Sign out to let someone else use Prep Lab on this device.",`<button class="btn sm" onclick="signOut()">${ic("users",15)} Switch / sign out</button>`,true)}
-    ${setRow("Reset progress","Erase answers, streaks, missed questions, and flashcard marks. Keeps your profile and settings.",`<button class="btn sm bad" onclick="resetProgress()">Reset progress</button>`,true)}
+    ${setRow("Reset progress","Erase answers, streaks, missed questions, and flashcard marks. Keeps your profile, settings, and your own flashcard sets.",`<button class="btn sm bad" onclick="resetProgress()">Reset progress</button>`,true)}
     ${setRow("Delete profile","Permanently remove this profile from this device.",`<button class="btn sm bad" onclick="deleteProfile()">${ic("trash",15)} Delete</button>`,true)}
     <p class="muted mini" style="margin-top:10px">Everything is stored only in this browser. Clearing your browser data will erase it, so download a backup now and then.</p>
   </section></div>`;
 }
 function resetProgress(){
   if(!confirm("Erase ALL progress, missed questions, and flashcard marks for this profile? This cannot be undone.")) return;
-  const keep={profile:S.profile,settings:S.settings}; S=DEF(); S.profile=keep.profile; S.settings=keep.settings; save(); sess=null; T=null; renderNav(); rSettings(); toast("Progress reset");
+  const keep={profile:S.profile,settings:S.settings,custom:S.custom}; S=DEF(); S.profile=keep.profile; S.settings=keep.settings; S.custom=keep.custom; save(); sess=null; T=null; renderNav(); rSettings(); toast("Progress reset");
 }
 function exportData(){
   try{
@@ -2776,7 +3128,7 @@ function importData(inp){
   rd.onload=()=>{ const o=parse(rd.result), d=o&&o.data?o.data:o;
     if(!d||typeof d!=="object"||!d.stats){ toast("That file isn’t a Prep Lab backup","bad"); return; }
     if(!confirm("Replace this profile’s progress with the backup?")) return;
-    const prof=S.profile; S=normalize(d); S.profile=prof; save(); applySettings(); renderNav(); rSettings(); toast("Backup restored","good"); };
+    const prof=S.profile; S=normalize(d); S.profile=prof; FC.order=[]; FC.deck="vocab"; save(); applySettings(); renderNav(); rSettings(); toast("Backup restored","good"); };
   rd.onerror=()=>toast("Couldn’t read that file","bad");
   rd.readAsText(f); inp.value="";
 }
@@ -2796,7 +3148,7 @@ document.addEventListener("keydown",e=>{
     if(idx>=0 && idx<T.qs[T.idx].c.length){ e.preventDefault(); tAnswer(idx); }
     else if(k==="arrowright"){ tGo(T.idx+1); } else if(k==="arrowleft"){ tGo(T.idx-1); }
     else if(k==="f"){ tFlag(); }
-  } else if(view==="cards"){
+  } else if(view==="cards" && !FC.edit){
     if(k===" "||(k==="enter"&&e.target.tagName!=="BUTTON")){ e.preventDefault(); fcFlip(); }
     else if(k==="arrowright") fcMove(1); else if(k==="arrowleft") fcMove(-1);
     else if(k==="k") fcMark("know"); else if(k==="l") fcMark("learn");
@@ -2810,4 +3162,5 @@ document.addEventListener("keydown",e=>{
 </script>
 </body>
 </html>
+
 
