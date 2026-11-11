@@ -2331,7 +2331,7 @@ function validEmail(e){ return typeof e==="string" && e.length<=120 && /^[^\s@<>
 /* ---------- daily email reminders ----------
    The emails are sent by a small Google Apps Script service (see reminder-service.gs).
    Paste that service's web-app URL between the quotes to switch reminders on. */
-const REMINDER_URL="https://script.google.com/macros/s/AKfycbzqRDCh7fCC9Ul1lGdWB8CjqtrNd5CVgS8kgPUG4_N7-rO_Gb7YRODhGZfuXFrzN5s/exec";
+const REMINDER_URL="https://script.google.com/macros/s/AKfycbwZC4X-QQicVU_uc91kToeFip1qV1-5BHkdsKpJ8fHA4-7Yhp4q8njWkM0S8Bt1gprE/exec";
 let syncT=null, OPTIN=false;
 function userTZ(){ try{ return Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC"; }catch(e){ return "UTC"; } }
 function syncReminder(now){ if(!REMINDER_URL||!UID||!validEmail(S.profile.email)) return; if(syncT) clearTimeout(syncT); syncT=setTimeout(()=>{ syncT=null; doSync(); }, now?0:4000); }
