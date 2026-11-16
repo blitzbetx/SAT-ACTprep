@@ -1073,13 +1073,14 @@ function mk(t,q,correct,wrongs,e,p){
   const out=[String(correct)];
   for(const w of wrongs){ const s=String(w); if(!out.includes(s)) out.push(s); if(out.length===4) break; }
   const cs=String(correct).replace(MN,"-");
-  const num=Number(cs), fm=cs.match(/^(-?\d+)\/(\d+)$/), pm=cs.match(/^(-?\d+(?:\.\d+)?)π$/);
+  const num=Number(cs), fm=cs.match(/^(-?\d+)\/(\d+)$/), pm=cs.match(/^(-?\d+(?:\.\d+)?)π$/), um=cs.match(/^(\$?)(\d+(?:\.\d+)?)(%|°| [a-z]+)?$/);
   let k=1;
   while(out.length<4 && k<40){
     const dlt=k%2? Math.ceil(k/2) : -Math.ceil(k/2); let cand=null;
     if(isFinite(num)) cand=fmt(num+dlt);
     else if(fm) cand=frac(Number(fm[1])+dlt,Number(fm[2]));
     else if(pm && Number(pm[1])+dlt>0) cand=fmt(Number(pm[1])+dlt)+"π";
+    else if(um && Number(um[2])+dlt>0){ const v=Number(um[2])+dlt; cand=um[1]+(um[2].includes(".")?v.toFixed(um[2].split(".")[1].length):String(v))+(um[3]||""); }
     if(cand && !out.includes(cand)) out.push(cand);
     k++;
   }
@@ -2285,6 +2286,573 @@ reg("func",()=>{
 });
 
 /* =====================================================================
+   ENDLESS PACK — combinatorial generators for every topic
+   (each one builds questions from interchangeable parts, so it can
+   produce hundreds to thousands of different versions)
+   ===================================================================== */
+const NAMES=[["Maya","she","her"],["Jordan","he","his"],["Priya","she","her"],["Mateo","he","his"],["Aisha","she","her"],["Liam","he","his"],["Sofia","she","her"],["Kenji","he","his"],["Grace","she","her"],["Andre","he","his"],["Lucia","she","her"],["Omar","he","his"],["Hana","she","her"],["Diego","he","his"],["Nia","she","her"],["Ethan","he","his"]];
+const nf=n=>Number(n).toLocaleString("en-US");
+
+/* ---------- Modifiers: dangling modifiers ---------- */
+const MOD_ACTORS=[
+ ["the astronomer",["Peering through the telescope","After years of patient observation","Working late into the night"],[["spotted","spotted","a faint new comet",0],["recorded","recorded","an unusual flash of light",0],["photographed","photographed","two distant galaxies",1]]],
+ ["the chef",["Determined to impress the critics","Rushing to finish before dinner service","Trained in classic French cooking"],[["prepared","prepared","a seven-course tasting menu",0],["redesigned","redesigned","the restaurant’s seasonal menu",0],["baked","baked","three loaves of sourdough",1]]],
+ ["the volunteers",["Armed with gloves and trash bags","Working through the hot afternoon","Eager to help the town recover"],[["cleared","cleared","the debris from the riverbank",0],["planted","planted","two hundred young trees",1],["repainted","repainted","the community center",0]]],
+ ["the detective",["Suspicious of the witness’s story","Examining the scene carefully","Determined to solve the case"],[["found","found","a crucial clue under the rug",0],["questioned","questioned","the two nervous witnesses",1],["reopened","reopened","the old case file",0]]],
+ ["Dr. Okafor",["Curious about the strange results","Funded by a national grant","After reviewing the data twice"],[["repeated","repeated","the entire experiment",0],["published","published","the findings in a major journal",1],["identified","identified","a flaw in the original study",0]]],
+ ["the students",["Nervous about the final exam","Inspired by the guest speaker","After months of fundraising"],[["formed","formed","a weekly study group",0],["organized","organized","a school-wide recycling program",0],["built","built","a solar-powered car",0]]],
+ ["the architect",["Inspired by the shapes of seashells","Hoping to reduce energy use","Working with a tight budget"],[["designed","designed","a spiraling concert hall",0],["added","added","rooftop solar panels",1],["chose","chosen","recycled steel for the frame",0]]],
+ ["the hikers",["Exhausted after the long climb","Caught in a sudden storm","Following an old map"],[["pitched","pitched","their tents near the summit",1],["found","found","shelter in a small cave",0],["reached","reached","a hidden waterfall",0]]],
+ ["the pianist",["Nervous before the first recital","Having practiced for months","Known for daring interpretations"],[["performed","performed","a difficult Chopin étude",0],["memorized","memorized","the entire sonata",0],["impressed","impressed","the panel of judges",0]]],
+ ["the engineers",["Concerned about the bridge’s safety","Using computer simulations","After the first prototype failed"],[["strengthened","strengthened","the support beams",1],["tested","tested","a new wing design",0],["redesigned","redesigned","the cooling system",0]]],
+ ["the reporter",["Racing to meet the deadline","Skeptical of the official account","After interviewing dozens of residents"],[["uncovered","uncovered","a hidden budget shortfall",0],["wrote","written","a front-page story",0],["verified","verified","every quotation",0]]],
+ ["the farmers",["Worried about the long drought","Hoping to improve the harvest","Using new irrigation methods"],[["planted","planted","drought-resistant corn",0],["dug","dug","several deep wells",1],["rotated","rotated","the crops each season",1]]],
+ ["the coach",["Frustrated by the team’s slow start","Studying game film late at night","Confident in the young players"],[["changed","changed","the starting lineup",0],["designed","designed","a new defensive strategy",0],["scheduled","scheduled","two extra practices",1]]],
+ ["the historian",["Fascinated by the faded letters","Traveling to archives across Europe","After decades of research"],[["translated","translated","the entire diary",0],["discovered","discovered","a forgotten map",0],["reconstructed","reconstructed","the king’s final journey",0]]]
+];
+reg("mod",()=>{
+  const [actor,openers,acts]=pick(MOD_ACTORS), op=pick(openers), [v,pp,o,pl]=pick(acts);
+  return mk("mod",STD,`${actor} ${v} ${o}.`,[`${o} ${pl?"were":"was"} ${pp} by ${actor}.`,`it was ${o} that ${actor} ${v}.`,`${o} ${pl?"were":"was"} what ${actor} ${v}.`],
+    `Who is described by “${op}”? ${cap(actor)}. An introductory modifier must be followed immediately by the person or thing it describes, so the sentence must continue with “${actor}.” The other choices put “${o}” or “it” right after the comma, creating a dangling modifier.`,
+    `${op}, ${BL}`);
+});
+
+/* ---------- Parallel structure: lists ---------- */
+const PARA_ACTS=[["paint the fence","painting the fence","painted the fence"],["wash the car","washing the car","washed the car"],["plant tomatoes","planting tomatoes","planted tomatoes"],
+ ["clean the garage","cleaning the garage","cleaned the garage"],["bake bread","baking bread","baked bread"],["walk the dog","walking the dog","walked the dog"],["fix the bike","fixing the bike","fixed the bike"],
+ ["visit the science museum","visiting the science museum","visited the science museum"],["organize the closet","organizing the closet","organized the closet"],["practice the piano","practicing the piano","practiced the piano"],
+ ["study for the chemistry test","studying for the chemistry test","studied for the chemistry test"],["write thank-you notes","writing thank-you notes","wrote thank-you notes"],["build a birdhouse","building a birdhouse","built a birdhouse"],
+ ["learn a new song","learning a new song","learned a new song"],["repair the gate","repairing the gate","repaired the gate"],["rake the leaves","raking the leaves","raked the leaves"],
+ ["cook dinner for friends","cooking dinner for friends","cooked dinner for friends"],["mow the lawn","mowing the lawn","mowed the lawn"],["edit the school newspaper","editing the school newspaper","edited the school newspaper"],
+ ["volunteer at the food bank","volunteering at the food bank","volunteered at the food bank"],["sort old photographs","sorting old photographs","sorted old photographs"],["assemble a bookshelf","assembling a bookshelf","assembled a bookshelf"],
+ ["draw a map of the neighborhood","drawing a map of the neighborhood","drew a map of the neighborhood"],["jog around the lake","jogging around the lake","jogged around the lake"],["shop for groceries","shopping for groceries","shopped for groceries"],
+ ["sweep the porch","sweeping the porch","swept the porch"],["hang new curtains","hanging new curtains","hung new curtains"],["update the club website","updating the club website","updated the club website"]];
+reg("para",()=>{
+  const [n,pr]=pick(NAMES), [a,b,c]=shuffle(PARA_ACTS).slice(0,3), f=ri(0,2);
+  if(f===0) return mk("para",STD,c[1]+".",["to "+c[0]+".",c[2]+".",`${pr} ${c[2]}.`],
+    `The list is “${a[1]}, ${b[1]}, and ___.” Items in a list must have the same form, so the last item should also be an -ing phrase: “${c[1]}.”`,
+    `${n} spent the weekend ${a[1]}, ${b[1]}, and ${BL}`);
+  if(f===1) return mk("para",STD,c[0]+".",[c[1]+".",c[2]+".",`${pr} will ${c[0]}.`],
+    `The list is “to ${a[0]}, ${b[0]}, and ___,” where “to” carries over to every item. The last item must also be a base verb: “${c[0]}.”`,
+    `${n} plans to ${a[0]}, ${b[0]}, and ${BL}`);
+  return mk("para",STD,c[2]+".",[c[1]+".","to "+c[0]+".",`${pr} was ${c[1]}.`],
+    `The list is “${a[2]}, ${b[2]}, and ___,” all past-tense verbs, so the last item must match: “${c[2]}.”`,
+    `Last Saturday, ${n} ${a[2]}, ${b[2]}, and ${BL}`);
+});
+const PARA_CMP=[["Riding a bike to school","driving","is often faster than"],["Reading a book","watching its movie version","is usually more rewarding than"],["Cooking at home","eating at restaurants","is cheaper than"],
+ ["Taking notes by hand","typing them on a laptop","helps students remember more than"],["Walking in the park","sitting indoors","can lower stress more than"],["Studying a little each day","cramming the night before","works better than"],
+ ["Planting native flowers","mowing a lawn","supports more pollinators than"],["Asking questions in class","staying silent","helps students learn more than"]];
+reg("para",()=>{
+  const [a,b,mid]=pick(PARA_CMP);
+  return mk("para",STD,b+".",["to "+toBase(b)+".","if you "+toBase(b)+".","when you "+toBase(b)+"."],
+    `A comparison must compare matching forms. “${a.split(" ")[0]}” is an -ing word (a gerund), so the other side should be one too: “${b}.”`,
+    `${a} ${mid} ${BL}`);
+});
+function toBase(g){ const w=g.split(" "), v=w[0];
+  const map={driving:"drive",watching:"watch",eating:"eat",typing:"type",sitting:"sit",cramming:"cram",mowing:"mow",staying:"stay"};
+  w[0]=map[v]||v.replace(/ing$/,""); return w.join(" "); }
+
+/* ---------- Verb tense ---------- */
+const TV=[["finish","finishes","finished","finished","the history report"],["paint","paints","painted","painted","the hallway mural"],["write","writes","wrote","written","three chapters of the novel"],
+ ["build","builds","built","built","a model of the bridge"],["read","reads","read","read","the entire play"],["repair","repairs","repaired","repaired","the broken lamp"],["memorize","memorizes","memorized","memorized","the opening speech"],
+ ["complete","completes","completed","completed","the online course"],["plant","plants","planted","planted","the vegetable garden"],["clean","cleans","cleaned","cleaned","the science lab"],["bake","bakes","baked","baked","two dozen muffins"],
+ ["draw","draws","drew","drawn","the final sketches"],["solve","solves","solved","solved","every problem on the worksheet"],["send","sends","sent","sent","the invitations"],["choose","chooses","chose","chosen","a topic for the project"],
+ ["take","takes","took","taken","the practice test"],["sell","sells","sold","sold","all of the raffle tickets"],["teach","teaches","taught","taught","the new dance routine"],["buy","buys","bought","bought","the supplies for the trip"],
+ ["run","runs","ran","run","five miles"],["swim","swims","swam","swum","twenty laps"],["give","gives","gave","given","the presentation"],["begin","begins","began","begun","the research paper"],["speak","speaks","spoke","spoken","to the principal"]];
+reg("tense",()=>{
+  const [n]=pick(NAMES), [b,s,p,pp,o]=pick(TV), f=ri(0,3);
+  const F=[
+    [pick(["By the time the bell rang","By the time the guests arrived","By the time the storm hit","By the time the bus came"]),`had ${pp}`,[`will have ${pp}`,`will ${b}`,s],
+     "The sentence describes an action completed BEFORE another past event, which calls for the past perfect: “had” + past participle."],
+    [pick(["By next Friday","By the end of the month","By this time next year","By the time the semester ends"]),`will have ${pp}`,[`had ${pp}`,p,s],
+     "The action will be completed before a point in the FUTURE, which calls for the future perfect: “will have” + past participle."],
+    [pick(["Last night","Yesterday afternoon","Two weeks ago","Last summer"]),p,[`will ${b}`,`will have ${pp}`,s],
+     "The time phrase points to a specific, finished moment in the past, so the simple past is correct."],
+    [pick(["Tomorrow morning","Next weekend","Later this evening","Next week"]),`will ${b}`,[`had ${pp}`,p,`has ${pp}`],
+     "The time phrase points to the future, so the verb must be in the future tense: “will” + base verb."]][f];
+  return mk("tense",STD,F[1],F[2],`${F[3]} “${F[0]}” is the clue → “${F[1]}.”`,`${F[0]}, ${n} ${BL} ${o}.`);
+});
+
+/* ---------- Transitions: bigger pool ---------- */
+TRANS_ITEMS.push(
+ ["contrast","Most deserts receive very little rain.","the Atacama Desert in Chile blooms with wildflowers after rare storms."],
+ ["contrast","The first iPhone had no app store.","today’s smartphones can run millions of apps."],
+ ["contrast","Many people assume that bats are blind.","most bats can see quite well, and some see better than humans in dim light."],
+ ["contrast","The team led by twenty points at halftime.","it lost the game in the final minute."],
+ ["contrast","The old textbook was dense and difficult.","the new edition explains each concept with clear examples."],
+ ["contrast","Sharks have existed for over 400 million years.","many species are now endangered because of overfishing."],
+ ["contrast","The recipe looked simple on paper.","making it took nearly four hours."],
+ ["contrast","Pluto was classified as a planet for decades.","astronomers reclassified it as a dwarf planet in 2006."],
+ ["contrast","The candidate was largely unknown in January.","by November she had won the election by a wide margin."],
+ ["cause","The city added protected bike lanes downtown.","the number of people cycling to work doubled within two years."],
+ ["cause","The company’s profits fell sharply last year.","it postponed plans to open new stores."],
+ ["cause","The bridge was damaged in the earthquake.","engineers closed it until repairs could be completed."],
+ ["cause","Bees pollinate many of the crops people eat.","a decline in bee populations could threaten food supplies."],
+ ["cause","The author’s first novel sold millions of copies.","publishers competed fiercely for her second book."],
+ ["cause","The school extended its library hours.","more students began studying there in the evenings."],
+ ["cause","The frost arrived weeks earlier than usual.","much of the region’s apple crop was lost."],
+ ["cause","The museum digitized its entire collection.","researchers around the world can now study its artifacts online."],
+ ["addition","The new park includes walking trails and a playground.","it features a community garden where residents can grow vegetables."],
+ ["addition","Learning a second language can improve memory.","it may help people focus better on difficult tasks."],
+ ["addition","The documentary was praised for its stunning photography.","critics admired its careful research."],
+ ["addition","The electric bus fleet will reduce air pollution.","it is expected to lower the city’s fuel costs."],
+ ["addition","The novel explores the history of the town.","it examines how families change across generations."],
+ ["addition","The vaccine is highly effective.","it can be stored in an ordinary refrigerator."],
+ ["example","Many inventions came from accidents.","the microwave oven was invented after a scientist noticed a candy bar melting near radar equipment."],
+ ["example","Some animals can regenerate lost body parts.","axolotls can regrow entire limbs."],
+ ["example","Several ancient civilizations built impressive observatories.","the Maya built El Caracol to track the movements of Venus."],
+ ["example","Some plants have developed clever defenses.","the mimosa plant folds its leaves when touched."],
+ ["example","Many common words began as brand names.","“escalator” and “trampoline” were once trademarks."],
+ ["example","Some birds are remarkable mimics.","the lyrebird can imitate chainsaws and camera shutters."],
+ ["example","Several famous authors were rejected many times before succeeding.","J.K. Rowling’s first Harry Potter book was turned down by twelve publishers."]
+);
+const TRANS_SEQ=["Next","Then","After that","Finally"];
+const SEQ_ITEMS=[
+ ["To make paper by hand, first soak shredded scraps in water until they form a pulp.","spread the pulp evenly across a fine screen and press out the water."],
+ ["To plant a tree, first dig a hole twice as wide as its root ball.","place the tree in the hole and fill it with soil."],
+ ["To change a bike tire, first release the brake and remove the wheel.","use tire levers to pry the old tire off the rim."],
+ ["To start the experiment, the students measured 50 milliliters of water.","they added two grams of salt and stirred until it dissolved."],
+ ["To write a strong essay, first gather evidence for your argument.","organize that evidence into a clear outline."]
+];
+reg("trans",()=>{
+  const [s1,s2]=pick(SEQ_ITEMS), c=pick(["Next","Then","After that"]);
+  return mk("trans",TRN,c,[pick(TRANS_SETS.contrast),pick(TRANS_SETS.cause),pick(TRANS_SETS.example)],
+    `The text describes steps in order (“first… ___”), so a sequence transition like “${c}” fits. Nothing here is a contrast, a result, or an example.`,
+    `${s1} ${BL}, ${s2}`);
+});
+
+/* ---------- Punctuation: appositives, colons, more clause pairs ---------- */
+const APP_PEOPLE=["Lena Ortiz","Samuel Achebe","Mei Tanaka","Rafael Duarte","Amara Nwosu","Elena Petrova","Kofi Mensah","Ingrid Larsen","Tomás Rivera","Leila Haddad","Arjun Mehta","Claire Dubois","Yusuf Kaya","Nadia Rahman","Owen Gallagher"];
+const APP_ROLES=[["a marine biologist at the local university","has studied coral reefs for twenty years"],["the town’s first female mayor","opened the new library on Saturday"],
+ ["an award-winning jazz pianist","will perform at the festival this weekend"],["a former astronaut","spoke to students about life in orbit"],["the author of three bestselling mysteries","is writing a new series for young readers"],
+ ["a structural engineer","designed the city’s newest pedestrian bridge"],["a self-taught photographer","won the national wildlife photography prize"],["the museum’s head curator","discovered the forged painting"],
+ ["a high school chemistry teacher","developed a cheaper way to purify water"],["the captain of the debate team","argued the final round without notes"],["a renowned glass artist","created the chandelier in the lobby"],
+ ["the restaurant’s pastry chef","invented a dessert that sold out every night"],["a volcanologist","has visited more than forty active volcanoes"],["a retired firefighter","now teaches safety classes at the community center"]];
+reg("punc",()=>{
+  const nm=pick(APP_PEOPLE), [role,rest]=pick(APP_ROLES);
+  return mk("punc",STD,`${nm}, ${role},`,[`${nm}, ${role}`,`${nm} ${role},`,`${nm}; ${role},`],
+    `“${role}” is a nonessential appositive: it renames ${nm} and could be removed. It must be set off by a PAIR of commas, one before it and one after it. A semicolon can’t introduce an appositive.`,
+    `${BL} ${rest}.`);
+});
+const COLON_SETS=[["The recipe calls for three key ingredients",["flour","butter","sugar","eggs","vanilla","cinnamon"]],["The hikers packed only the essentials",["water","a map","a flashlight","a first-aid kit","granola bars","a rain jacket"]],
+ ["The museum’s new wing features works by three painters",["Frida Kahlo","Claude Monet","Mary Cassatt","Jacob Lawrence","Georgia O’Keeffe","Diego Rivera"]],["The club studied three planets this semester",["Mars","Jupiter","Saturn","Venus","Neptune","Mercury"]],
+ ["The coach emphasized three skills",["passing","footwork","communication","defense","stamina","shooting"]],["The garden includes three kinds of trees",["maples","oaks","birches","dogwoods","cherries","willows"]],
+ ["The report focused on three problems",["traffic","noise","pollution","flooding","rising rents","aging bridges"]],["The class read three novels this year",["<i>Beloved</i>","<i>Frankenstein</i>","<i>Jane Eyre</i>","<i>The Giver</i>","<i>Dracula</i>","<i>Kindred</i>"]]];
+reg("punc",()=>{
+  const [lead,items]=pick(COLON_SETS), [a,b,c]=shuffle(items).slice(0,3), w=lead.split(" "), last=w.pop();
+  return mk("punc",STD,`${last}: ${a},`,[`${last}; ${a},`,`${last}, such as: ${a},`,`${last} that ${a},`],
+    `“${lead}” is a complete independent clause, so a colon can introduce the list that follows. A semicolon needs an independent clause after it, and a colon shouldn’t follow “such as.”`,
+    `${w.join(" ")} ${BL} ${b}, and ${c}.`);
+});
+CLAUSES.push(
+ ["The storm knocked out power across the county","crews worked through the night to restore it"],["Saturn’s rings are made mostly of ice","some of the particles are as small as grains of sand"],
+ ["The library extended its weekend hours","more students now study there on Sundays"],["The first marathon runners had no special shoes","many ran in simple leather sandals"],
+ ["Penguins cannot fly","they are excellent swimmers"],["The festival attracted record crowds this year","organizers are already planning a larger event"],
+ ["The scientist repeated the experiment five times","each trial produced the same result"],["Coffee was first cultivated in Ethiopia","it later spread to Yemen and beyond"],
+ ["The mural took three months to complete","dozens of local artists contributed to it"],["Sea turtles return to the same beaches to nest","some travel thousands of miles to get there"],
+ ["The team trained at high altitude","their endurance improved dramatically"],["The old factory was converted into apartments","its brick walls and tall windows were preserved"],
+ ["Lightning is hotter than the surface of the Sun","a single bolt can reach about 30,000 kelvins"],["The novelist rewrote the ending six times","she finally settled on a quieter final scene"],
+ ["The town banned cars from its central square","the space is now filled with cafés and markets"],["Elephants can recognize themselves in mirrors","few other animals pass this test"]
+);
+
+/* ---------- Subject–verb agreement: indefinite subjects ---------- */
+const EACH_ITEMS=[["paintings in the gallery","has","have","a small label beneath it"],["students in the class","is","are","responsible for one chapter"],["bridges in the city","needs","need","a full inspection this year"],
+ ["recipes in the cookbook","includes","include","a list of substitutions"],["players on the roster","was","were","given a new jersey"],["songs on the album","tells","tell","a story about the singer’s hometown"],
+ ["volunteers at the shelter","works","work","one weekend shift per month"],["rooms in the hotel","offers","offer","a view of the harbor"],["experiments in the study","was","were","repeated three times"],
+ ["chapters in the textbook","ends","end","with a set of review questions"],["trees in the orchard","produces","produce","more than two hundred apples a year"],["questions on the quiz","counts","count","for five points"]];
+reg("sva",()=>{
+  const [np,sg,pl,rest]=pick(EACH_ITEMS), lead=pick(["Each of the","One of the","Every one of the","Neither of the two"]);
+  const ing=pl.replace(/e?$/,"ing");
+  const wr= sg==="is"? ["are","were","have been"] : sg==="was"? ["were","are","have been"] : sg==="has"? ["have","are having","were having"] : [pl,"are "+ing,"were "+ing];
+  const w0=lead.split(" ")[0].toLowerCase();
+  return mk("sva",STD,sg,wr,
+    `The subject is “${w0==="every"?"every one":w0},” which is singular. “Of the ${np.split(" ")[0]}…” is just a prepositional phrase, so ignore it. Singular subject → “${sg}.”`,
+    `${lead} ${np} ${BL} ${rest}.`);
+});
+
+/* ---------- Pronouns: more antecedent practice ---------- */
+const ANTE=[["The scientists","their","published","findings"],["The company","its","announced","new policy"],["Each runner","his or her","checked","time"],["The students","their","presented","projects"],
+ ["The committee","its","released","final report"],["The bees","their","returned to","hive"],["The museum","its","reopened","west wing"],["The musicians","their","tuned","instruments"],["The jury","its","delivered","verdict"],["The nations","their","signed","treaty"]];
+const ANTE_SUBJ=[["The company","its"],["The committee","its"],["The museum","its"],["The orchestra","its"],["The school board","its"],["The city council","its"],["The band","its"],["The research team","its"],
+ ["The scientists","their"],["The volunteers","their"],["The organizers","their"],["The engineers","their"],["The students","their"],["The musicians","their"],["The coaches","their"],["The board members","their"]];
+const ANTE_VO=[["updated","website"],["announced","plans for next year"],["changed","meeting schedule"],["shared","results with the public"],["posted","photos from the event"],["revised","budget"],["published","annual report"],["moved","headquarters to a larger building"]];
+reg("pron",()=>{
+  const [s,p]=pick(ANTE_SUBJ), [v,o]=pick(ANTE_VO), opts=["its","their","it’s","they’re"].filter(x=>x!==p);
+  const pl=p==="their";
+  return mk("pron",STD,p,shuffle(opts).slice(0,3),
+    `The pronoun refers to “${s.replace(/^The |^Each /,"")}”${s.startsWith("Each")?" (with “each,” which is singular)":""}, which is ${pl?"plural":"singular"}${!pl&&!s.startsWith("Each")?" (a single group acting as one unit)":""}. So the correct possessive is “${p}.” “It’s” and “they’re” are contractions, not possessives.`,
+    `${s} ${v} ${BL} ${o}.`);
+});
+
+/* ---------- Concision: redundancy ---------- */
+const CONC_ITEMS=[["The two friends decided to ___ their savings to buy a canoe.","combine","combine together","join and combine together","jointly combine together"],
+ ["The festival, which takes place ___ draws visitors from across the state.","annually,","annually every year,","each year annually,","yearly on an annual basis,"],
+ ["The students should ___ the essay before turning it in.","revise","revise and change","revise again by rewriting","go back and revise again"],
+ ["The scientist’s ___ challenged decades of accepted theory.","discovery","new discovery that was new","discovery, which was a new finding,","newly found new discovery"],
+ ["The meeting will begin ___.","at noon","at noon, 12:00 p.m.,","at 12 noon in the middle of the day","at noontime at 12:00"],
+ ["The town ___ the old ordinance last spring.","repealed","repealed and canceled","repealed by canceling it","canceled and repealed again"],
+ ["The outcome of the vote was ___.","close","close and near","close in its narrowness","closely near"],
+ ["The guide gave us a ___ of the castle.","tour","tour that toured","touring tour","tour around and through it touring"],
+ ["Researchers ___ the samples under a microscope.","examined","examined and looked at","examined by looking","looked at and examined closely by viewing"],
+ ["The bakery’s bread is ___.","fresh daily","fresh every day daily","daily fresh each day","freshly fresh daily"],
+ ["The team’s goal is to ___ costs.","reduce","reduce down","reduce and lower","lower by reducing down"],
+ ["The witness described the ___ in detail.","event","event that happened","happening event that occurred","event, an occurrence that happened,"],
+ ["The two companies agreed to ___.","merge","merge together","merge into one together","merge and combine as one"],
+ ["The documentary is ___.","two hours long","two hours long in length","long, at two hours in length","two hours in length long"],
+ ["After the storm, the crew worked to ___ power.","restore","restore back","restore again back","bring back and restore"],
+ ["Please ___ the instructions before you begin.","read","read and look over","read through and read","look at and read over again"],
+ ["The architect’s design was truly ___.","unique","very unique","unique and one of a kind","most uniquely unique"],
+ ["The audience ___ when the curtain rose.","applauded","applauded with clapping","applauded by clapping their hands","clapped and applauded loudly with applause"]];
+reg("conc",()=>{
+  const [s,c,...w]=pick(CONC_ITEMS);
+  return mk("conc",CONC,c,w,`All four choices mean the same thing, but “${c.replace(/[.,]$/,"")}” says it without repeating itself. The longer choices are redundant: they repeat an idea the shorter word already includes.`,s.replace("___",BL));
+});
+
+/* ---------- Rhetorical synthesis: generated notes ---------- */
+const BR_NAMES=["Alder Creek","Harbor Point","Millstone","Redwater","Cedar Falls","Northgate","Silver Lake","Kestrel","Granite Pass","Willow Bend","Stonehaven","Bayview"];
+const BR_MAT=["steel","concrete","stone","cable-stayed steel","timber"];
+reg("synth",()=>{
+  const [n1,n2]=shuffle(BR_NAMES).slice(0,2), y1=ri(1890,1990), y2=y1+ri(8,Math.min(60,2020-y1));
+  let L1=ri(30,140)*10, L2=ri(30,140)*10; while(Math.abs(L1-L2)<100) L2=ri(30,140)*10;
+  const same=Math.random()<.5, m1=pick(BR_MAT), m2=same?m1:pick(BR_MAT.filter(x=>x!==m1));
+  const r1=pick(["the Elk River","the Clearwater River","Lake Tama","the Sable River"]), r2=pick(["the Dunmore River","Blue Heron Bay","the Pine River","the Ashby Channel"]);
+  const notes=NOTES([`The ${n1} Bridge crosses ${r1}.`,`It opened in ${y1} and is ${nf(L1)} meters long.`,`It is a ${m1} bridge.`,`The ${n2} Bridge crosses ${r2}.`,`It opened in ${y2} and is ${nf(L2)} meters long.`,`It is a ${m2} bridge.`]);
+  const longer=L1>L2?n1:n2, shorter=L1>L2?n2:n1, diff=Math.abs(L1-L2);
+  const sLen=`The ${longer} Bridge is ${nf(diff)} meters longer than the ${shorter} Bridge.`;
+  const sAge=`The ${n1} Bridge opened in ${y1}, ${y2-y1} years before the ${n2} Bridge.`;
+  const sMat= same? `Both the ${n1} Bridge and the ${n2} Bridge are ${m1} bridges.` : `The ${n1} Bridge is a ${m1} bridge, while the ${n2} Bridge is a ${m2} bridge.`;
+  const sOne=`The ${n2} Bridge crosses ${r2} and is ${nf(L2)} meters long.`;
+  const g=same? pick(["len","age","sim"]) : pick(["len","age","mat"]);
+  const G={len:["emphasize the difference in length between the two bridges",sLen,[sAge,sMat,sOne],"The goal is a difference in LENGTH, so the answer must compare both lengths."],
+    age:["emphasize which bridge is older",sAge,[sLen,sMat,sOne],"The goal is which bridge is OLDER, so the answer must compare the two opening years."],
+    sim:["emphasize a similarity between the two bridges",sMat,[sLen,sAge,sOne],"The goal is a SIMILARITY, so the answer must name something both bridges share."],
+    mat:["contrast the materials of the two bridges",sMat,[sLen,sAge,sOne],"The goal is to contrast MATERIALS, so the answer must name both bridges’ materials."]}[g];
+  return mk("synth",`The student wants to ${G[0]}. ${SYN}`,G[1],G[2],`${G[3]} The other choices are accurate but don’t accomplish that goal.`,notes);
+});
+const NOV_AUTH=["Ruth Calder","Jun Ishida","Amaka Obi","Peter Lindqvist","Rosa Méndez","Farah Siddiqui","Daniel Ashworth","Ines Moreau"];
+const NOV_TITLES=["The Salt Road","Winter Orchard","A Map of Small Rooms","The Glass Harbor","Letters from the Delta","The Long Quiet","Iron Lanterns","The Second Garden","Tidewater","The Clockmaker’s Daughter"];
+reg("synth",()=>{
+  const a=pick(NOV_AUTH), [t1,t2]=shuffle(NOV_TITLES).slice(0,2), y1=ri(1950,2005), y2=y1+ri(3,15);
+  const set1=pick(["a fishing village in Maine","postwar London","a mining town in Chile","1920s Shanghai","a farm in Iowa"]), set2=pick(["a modern-day Lagos apartment","a lighthouse in Norway","a New Orleans jazz club","a desert research station"]);
+  const notes=NOTES([`${a} is a novelist.`,`${a}’s first novel, <i>${t1}</i>, was published in ${y1}.`,`It is set in ${set1}.`,`${a}’s second novel, <i>${t2}</i>, was published in ${y2}.`,`It is set in ${set2}.`,`<i>${t2}</i> won a national book award.`]);
+  const g=pick(["intro","contrast","award"]);
+  const sIntro=`${a}’s debut novel, <i>${t1}</i>, was published in ${y1} and is set in ${set1}.`;
+  const sCon=`While ${a}’s first novel is set in ${set1}, the second is set in ${set2}.`;
+  const sAward=`${a}’s second novel, <i>${t2}</i> (${y2}), won a national book award.`;
+  const sGap=`${a} published two novels ${y2-y1} years apart.`;
+  const G={intro:["introduce the author’s first novel to a new audience",sIntro,[sCon,sAward,sGap],"The goal is to introduce the FIRST novel, so the answer should name it and give key details about it."],
+    contrast:["contrast the settings of the two novels",sCon,[sIntro,sAward,sGap],"The goal is to contrast SETTINGS, so the answer must mention both settings."],
+    award:["highlight the author’s most celebrated achievement",sAward,[sIntro,sCon,sGap],"The notes say the second novel won a national award, which is the most celebrated achievement mentioned."]}[g];
+  return mk("synth",`The student wants to ${G[0]}. ${SYN}`,G[1],G[2],`${G[3]} The other choices are true but don’t accomplish the goal.`,notes);
+});
+
+/* ---------- Main idea & inference: experiments ---------- */
+const EXPS=[
+ ["tomato plants","half were grown with a layer of mulch over the soil, while the other half were grown without mulch","the mulched plants produced {p} percent more fruit","adding mulch to the soil may increase fruit production in tomato plants","adding mulch to the soil may reduce fruit production in tomato plants","the amount of fruit tomato plants produce cannot be changed by gardeners"],
+ ["volunteers","half took a 20-minute walk outdoors before a memory test, while the other half sat indoors","the walkers recalled {p} percent more words","a short outdoor walk may improve performance on memory tasks","sitting indoors may improve performance on memory tasks","memory cannot be measured reliably with word-recall tests"],
+ ["bean seedlings","half were kept under blue light, while the other half were kept under red light","the seedlings under blue light grew {p} percent taller","the color of light may affect how tall bean seedlings grow","bean seedlings grow equally well under any color of light","red light is necessary for all plants to grow"],
+ ["mice","half were raised in cages with toys and running wheels, while the other half were raised in empty cages","the mice from enriched cages solved mazes {p} percent faster","an enriched environment may improve problem-solving in mice","empty cages may improve problem-solving in mice","mazes are not a useful way to study animal behavior"],
+ ["students","half studied with practice quizzes, while the other half reread their notes","the quiz group scored {p} percent higher on the final exam","practice quizzes may be a more effective study method than rereading","rereading notes may be a more effective study method than practice quizzes","final exam scores do not depend on how students study"],
+ ["bees","half were given access to flowers sprayed with a common pesticide, while the other half visited untreated flowers","the bees exposed to the pesticide returned to the hive {p} percent less often","the pesticide may interfere with bees’ ability to return to the hive","the pesticide may help bees find their way back to the hive","bees never return to the hive after visiting flowers"],
+ ["concrete blocks","half were mixed with recycled glass, while the other half used standard sand","the glass blocks withstood {p} percent more pressure before cracking","recycled glass may increase the strength of concrete","recycled glass may weaken concrete","concrete strength cannot be tested in a laboratory"],
+ ["office workers","half had plants placed on their desks, while the other half did not","the workers with plants reported {p} percent less stress","desk plants may reduce workplace stress","desk plants may increase workplace stress","stress levels in offices are impossible to measure"]];
+reg("read",()=>{
+  const [subj,setup,res,cor,rev,over]=pick(EXPS), n=pick([40,60,80,100,120,200]), p=pick([12,15,18,20,25,30,35]);
+  return mk("read","Which choice most logically completes the text?",cor+".",[rev+".",over+".",`the two groups of ${subj} performed equally well.`],
+    `The study compared two groups that differed in only one way, and the group with that one difference did better (${res.replace("{p}",p)}). The logical conclusion is that this difference may cause the improvement. The second choice reverses the result, and the others make claims the study doesn’t address.`,
+    `Researchers studied ${n} ${subj}: ${setup}. At the end of the study, ${res.replace("{p}",p)}. Based on these results, the researchers concluded that ${BL}`);
+});
+
+/* ---------- Command of evidence: generated tables ---------- */
+const EV_DOM=[
+ ["A librarian","checkouts","Library checkouts by genre",["Mystery","Science fiction","Biography","Poetry","Graphic novel"],"{c} checkouts"],
+ ["A city planner","weekday riders","Average weekday riders by transit line",["Red Line","Blue Line","Green Line","Orange Line","Harbor Ferry"],"weekday ridership on the {C}"],
+ ["An ecologist","birds counted","Birds counted at the wetland",["Herons","Egrets","Ospreys","Kingfishers","Sandpipers"],"the number of {c} counted at the wetland"],
+ ["A museum director","visitors","Annual visitors by gallery",["Ancient Art","Modern Art","Natural History","Science Hall","Photography"],"annual visitors to the {C} gallery"],
+ ["An energy analyst","gigawatt-hours","Electricity produced (gigawatt-hours)",["Solar","Wind","Hydropower","Natural gas","Coal"],"electricity produced from {c}"]];
+reg("evid",()=>{
+  const [who,unit,title,cats,claim]=pick(EV_DOM), cs=shuffle(cats).slice(0,4), y1=ri(2014,2019), y2=y1+ri(3,5);
+  const rows=cs.map(()=>{ const a=ri(20,90)*10; return [a, Math.max(10,a+ri(-40,40)*10)]; });
+  const up=Math.random()<.5, ti=0, k=1;
+  { const a=rows[0][0]; rows[0]=[a, up? a+ri(8,40)*10 : Math.max(10,a-ri(8,Math.floor(a/10)-1)*10)]; }
+  { const a=rows[1][0]; rows[1]=[a, up? Math.max(10,a-ri(5,Math.floor(a/10)-1)*10) : a+ri(5,30)*10]; }
+  const t=cs[ti], o=cs[k], lc=s=>claim.replace("{c}",s.toLowerCase()).replace("{C}",s);
+  const verb=up?"increased":"decreased";
+  const table=`<table><tr><th>${title}</th><th>${y1}</th><th>${y2}</th></tr>${cs.map((c,i)=>`<tr><td>${c}</td><td>${nf(rows[i][0])}</td><td>${nf(rows[i][1])}</td></tr>`).join("")}</table>`;
+  return mk("evid","Which choice most effectively uses data from the table to support the claim?",
+    `${t}: ${nf(rows[ti][0])} ${unit} in ${y1} and ${nf(rows[ti][1])} in ${y2}.`,
+    [`${o}: ${nf(rows[k][0])} ${unit} in ${y1} and ${nf(rows[k][1])} in ${y2}.`,`${t}: ${nf(rows[ti][1])} ${unit} in ${y2}.`,`${cs[2]}: ${nf(rows[2][0])} ${unit} in ${y1} and ${nf(rows[2][1])} in ${y2}.`],
+    `The claim is about how ${lc(t)} CHANGED between ${y1} and ${y2}, so the evidence needs ${t}’s numbers for BOTH years. Giving only one year can’t show a change, and other categories are irrelevant.`,
+    `${who} claims that ${lc(t)} ${verb} from ${y1} to ${y2}.${table}`);
+});
+
+SEQ_ITEMS.push(
+ ["To make a paper airplane, first fold the sheet in half lengthwise.","fold the top corners down toward the center crease."],
+ ["To brew tea properly, first bring fresh water to a boil.","pour the water over the leaves and let them steep for three minutes."],
+ ["To prepare the soil, the gardeners first removed all of the weeds.","they mixed compost into the top six inches of earth."],
+ ["To solve the equation, first subtract 4 from both sides.","divide both sides by 3 to isolate x."],
+ ["To build the circuit, the students first connected the battery to the switch.","they attached a wire from the switch to the light bulb."]
+);
+PARA_CMP.push(["Writing an outline first","starting the essay immediately","usually produces better essays than"],["Biking to work","sitting in traffic","is more relaxing than"],["Learning an instrument","listening to music","builds more patience than"],["Visiting a museum in person","viewing its photos online","is more memorable than"]);
+FEW_ITEMS.push(["The new phone has ___ buttons than the old model.",1],["She drank ___ coffee this week than last week.",0],["There are ___ cars on the road on Sundays.",1],["The recipe calls for ___ salt than the original.",0],["The library received ___ complaints after it extended its hours.",1],["We had ___ homework over the break.",0],["The coach made ___ substitutions in the second half.",1],["The new bulbs use ___ electricity.",0]);
+WHO_ITEMS.push(["The artist ___ painted the mural lives nearby.","who"],["The friend with ___ I traveled speaks four languages.","whom"],["The candidates ___ the committee interviewed were all qualified.","whom"],["The neighbor ___ fixed our fence refused payment.","who"],["The author ___ I admire most writes historical fiction.","whom"],["The scientists ___ discovered the comet named it after their town.","who"],["The guest ___ the host introduced was a famous chef.","whom"],["The runner ___ crossed the finish line first set a record.","who"]);
+ITS_ITEMS.push(["The company apologized for ___ mistake.",0],["The tree lost all of ___ leaves in October.",0],["The museum is closed because ___ being renovated.",1],["The app updates ___ data every hour.",0],["The teacher said ___ fine to use a calculator.",1],["The country celebrated ___ independence with fireworks.",0],["If ___ raining tomorrow, the game will be postponed.",1]);
+COLLECTIVE.push(["The museum","unveiled","newest exhibit"],["The committee","published","annual report"],["The orchestra","announced","holiday program"],["The school","updated","dress code"],["The family","sold","farmhouse"],["The audience","showed","appreciation with a standing ovation"]);
+const SVA_HEADS=[["The director","The directors"],["The captain","The captains"],["The lead scientist","The lead scientists"],["The principal","The principals"],["The mayor","The mayors"],["The head chef","The head chefs"],["The author","The authors"],["The pilot","The pilots"],["The senator","The senators"],["The architect","The architects"]];
+const SVA_INT=["along with several assistants","as well as two colleagues","together with the rest of the crew","in addition to the new interns","accompanied by a small film crew","as well as a team of volunteers"];
+const SVA_PRED=[[["is","are","were","have been"],["are","is","was","has been"],"expected to arrive at noon"],[["is","are","were","have been"],["are","is","was","has been"],"scheduled to speak first"],
+ [["was","were","are","have been"],["were","was","is","has been"],"interviewed on the evening news"],[["plans","plan","are planning","have planned"],["plan","plans","is planning","has planned"],"to attend the conference"],
+ [["was","were","are","have been"],["were","was","is","has been"],"honored at the ceremony"]];
+reg("sva",()=>{
+  const [sh,ph]=pick(SVA_HEADS), it=pick(SVA_INT), [sf,pf,rest]=pick(SVA_PRED), sing=Math.random()<.5, f=sing?sf:pf;
+  return mk("sva",STD,f[0],f.slice(1),
+    `The subject is “${(sing?sh:ph).replace("The ","")},” which is ${sing?"singular":"plural"}. Phrases like “${it.split(" ").slice(0,2).join(" ")}…” set off by commas don’t make the subject plural (or singular), so the verb must be ${sing?"singular":"plural"}: “${f[0]}.”`,
+    `${sing?sh:ph}, ${it}, ${BL} ${rest}.`);
+});
+CONC_ITEMS.push(
+ ["The committee will meet to discuss ___ for the trip.","plans","advance plans","future plans for later","plans made ahead in advance"],
+ ["Researchers reviewed the patient’s ___.","history","past history","previous past history","history from the past"],
+ ["The ___ of the experiment surprised everyone.","result","end result","final end result","resulting outcome"],
+ ["Every customer received a ___.","gift","free gift","free gift at no cost","complimentary free gift"],
+ ["The party was a ___ for the coach.","surprise","unexpected surprise","surprising surprise","sudden unexpected surprise"],
+ ["The two stores are in ___.","proximity","close proximity","near close proximity","nearby proximity"],
+ ["The workshop covered the ___ of chess.","fundamentals","basic fundamentals","fundamental basics","basic fundamental essentials"],
+ ["The bridge will be ___ by June.","finished","completely finished","finished and completed","totally completely finished"],
+ ["Please ___ the forms to the front office.","return","return back","return back again","bring back and return"],
+ ["The crowd ___ in the town square.","gathered","gathered together","gathered together in a group","collected and gathered together"],
+ ["___ student must sign the form.","Every","Each and every","Every single each","Each and every single"],
+ ["The speaker ___ her main point.","repeated","repeated again","repeated once more again","said again and repeated"],
+ ["The new law will take effect ___.","in May","in May, which is the fifth month","in the month of May in spring","in May during the month of May"],
+ ["The witness was ___ about what she saw.","honest","honest and truthful","truthfully honest","honest, telling the truth,"]
+);
+/* ---------- Math: more generator families ---------- */
+const SUPD={"0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹","-":"⁻"};
+const sup=n=>String(n).split("").map(c=>SUPD[c]||c).join("");
+const xp=(v,e)=> e===0?"1": e===1? v : v+sup(e);
+const sgn=n=> n<0? `${MN} ${-n}` : `+ ${n}`;
+function pifrac(n,d){ const f=frac(n,d); return f==="1"?"π": f.includes("/")? "("+f+")π" : f+"π"; }
+
+const LIN_CTX=[
+ ["The total cost C, in dollars, of a gym membership for m months","m",[25,30,35,40,45],[20,40,50,75],"the monthly fee","the one-time sign-up fee","month"],
+ ["The total cost C, in dollars, of renting a kayak for h hours","h",[12,15,18,20],[10,15,25,30],"the cost for each hour of rental","the fixed fee charged for any rental","hour"],
+ ["The total cost C, in dollars, of a taxi ride of d miles","d",[2,3,4],[3,4,5,6],"the cost for each mile driven","the fixed charge for any ride","mile"],
+ ["The total amount A, in dollars, that Mia has saved w weeks after opening an account","w",[15,20,25,30],[50,80,100,150],"the amount she saves each week","the amount she deposited when she opened the account","week"],
+ ["The height H, in centimeters, of a plant d days after it was first measured","d",[2,3,4],[5,8,12,15],"the amount the plant grows each day","the plant’s height when it was first measured","day"],
+ ["The total number of pages P that Theo has read n days after starting a challenge","n",[20,25,30,40],[35,50,60,80],"the number of pages he reads each day","the number of pages he had read before the challenge began","day"]];
+reg("lin",()=>{
+  const [desc,v,ss,is,sl,il,unit]=pick(LIN_CTX), s=pick(ss), i=pick(is), askS=Math.random()<.5, Y=desc.match(/ ([A-Z])[, ]/)[1];
+  return mk("lin",`${desc} is given by ${Y} = ${s}${v} + ${i}. What is the best interpretation of ${askS?s:i} in this context?`,
+    cap(askS?sl:il),[cap(askS?il:sl),`The value of ${Y} after exactly one ${unit}`,`The number of ${unit}s`],
+    askS? `${s} is the coefficient of ${v}, so it is a rate: ${Y} increases by ${s} for each additional ${unit}. That is ${sl}.` : `${i} is the constant term, the value of ${Y} when ${v} = 0. That is ${il}.`);
+});
+reg("lin",()=>{
+  const m=nz(-5,5), b=ri(-10,10), x1=ri(-5,5); let x2; do{x2=ri(-5,6)}while(x2===x1);
+  const y1=m*x1+b, y2=m*x2+b;
+  return mk("lin",`A line in the xy-plane passes through the points (${fmt(x1)}, ${fmt(y1)}) and (${fmt(x2)}, ${fmt(y2)}). What is the y-intercept of the line?`,fmt(b),[fmt(-b),fmt(m),fmt(y1-x1)],
+    `Slope = (${fmt(y2)} ${MN} ${paren(y1)}) ÷ (${fmt(x2)} ${MN} ${paren(x1)}) = ${fmt(m)}. Substitute (${fmt(x1)}, ${fmt(y1)}) into y = mx + b: ${fmt(y1)} = ${fmt(m)}(${fmt(x1)}) + b, so b = ${fmt(b)}.`);
+});
+reg("sys",()=>{
+  const a=nz(-6,6), b=nz(-6,6), c=ri(-12,12), k=pick([2,3,-2,4,-3]), type=ri(0,2); let a2,b2,c2;
+  if(type===0){ do{a2=nz(-6,6);b2=nz(-6,6);}while(a*b2===a2*b); c2=ri(-12,12); } else { a2=k*a; b2=k*b; c2= type===1? k*c : k*c+nz(-5,5); }
+  const L=["Exactly one solution","Infinitely many solutions","No solution","Exactly two solutions"], lab=L[type];
+  return mk("sys","How many solutions does this system of equations have?",lab,L.filter(x=>x!==lab),
+    type===0? `The coefficients aren’t proportional (${fmt(a)}/${fmt(b)} ≠ ${fmt(a2)}/${fmt(b2)}), so the lines have different slopes and cross exactly once. Two lines can never cross exactly twice.`
+    : type===1? `The second equation is exactly ${fmt(k)} times the first, so both describe the SAME line: infinitely many solutions.`
+    : `The left side of the second equation is ${fmt(k)} times the first, but the constant isn’t (${fmt(k)} × ${paren(c)} = ${fmt(k*c)}, not ${fmt(c2)}). The lines are parallel and never meet, so there is no solution.`,
+    `<div style="font-family:inherit">${lin2(a,b,c)}<br>${lin2(a2,b2,c2)}</div>`);
+});
+reg("quad",()=>{
+  const a=pick([1,2,3,-1,-2]), r=nz(-7,7), s=nz(-7,7), B=-a*(r+s), C=a*r*s, sum=Math.random()<.5, ans= sum? frac(-B,a) : frac(C,a);
+  return mk("quad",`What is the ${sum?"sum":"product"} of the solutions of ${poly([a,B,C])} = 0?`,ans,[frac(B,a),sum?frac(C,a):frac(-B,a),frac(-C,a),fmt(sum?B:C)],
+    `For ax² + bx + c = 0, the sum of the solutions is −b/a and the product is c/a. Here a = ${fmt(a)}, b = ${fmt(B)}, and c = ${fmt(C)}, so the ${sum?"sum":"product"} is ${ans}.`);
+});
+reg("quad",()=>{
+  const h=nz(-9,9), b=2*h, c=h*h;
+  return mk("quad",`For what value of c does x² ${sgn(b)}x + c = 0 have exactly one real solution?`,fmt(c),[fmt(-c),fmt(2*c),fmt(b)],
+    `Exactly one solution means the discriminant is 0: b² − 4ac = ${b*b} − 4c = 0, so c = ${c}. Check: x² ${sgn(b)}x + ${c} = (x ${sgn(h)})².`);
+});
+reg("quad",()=>{
+  const a=pick([1,2,3,-1,-2,-3]), h=nz(-6,6), c=ri(-9,9), b=-2*a*h, k=c-a*h*h, mx=a<0;
+  return mk("quad",`What is the ${mx?"maximum":"minimum"} value of f(x) = ${poly([a,b,c])}?`,fmt(k),[fmt(c),fmt(h),fmt(-k),fmt(k+a)],
+    `The vertex is at x = −b/(2a) = ${fmt(-b)}/${fmt(2*a)} = ${fmt(h)}, and f(${fmt(h)}) = ${fmt(k)}. Since a ${mx?"< 0, the parabola opens down, so this is the maximum":"> 0, the parabola opens up, so this is the minimum"}.`);
+});
+reg("func",()=>{
+  const m=nz(-6,6), b=ri(-12,12), a1=ri(-4,4); let a2; do{a2=ri(-4,6)}while(a2===a1); const a3=ri(-6,8), f=x=>m*x+b;
+  return mk("func",`For a linear function f, f(${fmt(a1)}) = ${fmt(f(a1))} and f(${fmt(a2)}) = ${fmt(f(a2))}. What is the value of f(${fmt(a3)})?`,fmt(f(a3)),[fmt(f(a3)+m),fmt(-f(a3)),fmt(m*a3),fmt(f(a3)-m)],
+    `Slope = (${fmt(f(a2))} ${MN} ${paren(f(a1))}) ÷ (${fmt(a2)} ${MN} ${paren(a1)}) = ${fmt(m)}. That gives f(x) = ${poly([m,b])}, so f(${fmt(a3)}) = ${fmt(f(a3))}.`);
+});
+reg("func",()=>{
+  const a=nz(-6,7), b=nz(-10,10), k=nz(-5,6), v=a*k+b;
+  return mk("func",`The function f is defined by f(x) = ax ${sgn(b)}, where a is a constant. If f(${fmt(k)}) = ${fmt(v)}, what is the value of a?`,fmt(a),[fmt(-a),fmt(v-b),fmt(v+b)],
+    `Substitute x = ${fmt(k)}: ${fmt(v)} = ${fmt(k)}a ${sgn(b)}. Then ${fmt(k)}a = ${fmt(v-b)}, so a = ${fmt(a)}.`);
+});
+reg("expo",()=>{
+  const P=pick([500,800,1200,2000,5000,12000]), r=pick([2,3,4,5,6,7,8,9,12,15,20,25]), up=Math.random()<.5, f=fmt(1+(up?r:-r)/100), per=pick([["year","t years"],["month","t months"],["hour","t hours"]]);
+  return mk("expo",`The function V(t) = ${nf(P)}(${f})ᵗ models a quantity after ${per[1]}. Which statement best describes how the quantity changes?`,
+    `It ${up?"increases":"decreases"} by ${r}% each ${per[0]}.`,
+    [`It ${up?"decreases":"increases"} by ${r}% each ${per[0]}.`,`It ${up?"increases":"decreases"} by ${f}% each ${per[0]}.`,`It ${up?"increases":"decreases"} by ${nf(r)} each ${per[0]}.`],
+    `The base ${f} is ${up?`greater than 1, so the quantity grows: ${f} = 1 + ${fmt(r/100)}`:`less than 1, so the quantity shrinks: ${f} = 1 ${MN} ${fmt(r/100)}`}, which is a ${r}% ${up?"increase":"decrease"} each ${per[0]}. Exponential models change by a constant PERCENT, not a constant amount.`);
+});
+reg("expo",()=>{
+  const a=ri(2,9), b=ri(2,9), c=ri(1,a+b-2), e=a+b-c;
+  return mk("expo",`Which expression is equivalent to (${xp("x",a)} · ${xp("x",b)}) ÷ ${xp("x",c)}, where x ≠ 0?`,xp("x",e),[xp("x",a*b-c),xp("x",a+b+c),xp("x",a+b),xp("x",e+1),xp("x",a*b),xp("x",e+2),xp("x",e+3)],
+    `When you multiply powers with the same base, add the exponents: ${a} + ${b} = ${a+b}. When you divide, subtract: ${a+b} ${MN} ${c} = ${e}. So the expression equals ${xp("x",e)}.`);
+});
+reg("expo",()=>{
+  const n=pick([2,3,4,5]), m=pick([1,2,3,4,5,7].filter(x=>x!==n&&gcd(x,n)===1)), root=n===2?"√":n===3?"∛":n===4?"∜":"⁵√", inner="x"+(m===1?"":sup(m));
+  return mk("expo",`Which expression is equivalent to ${root}(${inner}), for x > 0?`,`x^(${m}/${n})`,[`x^(${n}/${m})`,`x^${m*n}`,`x^(${fmt(m-n)})`,`x^(${m+n})`],
+    `A root becomes a fractional exponent: the power inside goes on top, and the index of the root goes on the bottom. ${root}(${inner}) = x^(${m}/${n}).`);
+});
+reg("poly",()=>{
+  const a=nz(-9,9), b=nz(-9,9), ex=poly([1,a+b,a*b]);
+  return mk("poly",`Which expression is equivalent to (x ${sgn(a)})(x ${sgn(b)})?`,ex,[poly([1,a*b,a+b]),poly([1,a+b,-a*b]),poly([1,0,a*b]),poly([1,-(a+b),a*b]),poly([1,a-b,a*b]),poly([2,a+b,a*b])],
+    `Multiply every term by every term (FOIL): x·x = x², the middle terms give ${fmt(a)}x + ${paren(b)}x = ${fmt(a+b)}x, and the last terms give ${fmt(a)} · ${paren(b)} = ${fmt(a*b)}. Result: ${ex}.`);
+});
+reg("poly",()=>{
+  const p=[ri(1,6),ri(-9,9),ri(-9,9)], q=[ri(1,6),nz(-9,9),nz(-9,9)], d=p.map((x,i)=>x-q[i]), D=poly(d);
+  return mk("poly",`Which expression is equivalent to (${poly(p)}) ${MN} (${poly(q)})?`,D,[poly(p.map((x,i)=>x+q[i])),poly([d[0],p[1]+q[1],p[2]+q[2]]),poly([d[0],d[1],p[2]+q[2]]),poly([d[0],p[1]+q[1],d[2]])],
+    `Subtracting means distributing the minus sign to EVERY term in the second polynomial, then combining like terms: (${p[0]} ${MN} ${q[0]})x² + (${fmt(p[1])} ${MN} ${paren(q[1])})x + (${fmt(p[2])} ${MN} ${paren(q[2])}) = ${D}.`);
+});
+reg("pct",()=>{
+  let A,p,B; do{ A=pick([20,25,40,50,60,80,120,150,200,250,400]); p=pick([5,10,15,20,25,30,35,40,45,60,75,80,120,150]); B=A*p/100; }while(B!==Math.round(B));
+  return mk("pct",`${B} is what percent of ${A}?`,p+"%",[fmt(A/B*100)+"%",fmt(100-p)+"%",fmt(p/10)+"%"],
+    `Percent = part ÷ whole × 100 = ${B} ÷ ${A} × 100 = ${p}%.`);
+});
+reg("pct",()=>{
+  const it=pick([["notebooks",[1.5,2,2.25,3.5]],["bottles of water",[0.75,1.25,1.5]],["movie tickets",[8.5,9,12]],["pounds of apples",[1.2,1.8,2.4]],["packs of pencils",[2.5,3.25,4]]]), u=pick(it[1]), n=ri(3,9); let m; do{m=ri(4,15)}while(m===n);
+  const $=x=>"$"+x.toFixed(2);
+  return mk("pct",`If ${n} ${it[0]} cost ${$(u*n)}, how much do ${m} ${it[0]} cost at the same rate?`,$(u*m),[$(u*(m+1)),$(u*n+m),$(u*m*1.5),$(u*(m-1))],
+    `Find the unit rate first: ${$(u*n)} ÷ ${n} = ${$(u)} each. Then ${m} × ${$(u)} = ${$(u*m)}.`);
+});
+reg("stat",()=>{
+  const n=ri(5,9), vals=[]; for(let i=0;i<n;i++) vals.push(ri(1,50));
+  const s=vals.slice().sort((a,b)=>a-b), N=s.length, med=N%2?s[(N-1)/2]:(s[N/2-1]+s[N/2])/2, rng=s[N-1]-s[0], mean=vals.reduce((a,b)=>a+b,0)/N, ask=pick(["range","median"]);
+  return mk("stat",`What is the ${ask} of the data set ${vals.join(", ")}?`,fmt(ask==="range"?rng:med),[fmt(ask==="range"?med:rng),fmt(Math.round(mean*10)/10),fmt(ask==="range"?s[N-1]:vals[Math.floor(N/2)])],
+    ask==="range"? `Range = greatest value − least value = ${s[N-1]} ${MN} ${s[0]} = ${rng}.`
+    : `First put the ${N} values in order: ${s.join(", ")}. ${N%2?`The middle value is ${med}.`:`With an even number of values, average the two middle ones: (${s[N/2-1]} + ${s[N/2]}) ÷ 2 = ${fmt(med)}.`} (Using the unsorted list is a common trap.)`);
+});
+reg("stat",()=>{
+  const p=ri(30,75), m=pick([2,3,4,5]), N=pick([400,600,800,1000,1200]);
+  const [what,past]=pick([["support a later school start time","supported a later school start time"],["use public transit at least once a week","used public transit at least once a week"],["have read a book in the past month","had read a book in the past month"],["prefer shopping at local stores","preferred shopping at local stores"]]);
+  return mk("stat",`A survey of ${nf(N)} randomly selected adults in a city found that ${p}% ${what}, with a margin of error of ${m} percentage points. Which conclusion is best supported?`,
+    `The percentage of all adults in the city who ${what} is likely between ${p-m}% and ${p+m}%.`,
+    [`Exactly ${p}% of all adults in the city ${what}.`,`The percentage of all adults in the country who ${what} is likely between ${p-m}% and ${p+m}%.`,`Between ${p-m}% and ${p+m}% of the adults surveyed ${past}.`],
+    `A margin of error gives a plausible range for the POPULATION the sample came from (adults in this city): ${p} ± ${m} → ${p-m}% to ${p+m}%. It isn’t an exact value, it can’t be stretched to a different population like the whole country, and for the people actually surveyed the figure is exactly ${p}%.`);
+});
+reg("prob",()=>{
+  if(Math.random()<.5){ const n=ri(2,5), T=2**n;
+    return mk("prob",`A fair coin is flipped ${n} times. What is the probability of getting at least one head?`,frac(T-1,T),[frac(1,T),frac(n,T),frac(1,2),frac(T-2,T)],
+      `“At least one” is easiest with the complement. P(no heads) = (1/2)${sup(n)} = 1/${T}, so P(at least one head) = 1 ${MN} 1/${T} = ${frac(T-1,T)}.`); }
+  const [a,b]=pick([[1,2],[1,3],[2,3],[1,4],[3,4],[2,5],[3,5],[4,5],[1,6],[5,6],[3,10],[7,10]]), n=ri(2,3);
+  const [who,ev,evs]=pick([["A basketball player","makes a free throw","free throws made"],["A seed","sprouts","seeds that sprout"],["A weather model","predicts rain correctly on a given day","correct predictions"],["A machine","produces a part with no defects","defect-free parts"],["An archer","hits the target","hits"]]);
+  const T=b**n, F=(b-a)**n;
+  return mk("prob",`${who} ${ev} with probability ${a}/${b}, independently each time. Over ${n} independent tries, what is the probability of at least one success?`,frac(T-F,T),[frac(a**n,T),frac(F,T),frac(Math.min(n*a,b),b),frac(a,b),frac(T-F-1,T)],
+    `Use the complement. The chance of failing once is 1 ${MN} ${a}/${b} = ${frac(b-a,b)}, so failing all ${n} times is (${frac(b-a,b)})${sup(n)} = ${frac(F,T)}. P(at least one success) = 1 ${MN} ${frac(F,T)} = ${frac(T-F,T)}. (Adding the probabilities would double-count.)`);
+});
+reg("prob",()=>{
+  const r=ri(3,8), b=ri(3,8), T=r+b, it=pick([["red","blue","marbles","a bag"],["green","yellow","tokens","a box"],["fiction","nonfiction","books","a shelf"]]), one=it[2].replace(/s$/,""), ans=frac(r*(r-1),T*(T-1));
+  return mk("prob",`${cap(it[3])} holds ${r} ${it[0]} ${it[2]} and ${b} ${it[1]} ${it[2]}. Two ${it[2]} are chosen at random without replacement. What is the probability that both are ${it[0]}?`,ans,[frac(r*r,T*T),frac(r,T),frac(r*(r-1),T*T),frac(r-1,T-1)],
+    `First pick: ${r}/${T}. Without replacement, there are now ${r-1} ${it[0]} ${it[2]} out of ${T-1}: ${r-1}/${T-1}. Multiply: (${r}/${T})(${r-1}/${T-1}) = ${ans}.`);
+});
+reg("geo",()=>{
+  const [dx,dy,d]=pick(TRIPLES.slice(0,5)), x1=ri(-6,6), y1=ri(-6,6), x2=x1+pick([1,-1])*dx, y2=y1+pick([1,-1])*dy;
+  if(Math.random()<.5) return mk("geo",`What is the distance between the points (${fmt(x1)}, ${fmt(y1)}) and (${fmt(x2)}, ${fmt(y2)})?`,String(d),[String(dx+dy),String(d*d),String(Math.abs(dx-dy)),String(d+1)],
+    `Distance = √((Δx)² + (Δy)²) = √(${dx}² + ${dy}²) = √${d*d} = ${d}.`);
+  const mx=(x1+x2)/2, my=(y1+y2)/2;
+  return mk("geo",`What is the midpoint of the segment with endpoints (${fmt(x1)}, ${fmt(y1)}) and (${fmt(x2)}, ${fmt(y2)})?`,`(${fmt(mx)}, ${fmt(my)})`,
+    [`(${fmt((x2-x1)/2)}, ${fmt((y2-y1)/2)})`,`(${fmt(x1+x2)}, ${fmt(y1+y2)})`,`(${fmt(my)}, ${fmt(mx)})`,`(${fmt(mx+1)}, ${fmt(my-1)})`,`(${fmt(mx-1)}, ${fmt(my+1)})`,`(${fmt(x2)}, ${fmt(y1)})`],
+    `Average the x-coordinates and the y-coordinates: ((${fmt(x1)} + ${paren(x2)}) ÷ 2, (${fmt(y1)} + ${paren(y2)}) ÷ 2) = (${fmt(mx)}, ${fmt(my)}).`);
+});
+reg("geo",()=>{
+  let v; do{ v=2*ri(10,75); }while(v===60); const b=(180-v)/2;
+  return Math.random()<.5
+   ? mk("geo",`In isosceles triangle ABC, AB = AC and angle A measures ${v}°. What is the measure of angle B?`,b+"°",[v+"°",(180-v)+"°",(b+10)+"°"],
+      `Because AB = AC, the angles opposite those sides (B and C) are equal. B + C = 180° ${MN} ${v}° = ${180-v}°, so each measures ${b}°.`)
+   : mk("geo",`In isosceles triangle ABC, AB = AC and angle B measures ${b}°. What is the measure of angle A?`,v+"°",[b+"°",(180-b)+"°",(v+10)+"°"],
+      `Because AB = AC, angle C also measures ${b}°. So angle A = 180° ${MN} ${b}° ${MN} ${b}° = ${v}°.`);
+});
+reg("geo",()=>{
+  const k=ri(0,2);
+  if(k===0){ const a=ri(3,14), b=a+ri(2,10), h=2*ri(2,8);
+    return mk("geo",`A trapezoid has parallel sides of length ${a} and ${b} and a height of ${h}. What is its area?`,fmt((a+b)*h/2),[fmt((a+b)*h),fmt(a*b*h/2),fmt(a*h+b),fmt(b*h)],
+      `Area = ½(b₁ + b₂)h = ½(${a} + ${b})(${h}) = ${fmt((a+b)*h/2)}.`); }
+  if(k===1){ const r=ri(2,12), th=pick([30,45,60,90,120,150,240,270]), A=pifrac(th*r*r,360);
+    return mk("geo",`A circle has a radius of ${r}. What is the area of a sector with a central angle of ${th}°?`,A,[pifrac(th*2*r,360),pifrac(r*r,1),pifrac(th*r,360),pifrac(th*r*r,180)],
+      `Sector area = (θ/360)·πr² = (${th}/360)·π(${r*r}) = ${A}. (The arc-length formula would use 2πr instead of πr².)`); }
+  const b=2*ri(2,12), h=ri(3,15);
+  return mk("geo",`A triangle has a base of ${b} and a height of ${h}. What is its area?`,fmt(b*h/2),[fmt(b*h),fmt(b+h),fmt(b*h/4),fmt(2*(b+h))],
+    `Area = ½ × base × height = ½(${b})(${h}) = ${fmt(b*h/2)}.`);
+});
+reg("trig",()=>{
+  const [a,b,c]=pick(TRIPLES), f=pick(["sin","cos"]), o=f==="sin"?"cos":"sin", ans=frac(a,c);
+  return mk("trig",`In right triangle ABC, angle C is the right angle and ${f} A = ${ans}. What is ${o} B?`,ans,[frac(b,c),frac(a,b),frac(c,a),frac(b,a)],
+    `Angles A and B are complementary (they add to 90°), and ${f}(x) = ${o}(90° ${MN} x). So ${o} B = ${f} A = ${ans}.`);
+});
+reg("word",()=>{
+  const n=ri(3,5), odd=Math.random()<.4, step=odd?2:1; let st=ri(5,60); if(odd&&st%2===0) st++;
+  const S=st*n+step*n*(n-1)/2, terms=Array.from({length:n},(_,i)=>i?`x + ${i*step}`:"x").join(", ");
+  return mk("word",`The sum of ${n} consecutive ${odd?"odd ":""}integers is ${S}. What is the smallest of these integers?`,String(st),[String(st+step),String(Math.round(S/n)),String(st-step),String(st+2*step)],
+    `Call the smallest integer x. The integers are ${terms}, which add to ${n}x + ${step*n*(n-1)/2} = ${S}. So ${n}x = ${S-step*n*(n-1)/2}, and x = ${st}.`);
+});
+reg("word",()=>{
+  const nm=pick(["Ana","Leo","Kai","Zoe","Ravi","Mina"]), c=ri(4,15), k=pick([2,3,4]), y=ri(2,12), T=k*c+c+2*y;
+  return mk("word",`${nm}’s aunt is ${k} times as old as ${nm}. In ${y} years, the sum of their ages will be ${T}. How old is ${nm} now?`,String(c),[String(c+y),String(k*c),String(Math.round(T/(k+1))),String(c-1)],
+    `Let ${nm}’s age be x, so the aunt is ${k}x. In ${y} years: (x + ${y}) + (${k}x + ${y}) = ${T} → ${k+1}x + ${2*y} = ${T} → ${k+1}x = ${T-2*y} → x = ${c}.`);
+});
+reg("word",()=>{
+  const r1=pick([40,45,50,55,60]), r2=pick([30,35,65,70,75]), t=pick([1.5,2,2.5,3,4]), D=(r1+r2)*t;
+  return mk("word",`Two cars start ${D} miles apart and drive toward each other on the same road, one at ${r1} miles per hour and the other at ${r2} miles per hour. After how many hours will they meet?`,fmt(t)+" hours",[fmt(D/r1)+" hours",fmt(D/Math.abs(r1-r2))+" hours",fmt(t*2)+" hours",fmt(t+1)+" hours"],
+    `Moving toward each other, they close the gap at ${r1} + ${r2} = ${r1+r2} miles per hour. Time = distance ÷ rate = ${D} ÷ ${r1+r2} = ${fmt(t)} hours.`);
+});
+
+/* ---------- More vocabulary (also feeds the endless Words-in-Context generator) ---------- */
+VOCAB.push(
+["ameliorate","verb","to make a bad situation better","The new policy was designed to ameliorate overcrowding in the city’s schools."],
+["anachronism","noun","something placed in the wrong time period","The wristwatch on the Roman soldier was an obvious anachronism in the film."],
+["assiduous","adjective","showing great care and persistence","Her assiduous note-taking paid off on the final exam."],
+["audacious","adjective","bold and daring","The climber made an audacious attempt to scale the cliff without ropes."],
+["bombastic","adjective","full of pompous, inflated language","The bombastic speech was long on big words and short on ideas."],
+["cacophony","noun","a harsh mixture of loud sounds","The cacophony of car horns made it impossible to think."],
+["callous","adjective","cruelly insensitive to others","His callous remark about the injured player upset the crowd."],
+["clandestine","adjective","done secretly, often to hide something","The spies arranged a clandestine meeting in the park."],
+["conciliatory","adjective","intended to make peace or reduce anger","She sent a conciliatory email after the argument."],
+["convoluted","adjective","extremely complicated and hard to follow","The movie’s convoluted plot confused most of the audience."],
+["cryptic","adjective","mysterious or unclear in meaning","He left a cryptic note that said only ‘Look up.’"],
+["dearth","noun","a scarcity or lack","The town suffered from a dearth of affordable housing."],
+["diffident","adjective","shy and lacking confidence","The diffident student rarely raised her hand, even when she knew the answer."],
+["egregious","adjective","shockingly bad","The referee made an egregious error that cost the team the game."],
+["emulate","verb","to imitate someone in order to match or surpass them","Young players often emulate the stars they admire."],
+["esoteric","adjective","understood by only a small group of people","The lecture was full of esoteric terms that only specialists knew."],
+["exonerate","verb","to clear someone of blame","New DNA evidence helped exonerate the wrongly convicted man."],
+["facilitate","verb","to make a process easier","The new software will facilitate communication between departments."],
+["fallacy","noun","a mistaken belief or a flaw in reasoning","It is a fallacy that people use only ten percent of their brains."],
+["fervent","adjective","showing intense passion","She is a fervent supporter of the local soccer team."],
+["garrulous","adjective","excessively talkative","The garrulous passenger talked for the entire flight."],
+["idiosyncratic","adjective","peculiar to one individual","The artist’s idiosyncratic style makes her paintings easy to recognize."],
+["impervious","adjective","unable to be affected or penetrated","The new coat is impervious to rain."],
+["incisive","adjective","clear, sharp, and direct","The critic’s incisive review exposed the film’s weaknesses."],
+["incongruous","adjective","out of place; not fitting in","A modern glass tower looked incongruous among the old stone buildings."],
+["intrepid","adjective","fearless and adventurous","The intrepid explorers crossed the frozen sea on foot."],
+["lethargic","adjective","sluggish and lacking energy","The heat made everyone lethargic by midafternoon."],
+["lucrative","adjective","producing a lot of money","The bakery turned out to be a lucrative business."],
+["nostalgia","noun","a sentimental longing for the past","Old photographs filled him with nostalgia for his childhood."],
+["ostentatious","adjective","showy and meant to impress","The ostentatious mansion had gold-plated doorknobs."],
+["paucity","noun","the presence of something in only small amounts","The paucity of evidence made the case difficult to prove."],
+["pivotal","adjective","of crucial importance","The final debate was a pivotal moment in the election."],
+["quell","verb","to put an end to; to suppress","The principal’s announcement helped quell the rumors."],
+["salient","adjective","most noticeable or important","The report summarized the salient points on a single page."],
+["sanguine","adjective","optimistic, especially in a difficult situation","Despite the setbacks, the coach remained sanguine about the season."],
+["stagnant","adjective","not flowing, growing, or developing","The economy remained stagnant for most of the decade."],
+["sycophant","noun","a person who flatters powerful people to gain favor","Only a sycophant would praise every one of the boss’s ideas."],
+["tranquil","adjective","calm and peaceful","The tranquil lake reflected the mountains perfectly."],
+["venerable","adjective","respected because of age, wisdom, or character","The venerable professor had taught at the university for fifty years."],
+["whimsical","adjective","playfully unusual or fanciful","The children’s book is full of whimsical drawings of talking teapots."],
+["wistful","adjective","having a feeling of sad longing","She gave a wistful smile as she looked at her old school."]
+);
+DECKS.vocab = VOCAB.map(v=>({id:"v:"+v[0], front:`<div class="word">${v[0]}</div><div class="pos">${v[1]}</div>`, back:`<div class="def">${v[2]}</div><div class="ex">“${v[3]}”</div>`}));
+
+
+/* =====================================================================
    STORAGE — profiles + per-profile data (every access in try/catch)
    ===================================================================== */
 const PKEY="prepLab.profiles", UKEY="prepLab.u.", OLDKEY="prepLab.v1", SKEY="prepLab.session";
@@ -2305,7 +2873,7 @@ function loadProfiles(){
 }
 function savePro(){ lsSet(PKEY,JSON.stringify(P)); }
 function DEFSET(){ return {theme:"system",accent:"indigo",size:"m",radius:"round",density:"comfy",pfont:"serif",motion:true,hints:true,autoNext:0,sound:false,showGen:true,confetti:true,ufont:"jakarta",hfont:"fraunces",mixE:60,timeMult:1,showTimer:true,confirmLeave:true}; }
-function DEF(){ return {profile:{name:"",email:"",remind:true,secret:"",grade:"9",test:"SAT",target:"",date:"",goal:20,color:0},settings:DEFSET(),stats:{},days:{},streak:{cur:0,best:0},missed:[],cards:{},tests:[],custom:[]}; }
+function DEF(){ return {profile:{name:"",email:"",remind:true,secret:"",grade:"9",test:"SAT",target:"",date:"",goal:20,color:0},settings:DEFSET(),stats:{},days:{},streak:{cur:0,best:0},missed:[],cards:{},tests:[],custom:[],seenQ:[],recentSig:[]}; }
 function normalize(o){
   const d=DEF(); if(!o||typeof o!=="object") return d;
   for(const k of ["stats","days","cards"]) if(o[k]&&typeof o[k]==="object"&&!Array.isArray(o[k])) d[k]=o[k];
@@ -2318,6 +2886,8 @@ function normalize(o){
   const okId=x=>typeof x==="string"&&/^[a-z0-9]+$/i.test(x);
   if(Array.isArray(o.custom)) d.custom=o.custom.filter(s=>s&&okId(s.id)&&typeof s.name==="string"&&Array.isArray(s.cards)).slice(0,50)
     .map(s=>({id:s.id,name:s.name.slice(0,40)||"My set",cards:s.cards.filter(c=>c&&okId(c.id)&&typeof c.f==="string"&&typeof c.b==="string").slice(0,500).map(c=>({id:c.id,f:c.f.slice(0,200),b:c.b.slice(0,400),x:typeof c.x==="string"?c.x.slice(0,200):""}))}));
+  if(Array.isArray(o.seenQ)) d.seenQ=o.seenQ.filter(x=>typeof x==="string").slice(-2000);
+  if(Array.isArray(o.recentSig)) d.recentSig=o.recentSig.filter(x=>typeof x==="string").slice(-800);
   if(typeof d.profile.email!=="string") d.profile.email="";
   if(!d.profile.secret) d.profile.secret=rid();
   return d;
@@ -2331,7 +2901,7 @@ function validEmail(e){ return typeof e==="string" && e.length<=120 && /^[^\s@<>
 /* ---------- daily email reminders ----------
    The emails are sent by a small Google Apps Script service (see reminder-service.gs).
    Paste that service's web-app URL between the quotes to switch reminders on. */
-const REMINDER_URL="https://script.google.com/macros/s/AKfycbwZC4X-QQicVU_uc91kToeFip1qV1-5BHkdsKpJ8fHA4-7Yhp4q8njWkM0S8Bt1gprE/exec";
+const REMINDER_URL="https://script.google.com/macros/s/AKfycbxq2TNGxvOOS-bVY5K8pfOZ-YV_eDc1lXbVaoP-bEZhlaHk3Y_YvpumVCUCceDijK4/exec";
 let syncT=null, OPTIN=false;
 function userTZ(){ try{ return Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC"; }catch(e){ return "UTC"; } }
 function syncReminder(now){ if(!REMINDER_URL||!UID||!validEmail(S.profile.email)) return; if(syncT) clearTimeout(syncT); syncT=setTimeout(()=>{ syncT=null; doSync(); }, now?0:4000); }
@@ -2377,14 +2947,28 @@ function topicFor(mode){
   if(mode.kind==="smart") return smartTopic();
   return Math.random()<(S.settings.mixE/100)? pick(ETOP) : pick(MTOP);
 }
+/* No-repeat memory: hand-written questions you've already seen are skipped (across
+   sessions) until you've seen every one in that topic, and generated questions are
+   checked against the last 800 you were shown, so an exact repeat is very unlikely. */
+function qsig(q){ const s=q.t+"|"+q.q+"|"+(q.p||"")+"|"+q.c[0]; let h=5381; for(let i=0;i<s.length;i++) h=((h<<5)+h+s.charCodeAt(i))|0; return (h>>>0).toString(36); }
+function rememberQ(q){
+  if(q.gen){ const a=S.recentSig||(S.recentSig=[]); a.push(qsig(q)); if(a.length>800) a.splice(0,a.length-800); }
+  else { const h=S.seenQ||(S.seenQ=[]); const i=h.indexOf(q.id); if(i>=0) h.splice(i,1); h.push(q.id); if(h.length>2000) h.shift(); }
+}
 function drawQuestion(mode,seen){
   const t=topicFor(mode);
-  const bank=BANK.filter(q=>q.t===t), avail=bank.filter(q=>!seen.has(q.id)), gens=GEN[t]||[];
-  let q;
-  if(avail.length && (!gens.length || Math.random()<.5)) q=pick(avail);
-  else if(gens.length){ try{ q=pick(gens)(); }catch(e){ q=null; } if(!q) q=pick(bank); }
-  else { bank.forEach(b=>seen.delete(b.id)); q=pick(bank); }
-  seen.add(q.id);
+  const bank=BANK.filter(q=>q.t===t), gens=GEN[t]||[], hist=S.seenQ||[], histSet=new Set(hist);
+  const fresh=bank.filter(q=>!seen.has(q.id)&&!histSet.has(q.id));
+  let q=null;
+  if(fresh.length && (!gens.length || Math.random()<.45)) q=pick(fresh);
+  else if(gens.length){
+    const recent=new Set(S.recentSig||[]);
+    for(let i=0;i<15&&!q;i++){ let c=null; try{ c=pick(gens)(); }catch(e){ c=null; }
+      if(c && (i===14 || (!recent.has(qsig(c)) && !seen.has(qsig(c))))) q=c; }
+  }
+  if(!q){ const pool=bank.filter(b=>!seen.has(b.id)), src=pool.length?pool:bank;
+    q=src.slice().sort((a,b)=>hist.indexOf(a.id)-hist.indexOf(b.id))[0]; }
+  rememberQ(q); seen.add(q.gen?qsig(q):q.id);
   return prep(q);
 }
 
@@ -3162,5 +3746,3 @@ document.addEventListener("keydown",e=>{
 </script>
 </body>
 </html>
-
-
