@@ -415,6 +415,168 @@ table.prog .bar{margin:0;min-width:70px}
   .feat{display:none}
   .auth-card{padding:24px 20px}
 }
+
+/* ---------- score predictor ---------- */
+.pgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--gap)}
+.scard{position:relative;overflow:hidden}
+.scard::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--accent)}
+.scard.act::before{background:var(--math)}
+.scard .big{font-family:var(--hfont);font-size:3.4rem;font-weight:820;line-height:1;margin:14px 0 6px;letter-spacing:-.02em}
+.scard.act .tag{background:var(--math-soft);color:var(--math)}
+.scard.sat .tag{background:var(--accent-soft);color:var(--accent)}
+.scale{position:relative;height:12px;border-radius:6px;background:var(--surface3);margin:20px 0 6px}
+.scale .band{position:absolute;top:0;bottom:0;border-radius:6px;background:color-mix(in srgb,var(--accent) 32%,transparent)}
+.scard.act .scale .band{background:color-mix(in srgb,var(--math) 32%,transparent)}
+.scale .pt{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid var(--surface);transform:translate(-50%,-50%);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.scard.act .scale .pt{background:var(--math)}
+.scale .tg{position:absolute;top:-5px;bottom:-5px;width:3px;margin-left:-1.5px;border-radius:2px;background:var(--good)}
+.scalelbl{position:relative;display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);font-weight:650;margin-bottom:14px;min-height:1.1em}
+.tgrow{position:relative;height:16px;margin-top:14px}
+.tgrow span{position:absolute;top:0;transform:translateX(-50%);color:var(--good);font-size:.74rem;font-weight:750;white-space:nowrap}
+.scale.wt{margin-top:6px}
+.secln{display:grid;grid-template-columns:minmax(0,150px) 1fr 38px;gap:12px;align-items:center;padding:6px 0;font-size:.9rem}
+.secln em{font-style:normal;color:var(--muted);font-size:.74rem;display:block}
+.secln b{text-align:right;font-variant-numeric:tabular-nums}
+.secln.e .bar i{background:var(--eng)} .secln.m .bar i{background:var(--math)} .secln.s .bar i{background:var(--muted)} .secln.s{opacity:.8}
+.conf{font-size:.78rem;font-weight:750;padding:4px 10px;border-radius:20px}
+.conf.cH{background:var(--good-soft);color:var(--good)} .conf.cM{background:var(--accent-soft);color:var(--accent)} .conf.cL{background:var(--warn-soft);color:var(--warn)}
+.chkl{list-style:none;margin:14px 0 10px;padding:0;display:grid;gap:8px;font-size:.9rem}
+.chkl li{display:flex;gap:9px;align-items:center;color:var(--muted)}
+.chkl li.ok{color:var(--ink)} .chkl li.ok .ic{color:var(--good)}
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
+.proj>div{background:var(--surface2);border:1px solid var(--line);border-radius:var(--rs);padding:12px 14px;display:flex;flex-direction:column}
+.proj b{font-family:var(--hfont);font-size:1.9rem;font-weight:820;line-height:1.1}
+.proj small{font-weight:750;color:var(--muted);font-size:.8rem}
+.proj small.up{color:var(--good)}
+.spark{margin-top:10px}
+.spark svg{width:100%;height:54px;display:block;margin-bottom:4px}
+.gains{display:grid;gap:8px}
+.gain{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:var(--rs);background:var(--surface2)}
+.gain>div{display:flex;flex-direction:column;min-width:0}
+.plus{font-family:var(--hfont);font-weight:820;font-size:1.25rem;color:var(--good);text-align:right;line-height:1}
+.plus small{display:block;font-family:var(--ufont);font-size:.7rem;color:var(--muted);font-weight:650}
+.h-big{font-size:1.45rem;font-weight:800;margin:calc(var(--gap) + 10px) 0 12px}
+.verdict{border-width:1.5px}
+.verdict.vs{background:linear-gradient(135deg,var(--accent-soft),var(--surface) 70%);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.verdict.va{background:linear-gradient(135deg,var(--math-soft),var(--surface) 70%);border-color:color-mix(in srgb,var(--math) 35%,transparent)}
+.vtitle{display:flex;align-items:center;gap:10px}
+.verdict.vs .vtitle{color:var(--accent)} .verdict.va .vtitle{color:var(--math)}
+.vtitle h3{font-size:1.4rem;margin:0;color:var(--ink)}
+.verdict p{margin:10px 0 16px;line-height:1.6}
+.fit{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font-size:.85rem;font-weight:750}
+.fit span:first-child{color:var(--accent)} .fit span:last-child{color:var(--math)}
+.fitbar{height:12px;border-radius:6px;background:var(--math);overflow:hidden}
+.fitbar i{display:block;height:100%;background:var(--accent);border-right:3px solid var(--surface)}
+.rgrid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+.reason{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.panel h3+.reason{border-top:0;padding-top:2px}
+.reason p{margin:4px 0 0;color:var(--muted);font-size:.9rem;line-height:1.55}
+.reason p b{color:var(--ink)}
+.side{font-size:.72rem;font-weight:800;text-align:center;padding:5px 0;border-radius:8px;height:max-content}
+.side.sat{background:var(--accent-soft);color:var(--accent)} .side.act{background:var(--math-soft);color:var(--math)} .side.neu{background:var(--surface3);color:var(--muted)}
+details.more summary{cursor:pointer;color:var(--accent);font-weight:700;font-size:.88rem;padding:10px 0 4px}
+.fq{padding:12px 0;border-top:1px solid var(--line)}
+.panel .ph+.fq{border-top:0;padding-top:2px}
+.fq>b{display:block;font-size:.92rem;margin-bottom:8px}
+.fq .seg button{font-size:.82rem}
+.tblwrap{overflow-x:auto;margin:0 -2px}
+.facts{width:100%;border-collapse:collapse;font-size:.88rem}
+.facts th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:750;padding:8px 10px;border-bottom:1px solid var(--line)}
+.facts td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+.facts td:first-child{font-weight:700;white-space:nowrap}
+.facts tr:last-child td{border-bottom:0}
+.facts:not(.mt) th:nth-child(2){color:var(--accent)} .facts:not(.mt) th:nth-child(3){color:var(--math)}
+
+/* ---------- full practice test ---------- */
+.mods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0 6px}
+.modc{display:flex;flex-direction:column;gap:5px;padding:14px;border-radius:var(--rs);border:1px solid var(--line);background:var(--surface2);border-top:4px solid var(--eng)}
+.modc.m{border-top-color:var(--math)}
+.modc b{font-family:var(--hfont);font-size:1.15rem}
+.chip{display:inline-block;width:max-content;font-size:.74rem;font-weight:750;padding:3px 10px;border-radius:20px;background:var(--surface3);color:var(--muted)}
+.chip.sm{font-size:.68rem;padding:2px 8px;vertical-align:middle}
+.chip.hard{background:var(--bad-soft);color:var(--bad)} .chip.easy{background:var(--good-soft);color:var(--good)}
+.opts.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.opts.three .opt b{font-size:1.05rem}
+.steps{display:flex;gap:6px;margin-bottom:12px}
+.steps span{flex:1;text-align:center;font-size:.75rem;font-weight:750;color:var(--muted);padding:6px 4px;border-radius:9px;background:var(--surface2);border:1px solid var(--line);white-space:nowrap}
+.steps span.done{background:var(--good-soft);color:var(--good);border-color:transparent}
+.steps span.cur{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.ftintro{text-align:center;padding:36px 24px}
+.ftintro h2{font-size:1.6rem;margin:12px 0 4px}
+.ftintro p{max-width:520px;margin:8px auto;line-height:1.6}
+.nw{white-space:nowrap}
+.timer.big{justify-content:center;font-size:2.6rem;margin:16px 0 4px}
+@media (max-width:860px){
+  .pgrid,.rgrid{grid-template-columns:1fr}
+  .tabbar{grid-template-columns:repeat(8,minmax(0,1fr))}
+  .tabbar button{font-size:9.5px;letter-spacing:-.01em}
+  .tabbar button span{white-space:nowrap;overflow:hidden;text-overflow:clip;max-width:100%}
+  .mods{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .scard .big{font-size:2.9rem}
+  .gain{grid-template-columns:minmax(0,1fr) auto;row-gap:8px}
+  .gain .btn{grid-column:1/-1}
+  .secln{grid-template-columns:minmax(0,118px) 1fr 34px}
+  .opts.three{grid-template-columns:1fr}
+  .steps span{font-size:.68rem;padding:5px 2px}
+  .hsm{display:none}
+  table.prog{font-size:.86rem} table.prog td,table.prog th{padding:9px 3px} table.prog .bar{min-width:36px}
+}
+
+/* ---------- Desmos ---------- */
+.calc{position:fixed;top:12px;right:12px;bottom:12px;width:min(44vw,620px);z-index:45;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;overflow:hidden;animation:fadeup .2s ease}
+.calc[hidden]{display:none}
+.calchd{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line)}
+.calchd .ti{width:30px;height:30px;border-radius:9px}
+.calchd .ct{flex:1;min-width:0;line-height:1.15}
+.calchd .ct small{display:block;color:var(--muted);font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iconbtn.sm{width:34px;height:34px;border-radius:10px}
+.onlysm{display:none!important}
+.calcbody{position:relative;flex:1;background:#fff}
+.calcbody iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.calcmsg{position:absolute;inset:auto 16px 50% 16px;text-align:center;color:#555}
+body.calc-on .main{padding-right:calc(min(44vw,620px) + 12px)}
+.calcfab{position:fixed;right:22px;bottom:22px;z-index:44;display:flex;align-items:center;gap:8px;border:0;border-radius:30px;padding:12px 18px 12px 14px;background:var(--math);color:#fff;font-weight:750;box-shadow:0 8px 24px color-mix(in srgb,var(--math) 40%,transparent);animation:fadeup .2s ease}
+.calcfab[hidden]{display:none}
+.calcfab:hover{filter:brightness(1.07)}
+.dzhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.dzfilters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chipbtn{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:20px;padding:6px 12px;font-size:.82rem;font-weight:700}
+.chipbtn:hover{color:var(--ink)}
+.chipbtn.on{background:var(--math-soft);color:var(--math);border-color:color-mix(in srgb,var(--math) 40%,transparent)}
+.tag.dz{background:var(--math-soft);color:var(--math);display:inline-flex;align-items:center;gap:4px}
+.eqs{font-family:var(--mfont);font-size:1.02rem;line-height:1.9;text-align:center}
+.dztab{border-collapse:collapse;margin:0 auto;font-family:var(--mfont)}
+.dztab th,.dztab td{border:1px solid var(--line2);padding:6px 14px;text-align:center}
+.dztab th{background:var(--surface2);font-weight:700}
+code.dzc{font-family:var(--mfont);font-size:.86em;background:var(--math-soft);color:var(--ink);padding:2px 7px;border-radius:6px;white-space:pre-wrap;word-break:break-word}
+.dzsteps{margin:8px 0 0;padding-left:22px;display:grid;gap:6px}
+.dzsteps li{line-height:1.55}
+.dzway{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line2)}
+.dzhint{margin-top:16px;padding:14px 16px;border-radius:var(--rs);background:var(--math-soft);border:1px solid color-mix(in srgb,var(--math) 30%,transparent)}
+.dzhint>b{display:flex;align-items:center;gap:6px;color:var(--math)}
+.dzfoot{text-align:center;margin-top:12px}
+.dzintro p{margin:0 0 8px;line-height:1.6}
+.lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--gap)}
+.lesson{display:grid;grid-template-columns:34px 1fr;gap:12px;margin:0}
+.lesson .ln{width:30px;height:30px;border-radius:9px;background:var(--math-soft);color:var(--math);display:grid;place-items:center;font-weight:800}
+.lesson h3{margin:3px 0 6px}
+.lesson p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
+.exs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ex{display:inline-flex;align-items:center;gap:2px}
+.ex .btn{padding:4px 6px}
+body.calc-on .lessons{grid-template-columns:1fr}
+@media (min-width:861px) and (max-width:1279px){ body.calc-on .shell{grid-template-columns:minmax(0,1fr)} body.calc-on .side{display:none} body.calc-on .content{padding-left:20px;padding-right:20px} }
+@media (max-width:860px){
+  .tabbar{grid-template-columns:repeat(9,minmax(0,1fr))}
+  .tabbar button{font-size:9px;letter-spacing:-.02em}
+  .calc{top:auto;left:0;right:0;bottom:calc(62px + env(safe-area-inset-bottom));width:auto;height:52vh;height:52dvh;border-radius:18px 18px 0 0;z-index:29;box-shadow:0 -10px 30px rgba(0,0,0,.25)}
+  .calc.full{top:0;bottom:0;height:auto;border-radius:0;z-index:60}
+  .onlysm{display:grid!important}
+  body.calc-on .main{padding-right:0}
+  body.calc-on .content{padding-bottom:calc(52vh + 110px)}
+  .calcfab{right:14px;bottom:calc(78px + env(safe-area-inset-bottom));padding:10px 14px 10px 12px}
+  .lessons{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -2873,7 +3035,7 @@ function loadProfiles(){
 }
 function savePro(){ lsSet(PKEY,JSON.stringify(P)); }
 function DEFSET(){ return {theme:"system",accent:"indigo",size:"m",radius:"round",density:"comfy",pfont:"serif",motion:true,hints:true,autoNext:0,sound:false,showGen:true,confetti:true,ufont:"jakarta",hfont:"fraunces",mixE:60,timeMult:1,showTimer:true,confirmLeave:true}; }
-function DEF(){ return {profile:{name:"",email:"",remind:true,secret:"",grade:"9",test:"SAT",target:"",date:"",goal:20,color:0},settings:DEFSET(),stats:{},days:{},streak:{cur:0,best:0},missed:[],cards:{},tests:[],custom:[],seenQ:[],recentSig:[]}; }
+function DEF(){ return {profile:{name:"",email:"",remind:true,secret:"",grade:"9",test:"SAT",target:"",date:"",goal:20,color:0},settings:DEFSET(),stats:{},days:{},streak:{cur:0,best:0},missed:[],cards:{},tests:[],custom:[],seenQ:[],recentSig:[],hist:[],full:[],fit:{},plog:{},dz:{n:0,c:0,h:0}}; }
 function normalize(o){
   const d=DEF(); if(!o||typeof o!=="object") return d;
   for(const k of ["stats","days","cards"]) if(o[k]&&typeof o[k]==="object"&&!Array.isArray(o[k])) d[k]=o[k];
@@ -2888,6 +3050,11 @@ function normalize(o){
     .map(s=>({id:s.id,name:s.name.slice(0,40)||"My set",cards:s.cards.filter(c=>c&&okId(c.id)&&typeof c.f==="string"&&typeof c.b==="string").slice(0,500).map(c=>({id:c.id,f:c.f.slice(0,200),b:c.b.slice(0,400),x:typeof c.x==="string"?c.x.slice(0,200):""}))}));
   if(Array.isArray(o.seenQ)) d.seenQ=o.seenQ.filter(x=>typeof x==="string").slice(-2000);
   if(Array.isArray(o.recentSig)) d.recentSig=o.recentSig.filter(x=>typeof x==="string").slice(-800);
+  if(Array.isArray(o.hist)) d.hist=o.hist.filter(r=>Array.isArray(r)&&r.length>=6&&r.every(x=>typeof x==="number")).slice(-4000);
+  if(Array.isArray(o.full)) d.full=o.full.filter(x=>x&&typeof x==="object"&&typeof x.total==="number"&&Array.isArray(x.mods)).slice(-30);
+  if(o.dz&&typeof o.dz==="object") for(const k of ["n","c","h"]) d.dz[k]=Math.max(0,+o.dz[k]||0);
+  if(o.fit&&typeof o.fit==="object"&&!Array.isArray(o.fit)) for(const k in o.fit) if(typeof o.fit[k]==="string") d.fit[k]=o.fit[k];
+  if(o.plog&&typeof o.plog==="object"&&!Array.isArray(o.plog)) for(const k in o.plog) if(Array.isArray(o.plog[k])) d.plog[k]=o.plog[k];
   if(typeof d.profile.email!=="string") d.profile.email="";
   if(!d.profile.secret) d.profile.secret=rid();
   return d;
@@ -2921,7 +3088,7 @@ function today(){ return dkey(new Date()); }
 function dayStreak(){ let n=0; const d=new Date(); if(!S.days[dkey(d)]) d.setDate(d.getDate()-1); while(S.days[dkey(d)]){ n++; d.setDate(d.getDate()-1); } return n; }
 function goal(){ return Math.max(1,Number(S.profile.goal)||20); }
 function rec(q,ok,fromReview,quiet){
-  const st=S.stats[q.t]||(S.stats[q.t]={n:0,c:0}); st.n++; if(ok) st.c++;
+  const st=S.stats[q.t]||(S.stats[q.t]={n:0,c:0}); st.n++; if(ok) st.c++; logAns(q,ok);
   const d=today(); S.days[d]=(S.days[d]||0)+1;
   S.streak.cur= ok? S.streak.cur+1 : 0; S.streak.best=Math.max(S.streak.best,S.streak.cur);
   if(!ok) addMissed(q); else if(fromReview) removeMissed(q.id);
@@ -2978,10 +3145,16 @@ function drawQuestion(mode,seen){
 const $=id=>document.getElementById(id);
 const app=$("app");
 let view="home", timerId=null, autoTimer=null, sess=null, T=null;
-const NAV=[["home","Home","Dashboard"],["practice","Practice","Practice"],["test","Test","Timed Test"],["review","Review","Review"],["cards","Cards","Flashcards"],["progress","Stats","Progress"],["settings","Settings","Settings"]];
-const TITLES={practice:"Practice",test:"Timed Test",review:"Review",cards:"Flashcards",progress:"Progress",settings:"Settings"};
-const SUBS={practice:"Untimed questions with instant feedback and explanations.",test:"Practice under real-test pacing with a countdown.",review:"The questions you missed, ready for another try.",cards:"Vocabulary, grammar rules, and math formulas.",progress:"How you’re doing, topic by topic.",settings:"Make Prep Lab look and work the way you like."};
+const NAV=[["home","Home","Dashboard"],["practice","Practice","Practice"],["test","Test","Timed Test"],["full","Full test","Full Practice Test"],["desmos","Desmos","Desmos"],["review","Review","Review"],["cards","Cards","Flashcards"],["progress","Stats","Progress"],["predict","Score","Score Predictor"],["settings","Settings","Settings"]];
+const TITLES={desmos:"Desmos Practice",full:"Full Practice Test",predict:"Score Predictor",practice:"Practice",test:"Timed Test",review:"Review",cards:"Flashcards",progress:"Progress",settings:"Settings"};
+const SUBS={desmos:"Practice the graphing calculator built into the digital SAT.",full:"Four timed modules like the digital SAT. Module 2 of each section is harder.",predict:"Your predicted SAT and ACT scores, and which test suits you best.",practice:"Untimed questions with instant feedback and explanations.",test:"Practice under real-test pacing with a countdown.",review:"The questions you missed, ready for another try.",cards:"Vocabulary, grammar rules, and math formulas.",progress:"How you’re doing, topic by topic.",settings:"Make Prep Lab look and work the way you like."};
 const IC={
+ desmos:'<path d="M3 3v18h18"/><path d="M6 17c2.5-11 5.5-11 8 0 1.2 4 3.5 3 5-2"/>',
+ copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+ ext:'<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+ expand:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
+ full:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+ predict:'<path d="M3.5 17a9 9 0 1 1 17 0"/><path d="m12 14 4.5-4.5"/><circle cx="12" cy="14" r="1.6"/>',
  home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
  practice:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
  test:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/>',
@@ -3106,16 +3279,17 @@ function renderNav(){
       <div class="goalmini"><div class="row"><span>Today’s goal</span><span class="muted">${Math.min(td,g)}/${g}</span></div><div class="bar thin"><i class="${td>=g?"g":""}" style="width:${Math.min(100,Math.round(100*td/g))}%"></i></div></div>
       <button class="me" onclick="go('settings')" title="Profile and settings">${avatar(S.profile,34)}<span><b>${esc(S.profile.name)}</b><small>${gradeLabel(S.profile.grade)} · ${esc(testName())}</small></span></button>
     </div>`;
-  $("tabbar").innerHTML=NAV.map(([k,s])=>`<button class="${view===k?"on":""}" onclick="go('${k}')" aria-label="${s}" ${view===k?'aria-current="page"':""}>${ic(k,22)}<span>${s}</span>${badge(k)}</button>`).join("");
+  $("tabbar").innerHTML=NAV.filter(n=>n[0]!=="settings").map(([k,s])=>`<button class="${view===k?"on":""}" onclick="go('${k}')" aria-label="${s}" ${view===k?'aria-current="page"':""}>${ic(k,22)}<span>${s}</span>${badge(k)}</button>`).join("");
   $("topbar").innerHTML=`<div class="tt">${view==="home"?`<div class="mbrand"><span class="logo sm">${ic("star",15)}</span>Prep Lab</div>`:`<h1>${TITLES[view]}</h1><p>${SUBS[view]}</p>`}</div>
     <div class="tr"><button class="iconbtn" onclick="quickTheme()" title="Switch to ${isDark()?"light":"dark"} mode" aria-label="Switch to ${isDark()?"light":"dark"} mode">${ic(isDark()?"sun":"moon")}</button><button class="iconbtn avbtn" onclick="go('settings')" aria-label="Profile and settings">${avatar(S.profile,36)}</button></div>`;
 }
 function clearAuto(){ if(autoTimer){ clearTimeout(autoTimer); autoTimer=null; } }
 function go(v){
   if(T && !T.done && v!=="test"){ if(S.settings.confirmLeave && !confirm("Leave the timed test? Your answers on this test will be lost.")) return; stopTimer(); T=null; }
+  if(FT && FT.phase!=="done" && v!=="full"){ if(!confirm("Leave the full practice test? Modules you already submitted stay in your stats, but this test won’t get a score.")) return; ftStop(); FT=null; }
   clearAuto(); view=v; renderNav(); render(); window.scrollTo(0,0);
 }
-function render(){ ({home:rHome,practice:rPractice,test:rTest,review:rReview,cards:rCards,progress:rProgress,settings:rSettings})[view](); }
+function render(){ ({home:rHome,practice:rPractice,test:rTest,review:rReview,cards:rCards,progress:rProgress,settings:rSettings,full:rFull,predict:rPredict,desmos:rDesmos})[view](); calcSync(); }
 function secTag(q){ return `<span class="tag ${q.s==="M"?"m":""}">${q.s==="M"?"Math":"English"} · ${TOPICS[q.t].n}</span>`; }
 function choicesHTML(q,picked,reveal,fn){
   return `<div class="choices">${q.c.map((c,i)=>{ let cls="choice";
@@ -3239,14 +3413,14 @@ function signIn(id){
 function enterApp(){
   const a=$("auth"); a.hidden=true; a.innerHTML="";
   $("shell").hidden=false; $("tabbar").hidden=false;
-  sess=null; T=null; FC.order=[]; FC.i=0; FC.filter="all";
+  sess=null; T=null; FT=null; ftStop(); DZ.q=null; FC.order=[]; FC.i=0; FC.filter="all";
   applySettings();
   if(!validEmail(S.profile.email)){ showAuth("email"); return; }
   view="home"; renderNav(); render(); window.scrollTo(0,0); syncReminder(true);
 }
 function signOut(){
   if(T&&!T.done&&!confirm("Leave the timed test? Your answers on this test will be lost.")) return;
-  stopTimer(); clearAuto(); T=null; sess=null;
+  stopTimer(); clearAuto(); T=null; sess=null; FT=null; ftStop(); DZ.q=null; calcClose(false);
   P.current=null; ssDel(SKEY); savePro(); UID=null; S=DEF(); applySettings();
   showAuth(P.list.length?"pick":"signup"); window.scrollTo(0,0);
 }
@@ -3335,12 +3509,12 @@ function startPractice(kind,topic){
 function nextQ(){
   if(sess.mode.kind==="review"){ const q=sess.queue.shift(); sess.q=q? prep(Object.assign({},q,{c:q.c.slice()})) : null; }
   else sess.q=drawQuestion(sess.mode,sess.seen);
-  sess.picked=null; sess.answered=false;
+  sess.picked=null; sess.answered=false; sess.shown=Date.now();
 }
 function modeLabel(m){ return m.kind==="topic"?TOPICS[m.topic].n : {E:"All English",M:"All Math",X:"Mixed",smart:"Smart Mix",review:"Review"}[m.kind]; }
 function pAnswer(i){
   if(!sess||sess.answered) return; sess.picked=i; sess.answered=true; const ok=i===sess.q.a;
-  sess.praise=pick(PRAISE); sess.n++; if(ok) sess.c++; rec(sess.q,ok,sess.mode.kind==="review"); beep(ok); renderNav(); render();
+  sess.praise=pick(PRAISE); sess.n++; if(ok) sess.c++; RCTX={secs:sess.shown?(Date.now()-sess.shown)/1000:0,src:0}; rec(sess.q,ok,sess.mode.kind==="review"); RCTX={secs:0,src:0}; beep(ok); renderNav(); render();
   const fb=document.querySelector(".fb"); if(fb&&fb.getBoundingClientRect().bottom>innerHeight) fb.scrollIntoView({behavior:S.settings.motion?"smooth":"auto",block:"nearest"});
   const last=sess.mode.kind==="review"&&!sess.queue.length;
   if(ok && S.settings.autoNext && !last){ clearAuto(); const s=sess; autoTimer=setTimeout(()=>{ autoTimer=null; if(sess===s&&sess.answered) pNext(); },S.settings.autoNext); }
@@ -3406,9 +3580,9 @@ function submitTest(auto){
   if(!auto){ const un=T.ans.filter(a=>a===null).length; if(un && !confirm(`You have ${un} unanswered question${un>1?"s":""}. Submit anyway?`)) return; }
   stopTimer(); T.done=true; T.used=Math.min(T.secs,Math.round((Date.now()-T.start)/1000));
   const before=S.days[today()]||0;
-  T.qs.forEach((q,i)=>rec(q,T.ans[i]===q.a,false,true));
+  RCTX={secs:T.used/T.qs.length,src:1}; T.qs.forEach((q,i)=>rec(q,T.ans[i]===q.a,false,true)); RCTX={secs:0,src:0};
   const c=T.qs.filter((q,i)=>T.ans[i]===q.a).length;
-  S.tests.push({d:today(),c,n:T.qs.length,mix:T.mix}); if(S.tests.length>50) S.tests.shift(); save();
+  S.tests.push({d:today(),c,n:T.qs.length,mix:T.mix,used:T.used,secs:T.secs,un:T.ans.filter(a=>a===null).length}); if(S.tests.length>50) S.tests.shift(); save();
   if(auto) toast("Time’s up! Your test was submitted.");
   if(before<goal() && (S.days[today()]||0)>=goal()) goalReached(); else syncReminder(true);
   renderNav(); render(); window.scrollTo(0,0);
@@ -3695,7 +3869,7 @@ function rSettings(){
 }
 function resetProgress(){
   if(!confirm("Erase ALL progress, missed questions, and flashcard marks for this profile? This cannot be undone.")) return;
-  const keep={profile:S.profile,settings:S.settings,custom:S.custom}; S=DEF(); S.profile=keep.profile; S.settings=keep.settings; S.custom=keep.custom; save(); sess=null; T=null; renderNav(); rSettings(); toast("Progress reset");
+  const keep={profile:S.profile,settings:S.settings,custom:S.custom}; S=DEF(); S.profile=keep.profile; S.settings=keep.settings; S.custom=keep.custom; save(); sess=null; T=null; FT=null; ftStop(); renderNav(); rSettings(); toast("Progress reset");
 }
 function exportData(){
   try{
@@ -3718,6 +3892,724 @@ function importData(inp){
 }
 
 /* =====================================================================
+   QUESTION DIFFICULTY + ANSWER HISTORY  (feeds the predictor and full tests)
+   ===================================================================== */
+const TKEYS=Object.keys(TOPICS);
+const TBASE={punc:.45,sva:.35,pron:.4,mod:.55,para:.45,tense:.35,trans:.45,wic:.55,synth:.55,read:.6,conc:.4,evid:.65,
+  lin:.3,sys:.45,quad:.6,func:.55,expo:.6,poly:.7,pct:.4,stat:.5,prob:.5,geo:.55,trig:.7,word:.5};
+function plain(s){ return String(s||"").replace(/<[^>]*>/g," ").replace(/\s+/g," "); }
+function qDiff(q){
+  if(q._d!=null) return q._d;
+  const L=plain(q.p).length+(q.s==="E"&&/^Which choice/.test(q.q)?0:plain(q.q).length)+q.c.reduce((n,c)=>n+plain(c).length,0);
+  const nums=q.s==="M"? Math.min(.15,(plain(q.q).match(/\d+/g)||[]).length*.012) : 0;
+  return q._d=Math.max(.15,Math.min(1,(TBASE[q.t]||.5)+Math.min(.3,Math.max(0,L-120)/1400)+nums));
+}
+let RCTX={secs:0,src:0};   // src: 0 practice, 1 timed test, 2 full test
+function dayNum(){ return Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5); }
+function logAns(q,ok){
+  const h=S.hist||(S.hist=[]);
+  h.push([dayNum(),TKEYS.indexOf(q.t),ok?1:0,Math.max(0,Math.min(900,Math.round(RCTX.secs||0))),Math.round(qDiff(q)*100),RCTX.src||0]);
+  if(h.length>4000) h.splice(0,h.length-4000);
+}
+function median(a){ if(!a.length) return 0; const s=a.slice().sort((x,y)=>x-y), m=s.length>>1; return s.length%2?s[m]:(s[m-1]+s[m])/2; }
+function clamp(x,a,b){ return Math.max(a,Math.min(b,x)); }
+
+/* ---- a small item-response model: ability (theta) from right/wrong answers at known difficulty ---- */
+const IRT_A=1.7;
+function bOf(d){ return (d-.55)*5; }
+function pCorr(th,b){ return .25+.75/(1+Math.exp(-IRT_A*(th-b))); }
+function estTheta(items){
+  const pv=1/1.44; let th=0;
+  for(let it=0;it<40;it++){ let g=-th*pv, h=-pv;
+    for(const [b,ok,w] of items){ const s=1/(1+Math.exp(-IRT_A*(th-b))), P=.25+.75*s, dP=.75*IRT_A*s*(1-s);
+      g+=w*(ok-P)*dP/(P*(1-P)); h-=w*dP*dP/(P*(1-P)); }
+    const step=g/h; th=clamp(th-step,-4,4); if(Math.abs(step)<1e-4) break; }
+  let info=pv; for(const [b,,w] of items){ const s=1/(1+Math.exp(-IRT_A*(th-b))), P=.25+.75*s, dP=.75*IRT_A*s*(1-s); info+=w*dP*dP/(P*(1-P)); }
+  return {th,se:1/Math.sqrt(info)};
+}
+function satSecRaw(th){ return clamp(540+125*th,200,800); }
+const r10=x=>Math.round(x/10)*10;
+
+/* =====================================================================
+   SCORE PREDICTOR
+   ===================================================================== */
+const BP={ // share of each test section that each topic represents
+  satE:{wic:.2,read:.21,evid:.13,punc:.08,sva:.04,pron:.03,mod:.04,para:.03,tense:.04,trans:.1,synth:.07,conc:.03},
+  satM:{lin:.2,sys:.15,quad:.1,func:.1,expo:.07,poly:.08,pct:.05,stat:.04,prob:.03,word:.03,geo:.09,trig:.06},
+  actE:{punc:.17,sva:.06,pron:.05,mod:.06,para:.05,tense:.05,trans:.14,synth:.12,conc:.14,wic:.08,read:.08},
+  actM:{pct:.09,lin:.1,sys:.06,quad:.1,poly:.06,func:.1,expo:.06,geo:.16,trig:.07,stat:.08,prob:.07,word:.05},
+  actR:{read:.45,evid:.25,wic:.2,synth:.1},
+  actS:{evid:.45,stat:.35,read:.1,expo:.1}
+};
+// how much tighter each ACT section's clock is than the SAT's, after allowing for shorter ACT items
+const TIGHT={E:1.27,M:1.28,R:1.17,S:1.3};
+const CC_ACT=[36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9];
+const CC_SAT=[1590,1540,1500,1460,1430,1400,1370,1340,1310,1280,1240,1210,1180,1140,1110,1080,1040,1010,970,930,890,850,800,760,710,670,630,590];
+function actFromSat(s){
+  if(s>=1590) return 36; if(s<=590) return Math.max(1,9-(590-s)/23.75);
+  for(let i=0;i<CC_SAT.length-1;i++) if(s>=CC_SAT[i+1]) return CC_ACT[i+1]+(s-CC_SAT[i+1])/(CC_SAT[i]-CC_SAT[i+1]);
+  return 9;
+}
+function satFromAct(a){
+  if(a>=36) return 1590; if(a<=9) return Math.max(400,590-(9-a)*23.75);
+  const i=CC_ACT.findIndex(x=>x<=a); if(CC_ACT[i]===a) return CC_SAT[i];
+  return CC_SAT[i]+(a-CC_ACT[i])*(CC_SAT[i-1]-CC_SAT[i]);
+}
+const SAT_PCT=[[400,1],[600,1],[700,3],[800,10],[900,23],[1000,40],[1100,58],[1200,74],[1300,87],[1400,94],[1500,98],[1600,99]];
+const ACT_PCT=[[1,1],[12,1],[14,9],[16,24],[18,38],[20,51],[22,63],[24,74],[26,82],[28,88],[30,93],[32,97],[34,99],[36,99]];
+function pctile(tab,x){ for(let i=1;i<tab.length;i++) if(x<=tab[i][0]){ const [a,pa]=tab[i-1],[b,pb]=tab[i]; return Math.round(pa+(pb-pa)*(x-a)/(b-a)); } return 99; }
+function ordinal(n){ const s=["th","st","nd","rd"], v=n%100; return n+(s[(v-20)%10]||s[v]||s[0]); }
+function smoothAcc(ts){ let n=0,c=0; for(const t of ts){ const s=S.stats[t]; if(s){ n+=s.n; c+=s.c; } } return {n,c,p:(c+3*.6)/(n+3)}; }
+
+function gatherItems(){
+  const now=dayNum(), H=S.hist||[], sec={E:[],M:[]}, top={}, hn={}, hc={};
+  for(const r of H){ const t=TKEYS[r[1]]; if(!t) continue;
+    const w=Math.pow(.5,Math.max(0,now-r[0])/45)*(r[5]===2?1.5:r[5]===1?1.2:1), it=[bOf(r[4]/100),r[2],w];
+    sec[TOPICS[t].s].push(it); (top[t]=top[t]||[]).push(it); hn[t]=(hn[t]||0)+1; hc[t]=(hc[t]||0)+r[2]; }
+  // answers from before history was kept: count them at the topic's typical difficulty
+  for(const t in S.stats){ const st=S.stats[t], nl=Math.max(0,st.n-(hn[t]||0)); if(!nl) continue;
+    const cl=clamp(st.c-(hc[t]||0),0,nl), b=bOf(TBASE[t]+.08), a=[[b,1,.6*cl],[b,0,.6*(nl-cl)]].filter(x=>x[2]>0);
+    sec[TOPICS[t].s].push(...a); (top[t]=top[t]||[]).push(...a); }
+  return {sec,top};
+}
+function paceInfo(){
+  const L={E:[],M:[]}, out={};
+  for(const f of (S.full||[]).slice(-4)) for(const m of (f.mods||[])) if(m.secs>0&&m.n&&L[m.s]) L[m.s].push(m.used/m.secs*m.n/Math.max(1,m.ans));
+  for(const t of S.tests.slice(-8)) if(t.secs>0&&t.used!=null){ const r=t.used/t.secs*t.n/Math.max(1,t.n-(t.un||0)); if(t.mix!=="M") L.E.push(r); if(t.mix!=="E") L.M.push(r); }
+  for(const s of ["E","M"]){
+    const xs=(S.hist||[]).filter(h=>h[5]===0&&h[3]>=3&&TKEYS[h[1]]&&TOPICS[TKEYS[h[1]]].s===s).slice(-150).map(h=>h[3]), psec=xs.length>=10?median(xs):null;
+    if(L[s].length) out[s]={r:median(L[s]),src:"timed",n:L[s].length,psec};
+    else if(xs.length>=15) out[s]={r:psec*.8/(s==="E"?71:95),src:"practice",n:xs.length,psec};
+    else out[s]={r:.8,src:"none",n:0,psec};
+  }
+  return out;
+}
+function paceAdj(th,r){
+  if(!r||r<=.92) return th;
+  const comp=.92/r, np=pCorr(th,0)*comp+.25*(1-comp), s=clamp((np-.25)/.75,.01,.99);
+  return Math.min(th,Math.log(s/(1-s))/IRT_A);
+}
+function predict(){
+  const G=gatherItems(), tE=totals("E"), tM=totals("M"), n=tE.n+tM.n;
+  const th={E:estTheta(G.sec.E),M:estTheta(G.sec.M)}, res={};
+  for(const t of TKEYS){ const it=G.top[t]; if(!it||!it.length){ res[t]={r:0,w:0}; continue; }
+    const T0=th[TOPICS[t].s].th; let num=0,den=0; for(const [b,ok,w] of it){ num+=w*(ok-pCorr(T0,b)); den+=w; }
+    res[t]={r:num/(den+6),w:den}; }
+  const pace=paceInfo();
+  const sect=(bp,r)=>{ let base=0,adj=0,unc=0,se=0;
+    for(const t in bp){ const w=bp[t], s=TOPICS[t].s; base+=w*th[s].th; se+=w*th[s].se; adj+=w*res[t].r*3.2; if(res[t].w<3) unc+=w; }
+    return {th:paceAdj(base+adj,r),se:Math.sqrt(se*se+(.5*unc)**2+.04)}; };
+  const sE=sect(BP.satE,pace.E.r), sM=sect(BP.satM,pace.M.r);
+  const rw=r10(satSecRaw(sE.th)), m=r10(satSecRaw(sM.th)), total=rw+m, satRaw=satSecRaw(sE.th)+satSecRaw(sM.th);
+  const sd=125*Math.sqrt(sE.se*sE.se+sM.se*sM.se)*.8;
+  const aE=sect(BP.actE,pace.E.r*TIGHT.E), aM=sect(BP.actM,pace.M.r*TIGHT.M), aR=sect(BP.actR,pace.E.r*TIGHT.R), aS=sect(BP.actS,(pace.E.r+pace.M.r)/2*TIGHT.S);
+  const ac=(x,k)=>actFromSat(2*satSecRaw(x.th+(k||0)*x.se*.6));
+  const actRaw=(ac(aE)+ac(aM)+ac(aR))/3, comp=clamp(Math.round(actRaw),1,36);
+  const actLo=clamp(Math.round((ac(aE,-1)+ac(aM,-1)+ac(aR,-1))/3),1,36), actHi=clamp(Math.round((ac(aE,1)+ac(aM,1)+ac(aR,1))/3),1,36);
+  const cov=TKEYS.filter(t=>S.stats[t]&&S.stats[t].n>=5).length, nt=S.tests.length, nf=(S.full||[]).length;
+  const conf=Math.round(Math.min(1,n/400)*45+cov/TKEYS.length*25+Math.min(1,nt/3)*15+Math.min(1,nf)*15);
+  return {n,cov,nt,nf,conf,th,res,pace,
+    sat:{total,rw,m,raw:satRaw,lo:clamp(r10(total-sd),400,1600),hi:clamp(r10(total+sd),400,1600)},
+    act:{comp,raw:actRaw,lo:Math.min(actLo,comp),hi:Math.max(actHi,comp),e:clamp(Math.round(ac(aE)),1,36),m:clamp(Math.round(ac(aM)),1,36),r:clamp(Math.round(ac(aR)),1,36),s:clamp(Math.round(ac(aS)),1,36)}};
+}
+function gains(pr){
+  return TKEYS.map(t=>{ const a=smoothAcc([t]), w=(BP.satE[t]||0)+(BP.satM[t]||0), g=125*3.2*w*clamp(.92-a.p,0,.25);
+    return {t,g,a,w}; }).filter(x=>x.g>=4).sort((x,y)=>y.g-x.g).slice(0,4);
+}
+function projection(pr){
+  const cd=countdown(); if(cd===null||cd<=0) return null;
+  let wk=0; for(let i=0;i<14;i++){ const d=new Date(); d.setDate(d.getDate()-i); wk+=S.days[dkey(d)]||0; } wk/=2;
+  const weeks=cd/7, per=Math.min(15,wk*.08); let g=0;
+  for(let i=0;i<Math.ceil(weeks);i++) g+=per*Math.pow(.94,i)*Math.min(1,weeks-i);
+  g=r10(Math.min(g,200,1600-pr.sat.total));
+  return {cd,wk:Math.round(wk),gain:g,sat:pr.sat.total+g,act:clamp(Math.round(pr.act.raw+actFromSat(pr.sat.raw+g)-actFromSat(pr.sat.raw)),1,36)};
+}
+function logPred(pr){
+  const p=S.plog||(S.plog={}), d=today(), v=[pr.sat.total,pr.act.comp];
+  if(p[d]&&p[d][0]===v[0]&&p[d][1]===v[1]) return;
+  p[d]=v; const ks=Object.keys(p).sort(); while(ks.length>120) delete p[ks.shift()]; save();
+}
+
+/* ---------- SAT or ACT? ---------- */
+const FITQ=[
+  ["time","On timed tests, you usually…",[["spare","Finish with time to spare"],["just","Finish just in time"],["run","Run out of time"]]],
+  ["pass","Which reading style suits you?",[["short","Short passages, one question each"],["long","Long passages, many questions"],["any","No preference"]]],
+  ["geo","How do you feel about geometry and trig?",[["love","I like them"],["ok","They’re fine"],["avoid","I’d rather avoid them"]]],
+  ["form","Would you rather be given the math formulas?",[["sheet","Yes, give me a formula sheet"],["know","I know my formulas"]]],
+  ["adapt","If questions got harder after a strong start, you’d feel…",[["fine","Motivated"],["stress","Stressed"],["meh","I wouldn’t care"]]],
+  ["data","Do you enjoy reading charts, graphs, and experiments?",[["love","Yes"],["some","Sometimes"],["no","Not really"]]]
+];
+function setFit(k,v){ const f=S.fit||(S.fit={}); f[k]=f[k]===v?undefined:v; if(f[k]===undefined) delete f[k]; save(); const y=window.scrollY; rPredict(); window.scrollTo(0,y); }
+function recommend(pr){
+  const R=[], f=S.fit||{}, A=smoothAcc, pc=x=>Math.round(x*100)+"%";
+  // difficulty-adjusted skill: how far above/below expectation you do in a group of topics
+  const adj=ts=>{ let n=0,d=0; for(const t of ts){ const r=pr.res[t]; if(r&&r.w){ n+=r.w; d+=r.r*(r.w+6); } } return n?d/n:0; };
+  const gap=d=>`${Math.round(Math.abs(d)*100)} points`;
+  const add=(pts,t,b)=>R.push({pts,t,b,side:pts>.15?"SAT":pts<-.15?"ACT":"="});
+  if(pr.n>=20){
+    const satEq=satFromAct(pr.act.raw), d=pr.sat.raw-satEq;
+    if(Math.abs(d)>=15) add(clamp(d/20,-3,3), d>0?"Your skills convert better to the SAT":"Your skills convert better to the ACT",
+      `Your predicted SAT is <b>${pr.sat.total}</b> and your predicted ACT is <b>${pr.act.comp}</b>. On the official SAT–ACT concordance, an ACT ${pr.act.comp} is worth about ${r10(satFromAct(pr.act.comp))}, so the ${d>0?"SAT":"ACT"} currently earns you roughly <b>${Math.max(10,Math.abs(r10(d)))} more points</b> of credit with colleges.${d<0&&pr.sat.rw-pr.sat.m>=30?" That’s mostly because English and Reading make up two of the three ACT scores that count, and English is your stronger side.":d>0&&pr.sat.m-pr.sat.rw>=30?" That’s mostly because Math is half of your SAT score but only a third of your ACT composite, and Math is your stronger side.":""}`);
+    else add(0,"Your two predictions are about even",`Your predicted SAT (<b>${pr.sat.total}</b>) and ACT (<b>${pr.act.comp}</b>) are worth almost the same on the official concordance, so the other reasons below decide it.`);
+  }
+  const pE=pr.pace.E, pM=pr.pace.M;
+  if(pE.src!=="none"||pM.src!=="none"){
+    const timed=pE.src==="timed"||pM.src==="timed", satR=Math.max(pE.r,pM.r), actR=Math.max(pE.r*TIGHT.E,pM.r*TIGHT.M);
+    const how= timed? `On your timed tests you used about <b>${pc(Math.min(1,satR))}</b> of the clock${satR>1?" and still left questions blank":""}.`
+      : `In untimed practice you take about <b>${Math.round(pE.psec||0)} seconds</b> per English question and <b>${Math.round(pM.psec||0)} seconds</b> per Math question.`;
+    const more=timed?"":" Take a timed test to make this more precise.";
+    if(actR>1){ const mE=Math.max(0,Math.round(50*(1-1/(pE.r*TIGHT.E)))), mM=Math.max(0,Math.round(45*(1-1/(pM.r*TIGHT.M))));
+      add(Math.min(3,(actR-1)*6+.6),"The ACT’s clock would squeeze you",
+        `${how} The ACT gives only about 42 seconds per English question and 67 per Math question (the SAT gives 71 and 95). At your pace you’d likely run out of time with about <b>${mE} English</b>${mM?` and <b>${mM} Math</b>`:""} question${mE+mM===1?"":"s"} left.${more}`); }
+    else if(actR<.82) add(-1.2,"You have speed to spare",`${how} Even on the ACT’s faster clock (42 seconds per English question, 67 per Math question) you’d probably finish early. Speed is the ACT’s biggest hurdle for most students, so it’s an advantage for you.${more}`);
+    else add(.6,"Your pacing is fine for the SAT, tight for the ACT",`${how} You’d finish the SAT comfortably, but the ACT’s faster clock (42 seconds per English question vs 71 on the SAT) would leave you little room to check your work.${more}`);
+  } else add(0,"Your pace isn’t known yet","Take a timed test or a full practice test so Prep Lab can compare your speed with each test’s clock. Pacing is the biggest difference between the SAT and the ACT.");
+  const g=A(["geo","trig"]), al=A(["lin","sys","func","quad","poly","expo"]);
+  if(g.n>=8&&al.n>=8&&Math.abs(adj(["geo","trig"])-adj(["lin","sys","func","quad","poly","expo"]))>=.05){ const d=adj(["geo","trig"])-adj(["lin","sys","func","quad","poly","expo"]);
+    add(clamp(-d*12,-2.5,2.5), d>0?"Geometry and trig are a strength":"Algebra is stronger than your geometry",
+      `Allowing for how hard each question was, you score about <b>${gap(d)} better</b> on ${d>0?"Geometry &amp; Trig":"Algebra &amp; Functions"} than on ${d>0?"Algebra &amp; Functions":"Geometry &amp; Trig"} (raw accuracy: ${pc(g.p)} vs ${pc(al.p)}). About a quarter of ACT Math is geometry and trig, compared with about 15% of SAT Math, which is mostly algebra. ${d>0?"That tilts toward the ACT.":"That tilts toward the SAT."}`); }
+  const cv=A(["punc","sva","pron","mod","para","tense"]), rv=A(["wic","read","evid"]);
+  if(cv.n>=10&&rv.n>=10&&Math.abs(adj(["punc","sva","pron","mod","para","tense"])-adj(["wic","read","evid"]))>=.05){ const d=adj(["punc","sva","pron","mod","para","tense"])-adj(["wic","read","evid"]);
+    add(clamp(-d*10,-2,2), d>0?"Grammar is your superpower":"Reading and vocabulary beat grammar for you",
+      `Allowing for difficulty, you score about <b>${gap(d)} better</b> on ${d>0?"grammar and punctuation":"vocabulary, reading, and evidence"} than on ${d>0?"vocabulary, reading, and evidence":"grammar and punctuation"} (raw accuracy: ${pc(cv.p)} vs ${pc(rv.p)}). ACT English is 50 editing questions and counts for a third of the composite, while SAT Reading &amp; Writing leans more on vocabulary in context and short reading passages. ${d>0?"That favors the ACT.":"That favors the SAT."}`); }
+  const aa=A(["quad","poly","expo","func"]);
+  const aaj=adj(["quad","poly","expo","func"]), dsj=adj(["evid","stat"]);
+  if(aa.n>=8&&(aa.p>=.8||aaj>=.08)) add(.6,"Advanced algebra is strong",`You’re at <b>${pc(aa.p)}</b> on quadratics, polynomials, exponentials, and functions. That “advanced math” is about 35% of SAT Math, more than on the ACT.`);
+  else if(aa.n>=8&&(aa.p<.55||aaj<=-.08)) add(-.4,"Advanced algebra still needs work",`You’re at <b>${pc(aa.p)}</b> on quadratics, polynomials, exponentials, and functions, which make up about 35% of SAT Math. The ACT spreads its math across more topics.`);
+  const ds=A(["evid","stat"]);
+  if(ds.n>=8&&(ds.p>=.78||dsj>=.08)) add(-.6,"You read data well",`You get <b>${pc(ds.p)}</b> of evidence and statistics questions right. The ACT’s Science section (now optional) is all charts, tables, and experiments, and a strong score there adds a STEM score some colleges like.`);
+  else if(ds.n>=8&&(ds.p<.6||dsj<=-.08)) add(.4,"Charts and data are still developing",`You get <b>${pc(ds.p)}</b> of evidence and statistics questions right. The SAT has no science section, and the ACT’s Science section is optional now, so this tips only slightly toward the SAT.`);
+  // answers to the quick questions
+  if(f.time==="run") add(2,"You said you often run out of time","The SAT gives about 70% more time per question than the ACT (71 vs 42 seconds in English, 95 vs 67 in Math). Running out of time costs more points than anything else, so the SAT’s calmer pace should help.");
+  if(f.time==="just") add(.5,"You said you finish just in time","If the SAT’s clock is just enough for you, the ACT’s faster one (about 40% less time per question) would probably feel rushed.");
+  if(f.time==="spare") add(-.8,"You said you finish with time to spare","Fast test-takers do well on the ACT, where the questions are usually more direct but the clock is tighter.");
+  if(f.pass==="short") add(1.5,"You prefer short passages","Every SAT Reading &amp; Writing question has its own short passage (25 to 150 words). ACT Reading uses four long passages of about 700 words, each with about 9 questions.");
+  if(f.pass==="long") add(-1.5,"You prefer long passages","ACT Reading gives you four long passages with about 9 questions each, so you read once and answer many. On the SAT, every question comes with a new short passage.");
+  if(f.geo==="love") add(-1,"You like geometry and trig",`The ACT has more geometry and trig questions (about a quarter of the math) than the SAT (about 15%).${g.n>=8?` Your ${pc(g.p)} accuracy there backs this up.`:""}`);
+  if(f.geo==="avoid") add(1.2,"You’d rather avoid geometry and trig",`SAT Math is mostly algebra, with only about 15% geometry and trig. The ACT has closer to a quarter.${g.n>=8?` Your current accuracy there is ${pc(g.p)}.`:""}`);
+  if(f.form==="sheet") add(1,"You want formulas given to you","The SAT gives a reference sheet with area, volume, and triangle formulas, plus a built-in Desmos graphing calculator. The ACT gives no formulas, so you must memorize them.");
+  if(f.form==="know") add(-.3,"You know your formulas","The ACT gives no formula sheet, but that won’t slow you down.");
+  if(f.adapt==="stress") add(-.8,"Adaptive tests stress you out","The SAT is adaptive: how you do on Module 1 decides whether Module 2 is harder or easier. The ACT gives everyone the same questions, start to finish.");
+  if(f.adapt==="fine") add(.4,"Harder questions motivate you","On the SAT, doing well in Module 1 unlocks a harder Module 2, which is the only path to a top score. You like that kind of challenge.");
+  if(f.data==="love") add(-.6,"You enjoy charts and experiments","The ACT’s optional Science section is 40 questions of exactly that, and it earns you an extra STEM score.");
+  if(f.data==="no") add(.6,"Charts and experiments aren’t your thing","The SAT has no science section. On the ACT, Science is optional now, but some students still take it.");
+  if(S.profile.grade==="9"||S.profile.grade==="10") add(.5,`You’re in ${gradeLabel(S.profile.grade)}`,"The PSAT you’ll take in 10th and 11th grade is built just like the digital SAT, and the 11th-grade PSAT decides National Merit. SAT practice counts twice for you.");
+  const pts=R.reduce((s,r)=>s+r.pts,0);
+  R.sort((a,b)=>Math.abs(b.pts)-Math.abs(a.pts));
+  const v= pts>=3?["SAT","The SAT is the better fit"] : pts>=1?["SAT","Leaning SAT"] : pts<=-3?["ACT","The ACT is the better fit"] : pts<=-1?["ACT","Leaning ACT"] : ["=","It’s a toss-up"];
+  return {R,pts,v,share:1/(1+Math.exp(-pts/2.5))};
+}
+
+/* ---------- predictor page ---------- */
+function scaleBar(lo,hi,val,min,max,target){
+  const P=x=>clamp((x-min)/(max-min)*100,0,100);
+  return `${target?`<div class="tgrow"><span style="left:${P(target)}%;transform:translateX(-${P(target)>88?92:P(target)<12?8:50}%)">Target ${target}</span></div>`:""}<div class="scale ${target?"wt":""}" aria-hidden="true"><span class="band" style="left:${P(lo)}%;width:${Math.max(1.5,P(hi)-P(lo))}%"></span>${target?`<span class="tg" style="left:${P(target)}%" title="Your target"></span>`:""}<span class="pt" style="left:${P(val)}%"></span></div>
+  <div class="scalelbl"><span>${min}</span><span>${max}</span></div>`;
+}
+function secLine(name,v,min,max,cls,note){ return `<div class="secln ${cls||""}"><span>${name}${note?` <em>${note}</em>`:""}</span><div class="bar thin"><i style="width:${Math.round((v-min)/(max-min)*100)}%"></i></div><b>${v}</b></div>`; }
+function targetFor(test){ const t=Number(S.profile.target); if(!t) return null; const isAct=t<=36; return test==="ACT"? (isAct?t:null) : (isAct?null:t); }
+function spark(){
+  const p=S.plog||{}, ks=Object.keys(p).sort().slice(-30); if(ks.length<3) return "";
+  const v=ks.map(k=>p[k][0]), mn=Math.min(...v)-20, mx=Math.max(...v)+20, W=260, H=54;
+  const pts=v.map((x,i)=>`${(i/(v.length-1)*W).toFixed(1)},${(H-(x-mn)/(mx-mn)*H).toFixed(1)}`).join(" ");
+  return `<div class="spark"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+    <div class="row between mini muted"><span>${ks[0].slice(5)}: ${v[0]}</span><span>Today: ${v[v.length-1]}</span></div></div>`;
+}
+function rPredict(){
+  const pr=predict(), locked=pr.n<20, rc=recommend(pr), nm=esc(firstName());
+  let top="";
+  if(locked){
+    top=`<section class="panel lockp"><div class="resgrid">${ring(pr.n/20,124,11,`${pr.n}<span>/20</span>`,"answered")}
+      <div style="flex:1;min-width:220px"><h2 style="font-size:1.4rem">Answer 20 questions to unlock your scores</h2>
+      <p class="muted">Prep Lab predicts your SAT and ACT scores from every question you answer, how hard each one was, and how fast you work. The more you practice, the sharper the prediction gets.</p>
+      <div class="row" style="margin-top:14px"><button class="btn pri" onclick="startPractice('smart')">${ic("bolt",16)} Start Smart Mix</button><button class="btn" onclick="go('full')">${ic("full",16)} Take a full practice test</button></div></div></div></section>`;
+  } else {
+    logPred(pr);
+    const sp=pctile(SAT_PCT,pr.sat.total), ap=pctile(ACT_PCT,pr.act.comp), pj=projection(pr), gs=gains(pr), cl=pr.conf>=70?"High":pr.conf>=40?"Medium":"Low";
+    const chk=(ok,txt)=>`<li class="${ok?"ok":""}">${ic(ok?"check":"target",15)}<span>${txt}</span></li>`;
+    top=`<div class="pgrid">
+      <section class="panel scard sat"><div class="row between"><span class="tag">SAT</span><span class="muted mini">about the ${ordinal(sp)} percentile</span></div>
+        <div class="big">${pr.sat.total}</div><div class="muted">Likely range <b>${pr.sat.lo}–${pr.sat.hi}</b></div>
+        ${scaleBar(pr.sat.lo,pr.sat.hi,pr.sat.total,400,1600,targetFor("SAT"))}
+        ${secLine("Reading &amp; Writing",pr.sat.rw,200,800,"e")}${secLine("Math",pr.sat.m,200,800,"m")}</section>
+      <section class="panel scard act"><div class="row between"><span class="tag m">ACT</span><span class="muted mini">about the ${ordinal(ap)} percentile</span></div>
+        <div class="big">${pr.act.comp}</div><div class="muted">Likely range <b>${pr.act.lo}–${pr.act.hi}</b></div>
+        ${scaleBar(pr.act.lo,pr.act.hi,pr.act.comp,1,36,targetFor("ACT"))}
+        ${secLine("English",pr.act.e,1,36,"e")}${secLine("Math",pr.act.m,1,36,"m")}${secLine("Reading",pr.act.r,1,36,"e")}${secLine("Science",pr.act.s,1,36,"s","optional, not in composite")}</section>
+    </div>
+    <div class="grid2">
+      <section class="panel"><div class="ph"><h3>How sure is this?</h3><span class="conf c${cl[0]}">${cl}</span></div>
+        <div class="bar"><i class="${pr.conf>=70?"g":pr.conf>=40?"":"w"}" style="width:${pr.conf}%"></i></div>
+        <ul class="chkl">${chk(pr.n>=400,`<b>${pr.n}</b> questions answered${pr.n<400?` (400+ is best)`:""}`)}${chk(pr.cov>=20,`<b>${pr.cov}</b> of ${TKEYS.length} topics with 5+ answers`)}${chk(pr.nt>=3,`<b>${pr.nt}</b> timed test${pr.nt===1?"":"s"}${pr.nt<3?" (3+ is best)":""}`)}${chk(pr.nf>=1,`<b>${pr.nf}</b> full practice test${pr.nf===1?"":"s"}`)}</ul>
+        <p class="muted mini">Built from how hard each question you answered was, your recent work (counted more), your timing, and your full tests. Treat it as an estimate, not a promise.</p></section>
+      <section class="panel"><h3>${pj?`On test day <span class="muted mini">in ${pj.cd} day${pj.cd===1?"":"s"}</span>`:"Your trend"}</h3>
+        ${pj?`<div class="proj"><div><span class="muted mini">SAT</span><b>${pj.sat}</b><small class="${pj.gain?"up":""}">${pj.gain?`+${pj.gain}`:"same"}</small></div><div><span class="muted mini">ACT</span><b>${pj.act}</b><small class="${pj.act>pr.act.comp?"up":""}">${pj.act>pr.act.comp?`+${pj.act-pr.act.comp}`:"same"}</small></div></div>
+          <p class="muted mini">${pj.wk?`If you keep practicing about <b>${pj.wk} questions a week</b>, like the last two weeks.`:`Practice regularly over the next ${pj.cd} days to see your projected gain here.`}</p>`
+          :`<p class="muted mini"><a href="#" onclick="go('settings');return false">Add your test date</a> to see a test-day projection.</p>`}
+        ${spark()||`<p class="muted mini">Come back on different days to see your predicted SAT score over time.</p>`}</section>
+    </div>
+    <section class="panel"><div class="ph"><h3>Fastest ways to raise your score</h3><span class="muted mini">Based on how much each topic counts</span></div>
+      ${gs.length?`<div class="gains">${gs.map(x=>`<div class="gain"><div><b>${TOPICS[x.t].n}</b><span class="muted mini">${x.a.n?`${Math.round(x.a.p*100)}% now`:"Not started yet"} · about ${Math.round(x.w*100)}% of its SAT section</span></div><span class="plus">+${Math.max(10,r10(x.g))}<small>SAT pts</small></span><button class="btn sm" onclick="startPractice('topic','${x.t}')">Practice</button></div>`).join("")}</div>`
+        :`<p class="muted">You’re strong everywhere. Keep taking full tests to keep your timing sharp.</p>`}
+      <p class="muted mini" style="margin-top:10px">Points are what you could gain by raising that topic to about 90% accuracy.</p></section>`;
+  }
+  const share=Math.round(rc.share*100), vs=rc.v[0], tr=rc.R.filter(r=>r.side!=="=");
+  const best=tr.filter(r=>r.side===vs).slice(0,2).map(r=>r.t.charAt(0).toLowerCase()+r.t.slice(1));
+  const answered=FITQ.filter(q=>(S.fit||{})[q[0]]).length;
+  const bottom= !tr.length? `Answer the quick questions below and keep practicing. As soon as Prep Lab has enough to go on, it will explain which test suits you, ${nm}, and why.`
+    : vs==="="? `${nm}, the two tests look about equally good for you right now. Take one full practice test here and one free official ACT practice test (from ACT.org), then go with the one that felt better.`
+    : `${nm}, the <b>${vs}</b> looks like the better match for you${best.length?`, mostly because ${best.length===2?`${best[0]} and ${best[1]}`:best[0]}`:""}.${pr.conf<40||locked?" Your data is still thin, so treat this as a first read. It will sharpen as you practice.":""}`;
+  const rItem=r=>`<div class="reason"><span class="side ${r.side==="SAT"?"sat":r.side==="ACT"?"act":"neu"}">${r.side==="="?"Even":r.side}</span><div><b>${r.t}</b><p>${r.b}</p></div></div>`;
+  app.innerHTML=top+`
+  <h2 class="h-big">SAT or ACT?</h2>
+  <section class="panel verdict v${vs==="SAT"?"s":vs==="ACT"?"a":"n"}"><div class="vtitle">${ic("target",22)}<h3>${rc.v[1]}</h3></div>
+    <p>${bottom}</p>
+    <div class="fit"><span>SAT ${share}%</span><div class="fitbar"><i style="width:${share}%"></i></div><span>${100-share}% ACT</span></div></section>
+  <div class="grid2 rgrid">
+    <section class="panel"><h3>Why, for you</h3>${rc.R.length?rc.R.slice(0,6).map(rItem).join("")+(rc.R.length>6?`<details class="more"><summary>${rc.R.length-6} more reason${rc.R.length-6===1?"":"s"}</summary>${rc.R.slice(6).map(rItem).join("")}</details>`:""):`<p class="muted">No reasons yet. Answer the questions on the right, or practice a bit more.</p>`}</section>
+    <section class="panel"><div class="ph"><h3>Quick questions about you</h3><span class="muted mini">${answered}/${FITQ.length}</span></div>
+      ${FITQ.map(([k,q,opts])=>`<div class="fq"><b>${q}</b><div class="seg">${opts.map(([v,l])=>`<button class="${(S.fit||{})[k]===v?"on":""}" onclick="setFit('${k}','${v}')">${l}</button>`).join("")}</div></div>`).join("")}</section>
+  </div>
+  <section class="panel"><h3>The two tests side by side</h3><div class="tblwrap"><table class="facts">
+    <tr><th></th><th>SAT</th><th>ACT</th></tr>
+    <tr><td>Total time</td><td>2 h 14 min</td><td>2 h 5 min (2 h 45 min with Science)</td></tr>
+    <tr><td>Sections</td><td>Reading &amp; Writing, Math</td><td>English, Math, Reading, optional Science</td></tr>
+    <tr><td>Time per question</td><td>71 s (R&amp;W) · 95 s (Math)</td><td>42 s (English) · 67 s (Math) · 67 s (Reading)</td></tr>
+    <tr><td>Reading</td><td>One short passage per question</td><td>4 long passages, about 9 questions each</td></tr>
+    <tr><td>Math</td><td>Mostly algebra; Desmos calculator built in</td><td>More geometry and trig; your own calculator</td></tr>
+    <tr><td>Formulas</td><td>Reference sheet given</td><td>None given</td></tr>
+    <tr><td>Format</td><td>Digital, adaptive by module</td><td>Online or paper, same questions for everyone</td></tr>
+    <tr><td>Score</td><td>400–1600</td><td>1–36 (average of English, Math, Reading)</td></tr>
+  </table></div><p class="muted mini" style="margin-top:10px">Colleges treat both tests equally. Check each college’s own testing policy before you register.</p></section>`;
+}
+
+/* =====================================================================
+   FULL PRACTICE TEST  (4 modules, Module 2 of each section is harder)
+   ===================================================================== */
+const FT_LEN={full:{E:27,M:22,l:"Full length"},half:{E:14,M:11,l:"Half length"},quick:{E:7,M:6,l:"Quick"}};
+const FT_PER={E:1920/27,M:2100/22};
+const RW_DOM=[["wic","read"],["read","evid"],["punc","sva","pron","mod","para","tense"],["trans","synth","conc"]], RW_SH=[.28,.26,.26,.2];
+const M_DOM=[["lin","sys"],["quad","func","expo","poly"],["pct","stat","prob","word"],["geo","trig"]], M_SH=[.35,.35,.15,.15];
+let ftCfg={len:"full",adapt:false}, FT=null, ftTimer=null;
+function secName(s){ return s==="E"?"Reading and Writing":"Math"; }
+function lvName(l){ return l==="hard"?"Harder":l==="easy"?"Easier":"Standard"; }
+function ftSecs(s,n){ return Math.round(n*FT_PER[s]*(Number(S.settings.timeMult)||1)); }
+const TDC={};
+function topicDiff(t){ if(TDC[t]) return TDC[t]; const ds=BANK.filter(q=>q.t===t).slice(0,20).map(q=>qDiff(Object.assign({},q))), g=GEN[t]||[];
+  for(let i=0;i<20&&g.length;i++){ try{ ds.push(qDiff(pick(g)())); }catch(e){} } return TDC[t]=ds.length?median(ds):TBASE[t]; }
+function tmplKey(q){ return (plain(q.p)+"|"+plain(q.q)).replace(/\d[\d,.]*/g,"#").slice(0,42); }
+function ftTopics(s,n,level){
+  const doms=s==="E"?RW_DOM:M_DOM, sh=s==="E"?RW_SH:M_SH, cnt=sh.map(x=>Math.floor(x*n));
+  let rem=n-cnt.reduce((a,b)=>a+b,0); for(let i=0;rem>0;i=(i+1)%4,rem--) cnt[i]++;
+  const out=[]; doms.forEach((d,i)=>{ for(let k=0;k<cnt[i];k++) out.push(wpick(d,d.map(t=>level==="hard"?Math.pow(topicDiff(t),s==="M"?6:4):level==="easy"?Math.pow(1.1-topicDiff(t),3):1))); });
+  return out;
+}
+function ftDraw(t,seen,level){
+  const all=BANK.filter(q=>q.t===t), hs=new Set(S.seenQ||[]), fresh=all.filter(q=>!seen.has(q.id)&&!hs.has(q.id)), gens=GEN[t]||[], recent=new Set(S.recentSig||[]);
+  const want=level==="std"?1:7, cands=[];
+  for(let i=0;i<24&&cands.length<want;i++){
+    const late=i>=18;
+    if(fresh.length&&(!gens.length||Math.random()<.4)){ const q=pick(fresh); if(!cands.includes(q)&&(late||!FT.stems.has(tmplKey(q)))) cands.push(q); }
+    else if(gens.length){ let c=null; try{ c=pick(gens)(); }catch(e){ c=null; } if(c&&!recent.has(qsig(c))&&!seen.has(qsig(c))&&(late||!FT.stems.has(tmplKey(c)))) cands.push(c); }
+  }
+  if(!cands.length){ const pool=all.filter(b=>!seen.has(b.id)), src=pool.length?pool:all, h=S.seenQ||[]; cands.push(src.slice().sort((a,b)=>h.indexOf(a.id)-h.indexOf(b.id))[0]); }
+  cands.sort((a,b)=>qDiff(a)-qDiff(b));
+  const q= level==="hard"?cands[cands.length-1] : level==="easy"?cands[0] : cands[0];
+  rememberQ(q); seen.add(q.gen?qsig(q):q.id); FT.stems.add(tmplKey(q));
+  const p=prep(q); p._d=qDiff(q); return p;
+}
+function ftBuild(m){
+  const seen=FT.seen; m.qs=ftTopics(m.s,m.n,m.level).map(t=>ftDraw(t,seen,m.level));
+  if(m.s==="M") m.qs.sort((a,b)=>a._d-b._d);
+  m.ans=m.qs.map(()=>null); m.flag=m.qs.map(()=>false); m.idx=0;
+}
+function ftStop(){ if(ftTimer){ clearInterval(ftTimer); ftTimer=null; } }
+function ftNew(){
+  const L=FT_LEN[ftCfg.len];
+  FT={len:ftCfg.len,adapt:ftCfg.adapt,cur:0,phase:"intro",seen:new Set(),stems:new Set(),
+    mods:[["E",1],["E",2],["M",1],["M",2]].map(([s,no])=>({s,no,n:L[s],level:no===1?"std":ftCfg.adapt?null:"hard",secs:ftSecs(s,L[s])}))};
+  ftStop(); render(); window.scrollTo(0,0);
+}
+function ftStartModule(){
+  const m=FT.mods[FT.cur];
+  if(!m.level){ const p=FT.mods[FT.cur-1]; m.level= p.c/p.n>=.6?"hard":"easy"; }
+  if(!m.qs) ftBuild(m);
+  m.start=Date.now(); m.end=m.start+m.secs*1000; FT.phase="q";
+  ftStop(); ftTimer=setInterval(ftTick,500); render(); window.scrollTo(0,0);
+}
+function ftTick(){
+  if(!FT){ ftStop(); return; }
+  const el=$("ftv");
+  if(FT.phase==="q"){ const m=FT.mods[FT.cur], left=(m.end-Date.now())/1000;
+    if(el&&S.settings.showTimer){ el.textContent=fmtTime(left); const t=$("fttimer"); if(t) t.classList.toggle("low",left<60); }
+    if(left<=0) ftSubmit(true); }
+  else if(FT.phase==="break"){ const left=(FT.breakEnd-Date.now())/1000; if(el) el.textContent=fmtTime(left); if(left<=0){ ftStop(); render(); } }
+  else ftStop();
+}
+function ftAns(i){ if(!FT||FT.phase!=="q") return; const m=FT.mods[FT.cur]; m.ans[m.idx]=i; render(); }
+function ftGo(i){ if(!FT||FT.phase!=="q") return; const m=FT.mods[FT.cur]; m.idx=clamp(i,0,m.qs.length-1); render(); }
+function ftFlag(){ if(!FT||FT.phase!=="q") return; const m=FT.mods[FT.cur]; m.flag[m.idx]=!m.flag[m.idx]; render(); }
+function ftSubmit(auto){
+  if(!FT||FT.phase!=="q") return; const m=FT.mods[FT.cur];
+  if(!auto){ const un=m.ans.filter(a=>a===null).length; if(un&&!confirm(`You have ${un} unanswered question${un>1?"s":""} in this module. You can’t come back to it after you submit. Submit anyway?`)) return; }
+  ftStop(); m.used=Math.min(m.secs,Math.round((Date.now()-m.start)/1000)); m.c=m.qs.filter((q,i)=>m.ans[i]===q.a).length; m.done=true;
+  const before=S.days[today()]||0;
+  RCTX={secs:m.used/m.qs.length,src:2}; m.qs.forEach((q,i)=>rec(q,m.ans[i]===q.a,false,true)); RCTX={secs:0,src:0};
+  FT.cur++;
+  if(FT.cur>=4) ftFinish();
+  else if(FT.cur===2){ FT.phase="break"; FT.breakEnd=Date.now()+600000; ftTimer=setInterval(ftTick,500); }
+  else FT.phase="intro";
+  save();
+  if(auto) toast("Time’s up! The module was submitted.");
+  if(before<goal()&&(S.days[today()]||0)>=goal()) goalReached(); else syncReminder(true);
+  renderNav(); render(); window.scrollTo(0,0);
+}
+function ftSecScore(s){
+  const ms=FT.mods.filter(m=>m.s===s), items=[];
+  ms.forEach(m=>m.qs.forEach((q,i)=>items.push([bOf(q._d!=null?q._d:qDiff(q)),m.ans[i]===q.a?1:0,1])));
+  let sc=r10(satSecRaw(estTheta(items).th)); if(ms[1].level==="easy") sc=Math.min(sc,640); return sc;
+}
+function ftFinish(){
+  FT.phase="done"; FT.rw=ftSecScore("E"); FT.m=ftSecScore("M"); FT.total=FT.rw+FT.m;
+  const f=S.full||(S.full=[]);
+  f.push({d:today(),len:FT.len,adapt:FT.adapt,rw:FT.rw,m:FT.m,total:FT.total,mods:FT.mods.map(m=>({s:m.s,no:m.no,lv:m.level,n:m.qs.length,c:m.c,ans:m.ans.filter(a=>a!==null).length,used:m.used,secs:m.secs}))});
+  if(f.length>30) f.shift();
+}
+function ftModCard(s,no,level,n,cur,done){
+  return `<div class="modc ${s==="M"?"m":""} ${cur?"cur":""} ${done?"done":""}"><span class="muted mini">${secName(s)}</span><b>Module ${no}</b>
+    <span class="chip ${level==="hard"?"hard":level==="easy"?"easy":""}">${level?lvName(level):"Harder or easier"}</span><span class="muted mini">${n} questions · ${fmtTime(ftSecs(s,n))}</span></div>`;
+}
+function rFull(){
+  if(!FT){
+    const L=FT_LEN[ftCfg.len], tot=2*ftSecs("E",L.E)+2*ftSecs("M",L.M), past=(S.full||[]).slice(-6).reverse(), mt=Number(S.settings.timeMult)||1;
+    const lv2=ftCfg.adapt?null:"hard";
+    app.innerHTML=`<section class="panel"><h3>Full SAT-style practice test</h3>
+      <p class="muted" style="margin-top:-4px">Four timed modules, just like the digital SAT: two Reading and Writing modules, a 10-minute break, then two Math modules. <b>Module 2 of each section is harder than Module 1</b>, with tougher topics and longer, trickier questions. You can move around inside a module, but once you submit it you can’t go back.</p>
+      <div class="mods">${ftModCard("E",1,"std",L.E)}${ftModCard("E",2,lv2,L.E)}${ftModCard("M",1,"std",L.M)}${ftModCard("M",2,lv2,L.M)}</div>
+      <div class="h-sec">Length</div>
+      <div class="opts three">${Object.keys(FT_LEN).map(k=>{ const x=FT_LEN[k]; return `<button class="opt ${ftCfg.len===k?"on":""}" onclick="ftCfg.len='${k}';rFull()"><b>${x.l}</b><span>${2*(x.E+x.M)} questions · ${fmtTime(2*ftSecs("E",x.E)+2*ftSecs("M",x.M))}</span></button>`; }).join("")}</div>
+      <div class="h-sec">Module 2 difficulty</div>
+      <div class="seg"><button class="${!ftCfg.adapt?"on":""}" onclick="ftCfg.adapt=false;rFull()">Always harder</button><button class="${ftCfg.adapt?"on":""}" onclick="ftCfg.adapt=true;rFull()">Adaptive, like the real SAT</button></div>
+      <p class="muted mini" style="margin-top:8px">${ftCfg.adapt?"Score 60% or better on Module 1 and Module 2 gets harder. Score lower and it gets easier, but then your section score tops out around 640, just like the real SAT.":"Module 2 is always the harder module, so you always practice the path to a top score."}</p>
+      <div class="row between" style="margin-top:22px"><span class="mini">Total time <b>${fmtTime(tot)}</b> plus a 10-minute break${mt!==1?` · includes ${mt}× extra time`:""}</span>
+        <button class="btn pri lg" onclick="ftNew()">Begin test ${ic("arrow",18)}</button></div></section>
+    <section class="panel"><h3>Past full tests</h3>${past.length?past.map(f=>`<div class="hist"><span><b>${f.total}</b> <span class="muted">· R&amp;W ${f.rw} · Math ${f.m} · ${FT_LEN[f.len]?FT_LEN[f.len].l:""} · ${f.d.slice(5)}</span></span><span style="width:110px"><div class="bar thin"><i style="width:${Math.round((f.total-400)/12)}%"></i></div></span></div>`).join("")
+      :`<p class="muted mini">No full tests yet. Your scores will appear here and in the Score Predictor.</p>`}</section>`;
+    return;
+  }
+  const steps=`<div class="steps">${FT.mods.map((m,i)=>`<span class="${i<FT.cur?"done":i===FT.cur&&FT.phase!=="done"?"cur":""}">${m.s==="E"?"R&amp;W":"Math"} ${m.no}</span>`).join("")}</div>`;
+  if(FT.phase==="intro"){
+    const m=FT.mods[FT.cur], lv=m.level||(()=>{ const p=FT.mods[FT.cur-1]; return p.c/p.n>=.6?"hard":"easy"; })(), p=FT.mods[FT.cur-1];
+    const why= m.no===1? (m.s==="M"?"Welcome back. Math starts with a standard module. You can use a calculator for every question.":"This first module has a mix of easier and harder questions, like the real test.")
+      : lv==="hard"? (FT.adapt?`You got <b>${p.c} of ${p.n}</b> on Module 1, so you’ve been routed to the <b>harder</b> Module 2. That’s the path to a top score.`:`This module is <b>harder</b> than Module 1: tougher topics and longer, trickier questions. Take a breath and pace yourself.`)
+      : `You got <b>${p.c} of ${p.n}</b> on Module 1, so you’ve been routed to the <b>easier</b> Module 2. Your top score for this section is about 640.`;
+    app.innerHTML=`<div class="qwrap">${steps}<section class="panel ftintro"><span class="chip ${lv==="hard"?"hard":lv==="easy"?"easy":""}">${lvName(lv)}</span>
+      <h2>${secName(m.s)} · Module ${m.no}</h2><p class="muted">${m.n} questions · ${fmtTime(m.secs)}</p><p>${why}</p>
+      <div class="row" style="justify-content:center;margin-top:18px"><button class="btn pri lg" onclick="ftStartModule()">Start module ${ic("arrow",18)}</button></div>
+      <p class="muted mini" style="margin-top:14px">The timer starts when you click. Opening another page in Prep Lab (like Practice or Home) ends the test.</p></section></div>`;
+    return;
+  }
+  if(FT.phase==="break"){
+    const left=(FT.breakEnd-Date.now())/1000;
+    app.innerHTML=`<div class="qwrap">${steps}<section class="panel ftintro"><span class="chip easy">Break</span><h2>Reading and Writing is done</h2>
+      <div class="timer big" id="fttimer">${ic("test",26)}<span id="ftv">${fmtTime(left)}</span></div>
+      <p class="muted">${left>0?"Take a 10-minute break, like on test day. Stand up, stretch, and drink some water.":"Break’s over. Start Math when you’re ready."}</p>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn pri lg" onclick="ftStop();FT.phase='intro';render()">${left>0?"Skip the break":"Continue to Math"} ${ic("arrow",18)}</button></div></section></div>`;
+    return;
+  }
+  if(FT.phase==="q"){
+    const m=FT.mods[FT.cur], q=m.qs[m.idx], left=(m.end-Date.now())/1000, done=m.ans.filter(a=>a!==null).length, n=m.qs.length, st=S.settings;
+    app.innerHTML=`<div class="qwrap">
+      <div class="testbar"><div class="tb-l"><b class="nw">${m.s==="E"?"R&amp;W":"Math"} · Module ${m.no}</b> <span class="chip sm ${m.level==="hard"?"hard":m.level==="easy"?"easy":""}">${lvName(m.level)}</span> <span class="muted">Q ${m.idx+1} of ${n}</span><div class="bar thin"><i style="width:${Math.round(100*done/n)}%"></i></div></div>
+        <div id="fttimer" class="timer ${st.showTimer&&left<60?"low":""}">${ic("test",20)}<span id="ftv">${st.showTimer?fmtTime(left):`<span class="muted mini">hidden</span>`}</span></div>
+        <button class="btn pri sm" onclick="ftSubmit()">Submit<span class="hsm"> module</span></button></div>
+      <div class="qnav">${m.qs.map((x,i)=>`<button class="${m.ans[i]!==null?"ans":""} ${i===m.idx?"cur":""} ${m.flag[i]?"fl":""}" onclick="ftGo(${i})" aria-label="Question ${i+1}${m.flag[i]?", flagged":""}">${i+1}</button>`).join("")}</div>
+      <article class="qcard"><div class="tags">${secTag(q)}<button class="btn ghost sm flagbtn ${m.flag[m.idx]?"on":""}" style="margin-left:auto" onclick="ftFlag()">${ic("flag",14)} ${m.flag[m.idx]?"Flagged":"Flag for review"}</button></div>
+      ${qBody(q)}${choicesHTML(q,m.ans[m.idx],false,"ftAns")}
+      <div class="actions"><button class="btn" onclick="ftGo(${m.idx-1})" ${m.idx===0?"disabled":""}>${ic("back",16)} Previous</button>
+      ${st.hints?`<span class="hint"><kbd>←</kbd> <kbd>→</kbd> move · <kbd>F</kbd> flag</span>`:""}
+      ${m.idx<n-1?`<button class="btn pri" onclick="ftGo(${m.idx+1})">Next ${ic("arrow",16)}</button>`:`<button class="btn pri" onclick="ftSubmit()">Submit module</button>`}</div></article></div>`;
+    return;
+  }
+  // results
+  const mods=FT.mods, pct=Math.round((FT.total-400)/12), miss={};
+  mods.forEach(m=>m.qs.forEach((q,i)=>{ if(m.ans[i]!==q.a) miss[q.t]=(miss[q.t]||0)+1; }));
+  const weak=Object.keys(miss).sort((a,b)=>miss[b]-miss[a]).slice(0,3);
+  const avgD=m=>Math.round(m.qs.reduce((s,q)=>s+q._d,0)/m.qs.length*100);
+  app.innerHTML=`<section class="panel"><div class="resgrid">
+      ${ring(pct/100,150,13,FT.total,"SAT-style score",FT.total>=1300?"var(--good)":FT.total>=1000?"var(--accent)":"var(--warn)")}
+      <div style="flex:1;min-width:230px"><h2 style="font-size:1.5rem">${FT.total>=1400?"Outstanding work!":FT.total>=1200?"Strong test!":FT.total>=1000?"Solid. Keep building.":"A great baseline to grow from."}</h2>
+        <div class="row" style="gap:28px;margin-top:12px"><div class="stat"><b>${FT.rw}</b><span>Reading &amp; Writing</span></div><div class="stat"><b>${FT.m}</b><span>Math</span></div></div>
+        <div class="row" style="margin-top:18px"><button class="btn pri" onclick="FT=null;go('predict')">${ic("predict",16)} See my score predictor</button><button class="btn" onclick="FT=null;rFull()">New full test</button>${S.missed.length?`<button class="btn" onclick="FT=null;go('review')">Review missed (${S.missed.length})</button>`:""}</div></div>
+    </div></section>
+  <section class="panel"><h3>Module by module</h3><div class="tblwrap"><table class="facts mt">
+    <tr><th>Module</th><th>Difficulty</th><th>Correct</th><th>Time used</th></tr>
+    ${mods.map(m=>`<tr><td>${m.s==="E"?"R&amp;W":"Math"} ${m.no}</td><td><span class="chip sm ${m.level==="hard"?"hard":m.level==="easy"?"easy":""}">${lvName(m.level)}</span> <span class="muted mini">level ${avgD(m)}</span></td><td><b>${m.c}/${m.qs.length}</b> <span class="muted mini">${Math.round(100*m.c/m.qs.length)}%</span></td><td>${fmtTime(m.used)} <span class="muted mini">of ${fmtTime(m.secs)}</span></td></tr>`).join("")}
+  </table></div>${weak.length?`<div class="muted mini" style="margin:14px 0 4px">Most missed</div>${weak.map(k=>`<div class="wk"><span><b>${TOPICS[k].n}</b> <span class="muted">· ${miss[k]} missed</span></span><button class="btn sm" onclick="FT=null;startPractice('topic','${k}')">Practice</button></div>`).join("")}`:""}
+    <p class="muted mini" style="margin-top:12px">Scored like the real SAT: right answers on harder questions count for more. This is an estimate, not an official score.</p></section>
+  ${mods.map(m=>`<section class="panel"><h3>${secName(m.s)} · Module ${m.no} <span class="muted mini">${lvName(m.level)}</span></h3>
+    ${m.qs.map((q,i)=>{ const a=m.ans[i], ok=a===q.a; return `<details class="rv"><summary><span class="dot ${a===null?"skip":ok?"":"no"}"></span>${i+1}. ${TOPICS[q.t].n} <span class="muted mini">· ${a===null?"skipped":ok?"correct":"incorrect"}${m.flag[i]?" · flagged":""}</span></summary>
+      <div class="body">${qBody(q)}${choicesHTML(q,a,true,"void")}<div class="fb">${q.e}</div></div></details>`; }).join("")}</section>`).join("")}`;
+}
+
+/* =====================================================================
+   DESMOS  (the College Board version of Desmos, embedded, plus Desmos-first practice)
+   ===================================================================== */
+const DESMOS_URL="https://www.desmos.com/testing/collegeboard/graphing";
+const CALC={open:false,made:false,full:false,closedByUser:false};
+function dzc(s){ return `<code class="dzc">${esc(s)}</code>`; }
+function dzSteps(a){ return `<ol class="dzsteps">${a.map(x=>`<li>${x}</li>`).join("")}</ol>`; }
+function aLin(a,b,c){ const t=(k,v,first)=>(k<0?"-":first?"":"+")+(Math.abs(k)===1?"":Math.abs(k))+v; let s=""; if(a) s+=t(a,"x",true); if(b) s+=t(b,"y",!s); return s+"="+c; }
+function aPoly(cs,v){ return poly(cs,v).replace(/²/g,"^2").replace(/³/g,"^3").split(MN).join("-").replace(/\s+/g,""); }
+function dec(v){ return String(+(+v).toFixed(3)).replace("-",MN); }
+const CLICK="Click the curve to show its gray points, then click a point to see its coordinates.";
+const DZG=[];
+function dzReg(grp,f){ DZG.push({grp,f}); }
+function dzFin(q,steps){ q.dz=steps; q.dzq=true; q.e+=`<div class="dzway"><b>With Desmos:</b>${steps}</div>`; return q; }
+const DZ_GROUPS=[["all","All"],["sys","Systems"],["quad","Quadratics"],["eq","Equations"],["fg","Functions &amp; circles"],["data","Data &amp; inequalities"]];
+
+/* systems: read the intersection */
+dzReg("sys",()=>{
+  const x=nz(-9,9), y=nz(-9,9); let a1,b1,a2,b2;
+  do{ a1=nz(-7,9); b1=nz(-7,9); a2=nz(-7,9); b2=nz(-7,9); }while(Math.abs(a1*b2-a2*b1)<5);
+  const c1=a1*x+b1*y, c2=a2*x+b2*y, ask=pick(["x","y"]), ans=ask==="x"?x:y;
+  const steps=dzSteps([`Type the first equation exactly as written: ${dzc(aLin(a1,b1,c1))}`,`Type the second one on a new line: ${dzc(aLin(a2,b2,c2))}`,
+    `Click where the two lines cross. Desmos shows the point (${fmt(x)}, ${fmt(y)}).`,`The ${ask}-coordinate is <b>${fmt(ans)}</b>.`]);
+  return dzFin(mk("sys",`What is the value of ${ask} in the solution (x, y) to the system of equations above?`,fmt(ans),[fmt(ask==="x"?y:x),fmt(-ans),fmt(x+y)],
+    `<b>By hand:</b> eliminate one variable (multiply so one variable cancels, then add). The solution is x = ${fmt(x)}, y = ${fmt(y)}.`,
+    `<div class="eqs">${lin2(a1,b1,c1)}<br>${lin2(a2,b2,c2)}</div>`),steps);
+});
+/* systems: slider for "no solution" */
+dzReg("sys",()=>{
+  const a1=ri(2,6), t=pick([2,3,4]), k=nz(-6,9), c1=nz(-9,12); let c2; do{ c2=nz(-20,30); }while(c2===c1*t);
+  const steps=dzSteps([`Type the first equation with the letter k: ${dzc(`${a1}x+ky=${c1}`)}. Desmos asks “add slider: k”. Click <b>k</b> to add it.`,
+    `Type the second equation: ${dzc(aLin(a1*t,k*t,c2))}`,`Drag the k slider (or click its number and type values) until the two lines are parallel and never cross.`,
+    `That happens at k = <b>${fmt(k)}</b>.`]);
+  return dzFin(mk("sys",`In the system of equations above, k is a constant. For what value of k does the system have no solution?`,fmt(k),[fmt(k*t),fmt(-k),fmt(k+t)],
+    `<b>By hand:</b> no solution means the lines are parallel: the x and y coefficients are in the same ratio. ${a1*t} ÷ ${a1} = ${t}, so k × ${t} must equal ${fmt(k*t)}, giving k = ${fmt(k)}. (The constants ${fmt(c1)} × ${t} ≠ ${fmt(c2)}, so the lines are not the same line.)`,
+    `<div class="eqs">${a1}x + ky = ${fmt(c1)}<br>${lin2(a1*t,k*t,c2)}</div>`),steps);
+});
+/* quadratics: zeros */
+dzReg("quad",()=>{
+  const d=pick([2,3,4]); let n; do{ n=nz(-11,11); }while(n%d===0); const r1=nz(-7,7), r2=n/d;
+  const cs=[d,-(n+d*r1),n*r1], big=Math.max(r1,r2), small=Math.min(r1,r2), F=v=>v===r2?frac(n,d):fmt(v), ask=pick(["greater","lesser"]), ans=ask==="greater"?big:small, oth=ans===big?small:big;
+  const steps=dzSteps([`Type the left side as a graph: ${dzc("y="+aPoly(cs))}`,`${CLICK} The solutions are the x-intercepts (where y = 0).`,
+    `Desmos shows x = ${dec(small)} and x = ${dec(big)}.`,`The ${ask} solution is ${dec(ans)}${ans===r2?`, which is <b>${frac(n,d)}</b>. (Desmos shows decimals, so match ${dec(r2)} to ${frac(n,d)}.)`:`, so the answer is <b>${fmt(ans)}</b>.`}`]);
+  return dzFin(mk("quad",`What is the ${ask} solution to the equation above?`,F(ans),[F(oth),F(-ans),F(-oth)],
+    `<b>By hand:</b> factor: ${fac(r1)}(${d}x ${n<0?"+ "+(-n):MN+" "+n}) = 0, so x = ${fmt(r1)} or x = ${frac(n,d)}. The ${ask} one is ${F(ans)}.`,
+    `<div class="eqs">${poly(cs)} = 0</div>`),steps);
+});
+/* quadratics: vertex */
+dzReg("quad",()=>{
+  const a=-pick([1,2,3]), h=nz(-5,6), k=nz(-12,20), cs=[a,-2*a*h,a*h*h+k], ask=pick(["max","x"]);
+  const ans=ask==="max"?k:h;
+  const steps=dzSteps([`Type the function: ${dzc("f(x)="+aPoly(cs))}`,`${CLICK} The gray point at the very top is the vertex.`,
+    `Desmos shows the vertex at (${fmt(h)}, ${fmt(k)}).`,`${ask==="max"?`The maximum value is the y-coordinate: <b>${fmt(k)}</b>.`:`The maximum happens at x = <b>${fmt(h)}</b>.`}`]);
+  return dzFin(mk("quad",ask==="max"?`The function f is defined above. What is the maximum value of f(x)?`:`The function f is defined above. For what value of x does f(x) reach its maximum?`,fmt(ans),
+    ask==="max"?[fmt(h),fmt(cs[2]),fmt(-k)]:[fmt(k),fmt(-h),fmt(2*h)],
+    `<b>By hand:</b> the vertex is at x = −b/(2a) = ${fmt(-cs[1])}/${paren(2*a)} = ${fmt(h)}, and f(${fmt(h)}) = ${fmt(k)}. Because a is negative, the parabola opens down, so this is the maximum.`,
+    `<div class="eqs">f(x) = ${poly(cs)}</div>`),steps);
+});
+/* quadratics: how many intersections */
+dzReg("quad",()=>{
+  let b,m; do{ b=nz(-6,6); m=nz(-4,4); }while((b-m)%2!==0);
+  const c=ri(-6,8), want=pick([0,1,2]), base=c-((b-m)**2)/4, kk= want===1?base : want===2? base+ri(1,8) : base-ri(1,8);
+  const D=(b-m)**2-4*(c-kk);
+  const steps=dzSteps([`Type ${dzc("y="+aPoly([1,b,c]))}`,`Type ${dzc("y="+aPoly([m,kk]))}`,
+    `Count the points where the line meets the parabola. Zoom out (pinch, or press the − button) to be sure none are off screen.`,
+    `There ${want===1?"is":"are"} <b>${want}</b> crossing point${want===1?"":"s"}${want===1?" (the line just touches the parabola)":""}.`]);
+  return dzFin(mk("quad",`How many solutions does the system of equations above have?`,String(want),["0","1","2","Infinitely many"].filter(s=>s!==String(want)),
+    `<b>By hand:</b> set them equal: x² ${b-m<0?MN:"+"} ${Math.abs(b-m)}x ${c-kk<0?MN:"+"} ${Math.abs(c-kk)} = 0. The discriminant is ${fmt(D)}, which is ${D>0?"positive, so there are 2 solutions":D===0?"zero, so there is 1 solution":"negative, so there are no real solutions"}.`,
+    `<div class="eqs">y = ${poly([1,b,c])}<br>y = ${poly([m,kk])}</div>`),steps);
+});
+/* equations: count solutions of a cubic */
+dzReg("eq",()=>{
+  const A=pick([3,12,27]), s=Math.sqrt(A/3), M=2*A/3*s, want=pick([1,2,3]);
+  const kv= want===3? ri(-(M-1),M-1) : want===2? pick([M,-M]) : (M+ri(1,10))*pick([1,-1]);
+  const steps=dzSteps([`Graph the left side: ${dzc("y="+aPoly([1,0,-A,0]))}`,`Graph the right side: ${dzc("y="+kv)}`,
+    `${Math.abs(kv)>8?"The line is high up, so zoom out or use the wrench (Graph Settings) to raise the y-range. ":""}Count where the two graphs meet.`,
+    `They meet <b>${want}</b> time${want===1?"":"s"}, so there ${want===1?"is":"are"} ${want} real solution${want===1?"":"s"}.`]);
+  return dzFin(mk("poly",`How many distinct real solutions does the equation above have?`,String(want),["0","1","2","3"].filter(x=>x!==String(want)),
+    `<b>By hand (hard!):</b> y = x³ − ${A}x has a peak of ${fmt(M)} at x = ${fmt(-s)} and a valley of ${fmt(-M)} at x = ${fmt(s)}. A horizontal line y = k crosses it 3 times if ${fmt(-M)} < k < ${fmt(M)}, 2 times if k = ±${fmt(M)}, and once otherwise. Here k = ${fmt(kv)}. Desmos makes this much faster.`,
+    `<div class="eqs">${poly([1,0,-A,0])} = ${fmt(kv)}</div>`),steps);
+});
+/* equations: exponential */
+dzReg("eq",()=>{
+  const c=pick([2,3,4,5]), b=pick([2,3]), n=ri(2,b===2?6:4), d=ri(0,3), val=c*b**n, ans=n+d;
+  const ex=d?`x − ${d}`:"x", aex=d?`(x-${d})`:"x";
+  const steps=dzSteps([`Graph the left side (use ^ for the exponent and parentheses around it): ${dzc(`y=${c}*${b}^${aex}`)}`,`Graph the right side: ${dzc(`y=${val}`)}`,
+    `${val>10?"The line is above the default view, so zoom out or set the y-range with the wrench. ":""}Click the intersection.`,`Desmos shows (${ans}, ${val}), so x = <b>${ans}</b>.`]);
+  return dzFin(mk("expo",`What value of x satisfies the equation above?`,String(ans),[String(n),String(ans+1),String(Math.max(0,ans-2))],
+    `<b>By hand:</b> divide both sides by ${c}: ${b}<sup>${ex}</sup> = ${val/c} = ${b}<sup>${n}</sup>. So ${ex} = ${n}${d?` and x = ${ans}`:""}.`,
+    `<div class="eqs">${c}(${b})<sup>${ex}</sup> = ${val}</div>`),steps);
+});
+/* data: table + regression */
+dzReg("data",()=>{
+  const m=nz(-4,5), b0=ri(-10,10), st=pick([1,2,3]), x0=ri(-3,1), xs=[0,1,2,3].map(i=>x0+st*i), ys=xs.map(x=>m*x+b0), t=ri(15,30), ans=m*t+b0;
+  const steps=dzSteps([`Click <b>+</b> (top left) and choose <b>table</b>.`,`Enter the x-values in the x<sub>1</sub> column and the f(x) values in the y<sub>1</sub> column.`,
+    `On a new line type ${dzc("y_1~mx_1+b")} (the ~ key is next to 1; the _ makes a subscript). Desmos finds m = ${fmt(m)} and b = ${fmt(b0)}.`,
+    `Type ${dzc(`m*${t}+b`)} and Desmos shows <b>${fmt(ans)}</b>.`]);
+  const tbl=`<table class="dztab"><tr><th>x</th>${xs.map(x=>`<td>${fmt(x)}</td>`).join("")}</tr><tr><th>f(x)</th>${ys.map(y=>`<td>${fmt(y)}</td>`).join("")}</tr></table>`;
+  return dzFin(mk("lin",`The table shows four values of the linear function f. What is the value of f(${t})?`,fmt(ans),[fmt(m*t),fmt(m*t-b0),fmt((m+1)*t+b0)],
+    `<b>By hand:</b> slope = (${fmt(ys[1])} − ${paren(ys[0])}) ÷ ${st} = ${fmt(m)}. Then f(x) = ${poly([m,b0])}, so f(${t}) = ${fmt(m)}(${t}) ${b0<0?MN:"+"} ${Math.abs(b0)} = ${fmt(ans)}.`,tbl),steps);
+});
+/* data: mean / median of a list */
+dzReg("data",()=>{
+  const ctx=pick([["minutes 9 students spent on homework",9,10,60],["points scored in 8 basketball games",8,40,95],["daily high temperatures (°F) over 7 days",7,45,90],["pages read by 9 book-club members",9,20,80]]);
+  const L=Array.from({length:ctx[1]},()=>ri(ctx[2],ctx[3])), ask=pick(["mean","median"]);
+  if(ask==="mean"){ const r=L.reduce((a,b)=>a+b,0)%L.length; if(r) L[L.length-1]+=L.length-r; }
+  const sum=L.reduce((a,b)=>a+b,0), mean=sum/L.length, srt=L.slice().sort((a,b)=>a-b), mid=L.length>>1, med=L.length%2?srt[mid]:(srt[mid-1]+srt[mid])/2;
+  const ans=ask==="mean"?mean:med, other=ask==="mean"?med:mean;
+  const steps=dzSteps([`Type the list with square brackets: ${dzc(`L=[${L.join(",")}]`)}`,`On a new line type ${dzc(ask+"(L)")}`,`Desmos shows <b>${dec(ans)}</b>.`,`Other handy list commands: ${dzc("median(L)")}, ${dzc("mean(L)")}, ${dzc("stdev(L)")}, ${dzc("max(L)-min(L)")} (the range).`]);
+  const opts=[fmt(other),fmt(ans+1),fmt(srt[srt.length-1]-srt[0])].filter(s=>s!==fmt(ans));
+  return dzFin(mk("stat",`The list shows the ${ctx[0]}. What is the ${ask} of the data?`,fmt(ans),opts,
+    ask==="mean"?`<b>By hand:</b> add them (${sum}) and divide by ${L.length}: ${fmt(mean)}.`:`<b>By hand:</b> sort them (${srt.join(", ")}) and take the middle${L.length%2?" value":" two and average them"}: ${fmt(med)}.`,
+    `<div class="eqs">${L.join(", ")}</div>`),steps);
+});
+/* data: system of inequalities */
+dzReg("data",()=>{
+  for(let tries=0;tries<60;tries++){
+    const a1=nz(-3,3), b1=ri(-4,5); let a2; do{ a2=nz(-3,3); }while(a2===a1); const b2=ri(-6,2);
+    const good=[], bad=[];
+    for(let i=0;i<40;i++){ const x=ri(-6,6), y=ri(-8,8), u=a1*x+b1, l=a2*x+b2; if(y===u||y===l) continue;
+      if(y<u&&y>l) good.push([x,y]); else bad.push([x,y]); }
+    if(!good.length||bad.length<3) continue;
+    const P=p=>`(${fmt(p[0])}, ${fmt(p[1])})`, g=pick(good), bs=shuffle(bad).filter((p,i,a)=>a.findIndex(z=>z[0]===p[0]&&z[1]===p[1])===i).slice(0,3);
+    if(bs.length<3) continue;
+    const steps=dzSteps([`Type ${dzc("y<"+aPoly([a1,b1]))} and ${dzc("y>"+aPoly([a2,b2]))}. Desmos shades each one.`,`The darker area where both shadings overlap holds every solution.`,
+      `Type each answer choice as a point, for example ${dzc(`(${g[0]},${g[1]})`)}.`,`Only <b>${P(g)}</b> lands inside the overlap.`]);
+    return dzFin(mk("lin",`Which point (x, y) is a solution to the system of inequalities above?`,P(g),bs.map(P),
+      `<b>By hand:</b> test each point in both inequalities. For ${P(g)}: ${fmt(g[1])} < ${fmt(a1*g[0]+b1)} ✓ and ${fmt(g[1])} > ${fmt(a2*g[0]+b2)} ✓. Each other point breaks at least one inequality.`,
+      `<div class="eqs">y &lt; ${poly([a1,b1])}<br>y &gt; ${poly([a2,b2])}</div>`),steps);
+  }
+  return DZG[0].f();
+});
+/* functions: composition */
+dzReg("fg",()=>{
+  const a=nz(-3,4), b=ri(-9,9), c=nz(-4,5), d=ri(-8,8), n=nz(-4,5), ord=pick(["fg","gf"]);
+  const f=x=>a*x*x+b, g=x=>c*x+d, ans=ord==="fg"?f(g(n)):g(f(n)), alt=ord==="fg"?g(f(n)):f(g(n)), call=ord==="fg"?`f(g(${n}))`:`g(f(${n}))`;
+  const steps=dzSteps([`Type ${dzc("f(x)="+aPoly([a,0,b]))}`,`Type ${dzc("g(x)="+aPoly([c,d]))}`,`Type ${dzc(call)}`,`Desmos shows <b>${fmt(ans)}</b>.`]);
+  return dzFin(mk("func",`The functions f and g are defined above. What is the value of ${call.replace(/-/g,MN)}?`,fmt(ans),[fmt(alt),fmt(f(n)+g(n)),fmt(-ans)],
+    ord==="fg"?`<b>By hand:</b> g(${fmt(n)}) = ${fmt(g(n))}, then f(${fmt(g(n))}) = ${fmt(ans)}.`:`<b>By hand:</b> f(${fmt(n)}) = ${fmt(f(n))}, then g(${fmt(f(n))}) = ${fmt(ans)}.`,
+    `<div class="eqs">f(x) = ${poly([a,0,b])}<br>g(x) = ${poly([c,d])}</div>`),steps);
+});
+/* geometry: circle from expanded equation */
+dzReg("fg",()=>{
+  const h=nz(-6,6), k=nz(-6,6), r=ri(2,9), D=-2*h, E=-2*k, F=h*h+k*k-r*r, ask=pick(["radius","center"]);
+  const tm=(v,s)=>v?` ${v<0?MN:"+"} ${Math.abs(v)}${s}`:"", eq=`x² + y²${tm(D,"x")}${tm(E,"y")}${tm(F,"")} = 0`, aeq=eq.replace(/²/g,"^2").split(MN).join("-").replace(/\s+/g,"");
+  const steps=dzSteps([`Type the equation exactly as written: ${dzc(aeq)}. Desmos draws the circle.`,`Find the center on the grid: it is at (${fmt(h)}, ${fmt(k)}). Count from the center to the edge: ${r} units.`,
+    `Check: type ${dzc(`(x-${h})^2+(y-${k})^2=${r*r}`.replace(/--/g,"+"))}. It lands exactly on top of the first circle.`,
+    ask==="radius"?`The radius is <b>${r}</b>.`:`The x-coordinate of the center is <b>${fmt(h)}</b>.`]);
+  const ans=ask==="radius"?String(r):fmt(h);
+  return dzFin(mk("geo",ask==="radius"?`The equation above defines a circle in the xy-plane. What is the radius of the circle?`:`The equation above defines a circle in the xy-plane. What is the x-coordinate of the circle’s center?`,ans,
+    ask==="radius"?[String(r*r),fmt(Math.abs(F)),String(2*r)]:[fmt(-h),fmt(k),fmt(D)],
+    `<b>By hand:</b> complete the square: (x ${h<0?"+ "+(-h):MN+" "+h})² + (y ${k<0?"+ "+(-k):MN+" "+k})² = ${r*r}. The center is (${fmt(h)}, ${fmt(k)}) and the radius is √${r*r} = ${r}.`,
+    `<div class="eqs">${eq}</div>`),steps);
+});
+
+/* ---------- the calculator panel ---------- */
+function calcEnsure(){
+  if(CALC.made) return; CALC.made=true;
+  const d=document.createElement("div"); d.id="calc"; d.className="calc"; d.hidden=true; d.setAttribute("role","dialog"); d.setAttribute("aria-label","Desmos graphing calculator");
+  d.innerHTML=`<div class="calchd"><span class="ti math">${ic("desmos",16)}</span><div class="ct"><b>Desmos</b><small>College Board version, same as on test day</small></div>
+    <button class="iconbtn sm" onclick="calcReset()" title="Start a blank graph" aria-label="Start a blank graph">${ic("review",17)}</button>
+    <button class="iconbtn sm onlysm" onclick="calcFull()" title="Bigger" aria-label="Make the calculator bigger">${ic("expand",17)}</button>
+    <a class="iconbtn sm" href="${DESMOS_URL}" target="_blank" rel="noopener" title="Open in a new tab" aria-label="Open Desmos in a new tab">${ic("ext",17)}</a>
+    <button class="iconbtn sm" onclick="calcClose(true)" title="Close" aria-label="Close the calculator">${ic("x",17)}</button></div>
+    <div class="calcbody"><p class="calcmsg muted mini">Loading Desmos… it needs an internet connection. If it doesn’t appear, <a href="${DESMOS_URL}" target="_blank" rel="noopener">open it in a new tab</a>.</p><iframe id="calcframe" title="Desmos graphing calculator" src="${DESMOS_URL}" allow="clipboard-read; clipboard-write"></iframe></div>`;
+  document.body.appendChild(d);
+}
+function calcOpen(){ calcEnsure(); CALC.open=true; CALC.closedByUser=false; $("calc").hidden=false; document.body.classList.add("calc-on"); calcSync(); if(view==="desmos") rDesmos(); }
+function calcClose(user){ CALC.open=false; if(user) CALC.closedByUser=true; const c=$("calc"); if(c){ c.hidden=true; c.classList.remove("full"); } CALC.full=false; document.body.classList.remove("calc-on"); calcSync(); if(user&&view==="desmos") rDesmos(); }
+function calcReset(){ const f=$("calcframe"); if(f&&confirm("Clear the calculator and start a blank graph?")) f.src=DESMOS_URL; }
+function calcFull(){ CALC.full=!CALC.full; const c=$("calc"); if(c) c.classList.toggle("full",CALC.full); }
+function calcWanted(){
+  if(!UID) return false;
+  if(view==="desmos") return true;
+  if(view==="practice"&&sess&&sess.q) return sess.q.s==="M";
+  if(view==="review"&&sess&&sess.q) return sess.q.s==="M";
+  if(view==="test"&&T&&!T.done) return T.qs[T.idx].s==="M";
+  if(view==="full"&&FT&&FT.phase==="q") return FT.mods[FT.cur].s==="M";
+  return false;
+}
+function calcSync(){
+  let fab=$("calcfab");
+  if(!fab){ fab=document.createElement("button"); fab.id="calcfab"; fab.className="calcfab"; fab.hidden=true; fab.onclick=()=>calcOpen(); fab.innerHTML=`${ic("desmos",19)}<span>Desmos</span>`; fab.setAttribute("aria-label","Open the Desmos calculator"); document.body.appendChild(fab); }
+  const want=calcWanted();
+  if(!want&&CALC.open) calcClose(false);
+  fab.hidden=!want||CALC.open;
+}
+
+/* ---------- Desmos page ---------- */
+let DZ={mode:"practice",grp:"all",q:null,picked:null,answered:false,hint:false,shown:0};
+function dzNext(){
+  const pool=DZG.filter(g=>DZ.grp==="all"||g.grp===DZ.grp), recent=new Set(S.recentSig||[]); let q=null;
+  for(let i=0;i<12&&!q;i++){ let c=null; try{ c=pick(pool).f(); }catch(e){ c=null; } if(c&&(i>=10||!recent.has(qsig(c)))) q=c; }
+  if(!q) q=DZG[0].f();
+  rememberQ(q); DZ.q=prep(q); DZ.picked=null; DZ.answered=false; DZ.hint=false; DZ.shown=Date.now();
+}
+function dzMode(m){ DZ.mode=m; if(m==="calc"&&!CALC.open) calcOpen(); rDesmos(); }
+function dzGroup(g){ DZ.grp=g; dzNext(); rDesmos(); }
+function dzHint(){ if(!DZ.q||DZ.answered) return; if(!DZ.hint){ DZ.hint=true; const z=S.dz||(S.dz={n:0,c:0,h:0}); z.h=(z.h||0)+1; save(); } rDesmos(); }
+function dzAns(i){
+  if(!DZ.q||DZ.answered) return; DZ.picked=i; DZ.answered=true; const ok=i===DZ.q.a, z=S.dz||(S.dz={n:0,c:0,h:0});
+  z.n++; if(ok) z.c++;
+  RCTX={secs:DZ.shown?(Date.now()-DZ.shown)/1000:0,src:0}; rec(DZ.q,ok,false); RCTX={secs:0,src:0};
+  beep(ok); renderNav(); rDesmos();
+  const fb=document.querySelector(".fb"); if(fb&&fb.getBoundingClientRect().bottom>innerHeight) fb.scrollIntoView({behavior:S.settings.motion?"smooth":"auto",block:"nearest"});
+}
+function dzGo(){ dzNext(); rDesmos(); window.scrollTo({top:0,behavior:S.settings.motion?"smooth":"auto"}); }
+function dzCopy(btn,s){
+  const done=()=>toast("Copied. Paste it into Desmos","good");
+  try{ navigator.clipboard.writeText(s).then(done,()=>toast("Couldn’t copy. Type it into Desmos instead.")); }catch(e){ toast("Couldn’t copy. Type it into Desmos instead."); }
+}
+const DZ_LESSONS=[
+  ["Graph anything, then click it","Type an equation on any line. Use ^ for exponents, * for multiply, “sqrt” for √, and “pi” for π. Click a graph to light up its gray points: intercepts, peaks, valleys, and crossings. Click a point to see its exact coordinates.",["y=2x^2-3x-5","y=sqrt(x+4)"],"quad"],
+  ["Solve any equation: graph both sides","Turn each side of the equation into its own graph (y = left side, y = right side). The x-coordinate where they cross is the solution. This works even for equations you can’t solve by hand.",["y=3*2^x","y=48"],"eq"],
+  ["Systems of equations","Type both equations exactly as written. Desmos accepts forms like 3x − 4y = 10. Click the crossing point. Parallel lines mean no solution; one line on top of the other means infinitely many.",["3x-4y=10","2x+y=9"],"sys"],
+  ["Zeros and the vertex","The x-intercepts of y = (expression) are the solutions of (expression) = 0. The gray point at the top or bottom of a parabola is the vertex, which gives the maximum or minimum.",["y=-2x^2+12x-7"],"quad"],
+  ["Sliders for unknown constants","Type an equation with a letter in it, like k. Desmos offers “add slider”. Drag the slider to see how the graph changes. This is perfect for “for what value of k…” questions.",["y=kx+3","y=2x-1"],"sys"],
+  ["Tables and regression","Click + and choose table. Enter points in x₁ and y₁. Then type y₁ ~ mx₁ + b (the ~ key is next to 1 on most keyboards, and _ makes a subscript) to get the best-fit line. Use ax₁² + bx₁ + c for a parabola.",["y_1~mx_1+b","y_1~ax_1^2+bx_1+c"],"data"],
+  ["Functions","Define a function once, then evaluate it anywhere: f(4), f(g(2)), or f(x+1).",["f(x)=x^2-3","g(x)=2x+1","f(g(2))"],"fg"],
+  ["Lists and statistics","Put data in square brackets and name it. Then use mean, median, stdev, max, and min.",["L=[12,15,15,18,22,40]","mean(L)","median(L)"],"data"],
+  ["Inequalities","Type an inequality to shade it. The overlap of two shadings is the solution set. Type the answer choices as points to see which one lands inside.",["y<2x+1","y>-x-4","(1,0)"],"data"],
+  ["Circles","Type the circle’s equation as written, even the messy expanded form. Read the center and radius off the grid, then check by typing the neat (x − h)² + (y − k)² = r² form on top.",["x^2+y^2-6x+4y-12=0","(x-3)^2+(y+2)^2=25"],"fg"],
+  ["Zoom and settings","Pinch or scroll to zoom. The + and − buttons zoom in and out, the house resets the view, and the wrench (Graph Settings) lets you type an exact x- and y-range when a crossing point is off screen.",[],null],
+  ["When NOT to use Desmos","Quick arithmetic, rearranging a formula, or questions that ask for an expression (like “which is equivalent to…”) are often faster by hand. Use Desmos when you need a number from a graph, a crossing point, or a count of solutions.",[],null]
+];
+function rDesmos(){
+  if(innerWidth>=1100&&!CALC.open&&!CALC.closedByUser) calcOpen();
+  if(DZ.mode==="practice"&&!DZ.q) dzNext();
+  const z=S.dz||{n:0,c:0,h:0}, tabs=[["practice","Practice"],["guide","Skills guide"],["calc","Just the calculator"]];
+  const head=`<div class="dzhead"><div class="seg">${tabs.map(([k,l])=>`<button class="${DZ.mode===k?"on":""}" onclick="dzMode('${k}')">${l}</button>`).join("")}</div>
+    ${CALC.open?"":`<button class="btn sm" onclick="calcOpen()">${ic("desmos",16)} Open Desmos</button>`}</div>`;
+  if(DZ.mode==="guide"){
+    app.innerHTML=head+`<section class="panel dzintro"><p>The digital SAT has Desmos built in for <b>every</b> Math question. Students who know these moves solve many questions in seconds. Open the calculator, copy an example, and paste it in (or type it, which is better practice).</p></section>
+    <div class="lessons">${DZ_LESSONS.map(([t,b,ex,g],i)=>`<section class="panel lesson"><div class="ln">${i+1}</div><div><h3>${t}</h3><p>${b}</p>
+      ${ex.length?`<div class="exs">${ex.map(s=>`<span class="ex">${dzc(s)}<button class="btn ghost sm" onclick="dzCopy(this,'${s.replace(/'/g,"\\'")}')" aria-label="Copy ${esc(s)}">${ic("copy",14)}</button></span>`).join("")}</div>`:""}
+      ${g?`<button class="btn sm" style="margin-top:10px" onclick="DZ.mode='practice';dzGroup('${g}')">Practice this ${ic("arrow",14)}</button>`:""}</div></section>`).join("")}</div>`;
+    return;
+  }
+  if(DZ.mode==="calc"){
+    app.innerHTML=head+`<section class="panel dzintro"><h3>Free play</h3><p>${CALC.open?"The calculator is open. Try anything!":"Open the calculator to try anything."} This is the same College Board version of Desmos you’ll see on test day, so the buttons and menus will look familiar.</p>
+      <p class="muted mini">Nothing you type here is saved. The calculator keeps your work while you move around Prep Lab, until you reload the page.</p>
+      ${CALC.open?"":`<button class="btn pri" onclick="calcOpen()">${ic("desmos",16)} Open Desmos</button>`}</section>`;
+    return;
+  }
+  const q=DZ.q, ok=DZ.picked===q.a;
+  app.innerHTML=head+`<div class="dzfilters">${DZ_GROUPS.map(([k,l])=>`<button class="chipbtn ${DZ.grp===k?"on":""}" onclick="dzGroup('${k}')">${l}</button>`).join("")}</div>
+  <div class="qwrap"><article class="qcard">
+    <div class="tags">${secTag(q)}<span class="tag dz">${ic("desmos",13)} Desmos</span><span class="qnum">${z.n?`${z.c}/${z.n} correct`:""}</span></div>
+    ${qBody(q)}${choicesHTML(q,DZ.picked,DZ.answered,"dzAns")}
+    ${DZ.answered?`<div class="fb ${ok?"ok":"no"}"><div class="res">${ic(ok?"check":"x",18)} ${ok?pick(PRAISE):"Not quite. The answer is "+"ABCD"[q.a]+"."}</div><div>${q.e}</div></div>
+      <div class="actions"><span class="muted mini">${ok?"":"Saved to your Review list."}</span><button class="btn pri" onclick="dzGo()">Next question ${ic("arrow",16)}</button></div>`
+    : `${DZ.hint?`<div class="dzhint"><b>${ic("desmos",15)} What to type</b>${q.dz}</div>`:""}
+      <div class="actions"><span class="hint">${S.settings.hints?`<kbd>1</kbd>–<kbd>4</kbd> answer · <kbd>H</kbd> hint`:""}</span><span class="row">${DZ.hint?"":`<button class="btn sm" onclick="dzHint()">${ic("bolt",14)} Show Desmos steps</button>`}<button class="btn ghost sm" onclick="dzGo()">Skip ${ic("skip",14)}</button></span></div>`}
+  </article></div>
+  <p class="muted mini dzfoot">Try each one in Desmos first. If you get stuck, tap “Show Desmos steps” for exactly what to type. Every question also shows how to do it by hand.</p>`;
+}
+
+/* =====================================================================
    KEYBOARD + INIT
    ===================================================================== */
 document.addEventListener("keydown",e=>{
@@ -3732,6 +4624,15 @@ document.addEventListener("keydown",e=>{
     if(idx>=0 && idx<T.qs[T.idx].c.length){ e.preventDefault(); tAnswer(idx); }
     else if(k==="arrowright"){ tGo(T.idx+1); } else if(k==="arrowleft"){ tGo(T.idx-1); }
     else if(k==="f"){ tFlag(); }
+  } else if(view==="full" && FT && FT.phase==="q"){
+    const m=FT.mods[FT.cur];
+    if(idx>=0 && idx<m.qs[m.idx].c.length){ e.preventDefault(); ftAns(idx); }
+    else if(k==="arrowright"){ ftGo(m.idx+1); } else if(k==="arrowleft"){ ftGo(m.idx-1); }
+    else if(k==="f"){ ftFlag(); }
+  } else if(view==="desmos" && DZ.mode==="practice" && DZ.q){
+    if(!DZ.answered && idx>=0 && idx<DZ.q.c.length){ e.preventDefault(); dzAns(idx); }
+    else if(!DZ.answered && k==="h"){ e.preventDefault(); dzHint(); }
+    else if(DZ.answered && k==="enter"){ e.preventDefault(); dzGo(); }
   } else if(view==="cards" && !FC.edit){
     if(k===" "||(k==="enter"&&e.target.tagName!=="BUTTON")){ e.preventDefault(); fcFlip(); }
     else if(k==="arrowright") fcMove(1); else if(k==="arrowleft") fcMove(-1);
