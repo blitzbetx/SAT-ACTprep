@@ -577,6 +577,61 @@ body.calc-on .lessons{grid-template-columns:1fr}
   .calcfab{right:14px;bottom:calc(78px + env(safe-area-inset-bottom));padding:10px 14px 10px 12px}
   .lessons{grid-template-columns:1fr}
 }
+
+/* ---------- predictor v2: simulation + analysis ---------- */
+.dist{margin:16px 0 4px}
+.dist svg{width:100%;height:74px;display:block}
+.dist rect.in{fill:var(--accent);opacity:.85} .dist rect.out{fill:var(--surface3)}
+.scard.act .dist rect.in{fill:var(--math)}
+.dist .mline{stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke}
+.dist .tline{stroke:var(--good);stroke-width:2;stroke-dasharray:4 3;vector-effect:non-scaling-stroke}
+.distlbl{position:relative;display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);font-weight:650;margin:4px 0 12px}
+.distlbl .tl{position:absolute;top:0;transform:translateX(-50%);color:var(--good);white-space:nowrap}
+.chance{color:var(--good);font-weight:750}
+details.how summary{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;cursor:pointer;list-style:none}
+details.how summary::-webkit-details-marker{display:none}
+details.how summary h3{margin:0}
+.howsteps{margin:14px 0 0;padding-left:22px;display:grid;gap:10px;line-height:1.6;font-size:.93rem}
+.howsteps b{color:var(--ink)}
+.howsteps li::marker{color:var(--accent);font-weight:800}
+.domgrid{gap:28px}
+.domh span{float:right;color:var(--ink)}
+.tgauge{margin-top:14px}
+.tgauge .bar{margin-top:6px}
+.domh{font-size:.76rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:14px 0 2px}
+.domrow{display:grid;grid-template-columns:minmax(0,1fr) auto 52px;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.domh+.domrow{border-top:0}
+.dn{display:flex;flex-direction:column;min-width:0}
+.dn b{font-size:.92rem}
+.bands{display:flex;gap:3px}
+.bands i{width:12px;height:14px;border-radius:3px;background:var(--surface3)}
+.bands i.on{background:var(--accent)}
+.lost{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;color:var(--muted)}
+.lost.hi{color:var(--bad)}
+.route{padding:12px 0;border-top:1px solid var(--line)}
+.route .bar{margin:8px 0}
+.route p{margin:0}
+.rp{font-weight:800} .rp.g{color:var(--good)} .rp.w{color:var(--warn)}
+.insgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.ins{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px;border-radius:var(--rs);border:1px solid var(--line);background:var(--surface2);border-left:4px solid var(--accent)}
+.ins.good{border-left-color:var(--good)} .ins.warn{border-left-color:var(--warn)} .ins.bad{border-left-color:var(--bad)}
+.ins .ii{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.ins.good .ii{background:var(--good-soft);color:var(--good)} .ins.warn .ii{background:var(--warn-soft);color:var(--warn)} .ins.bad .ii{background:var(--bad-soft);color:var(--bad)}
+.ins p{margin:4px 0 0;font-size:.88rem;line-height:1.55;color:var(--muted)}
+.ins p b{color:var(--ink)}
+.ins .tip{display:flex;gap:6px;align-items:flex-start;color:var(--ink);font-weight:600;margin-top:8px}
+.ins .tip .ic{flex:none;margin-top:3px;color:var(--warn)}
+.plan{display:grid;gap:8px}
+.pstep{display:grid;grid-template-columns:30px minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:var(--rs);background:var(--surface2)}
+.pstep p{margin:3px 0 0}
+.pn{width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:.85rem}
+@media (max-width:860px){
+  .pstep{grid-template-columns:28px minmax(0,1fr) auto;row-gap:8px}
+  .pstep .btn{grid-column:2/-1;justify-self:start}
+  .domrow{grid-template-columns:minmax(0,1fr) auto 44px;gap:8px}
+  .bands i{width:8px;height:12px}
+  .insgrid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -3918,8 +3973,8 @@ function clamp(x,a,b){ return Math.max(a,Math.min(b,x)); }
 const IRT_A=1.7;
 function bOf(d){ return (d-.55)*5; }
 function pCorr(th,b){ return .25+.75/(1+Math.exp(-IRT_A*(th-b))); }
-function estTheta(items){
-  const pv=1/1.44; let th=0;
+function estTheta(items,pvar){
+  const pv=1/(pvar||1.44); let th=0;
   for(let it=0;it<40;it++){ let g=-th*pv, h=-pv;
     for(const [b,ok,w] of items){ const s=1/(1+Math.exp(-IRT_A*(th-b))), P=.25+.75*s, dP=.75*IRT_A*s*(1-s);
       g+=w*(ok-P)*dP/(P*(1-P)); h-=w*dP*dP/(P*(1-P)); }
@@ -3929,6 +3984,7 @@ function estTheta(items){
 }
 function satSecRaw(th){ return clamp(540+125*th,200,800); }
 const r10=x=>Math.round(x/10)*10;
+function r5(x){ return Math.round(x/5)*5; }
 
 /* =====================================================================
    SCORE PREDICTOR
@@ -3964,7 +4020,7 @@ function smoothAcc(ts){ let n=0,c=0; for(const t of ts){ const s=S.stats[t]; if(
 function gatherItems(){
   const now=dayNum(), H=S.hist||[], sec={E:[],M:[]}, top={}, hn={}, hc={};
   for(const r of H){ const t=TKEYS[r[1]]; if(!t) continue;
-    const w=Math.pow(.5,Math.max(0,now-r[0])/45)*(r[5]===2?1.5:r[5]===1?1.2:1), it=[bOf(r[4]/100),r[2],w];
+    const w=Math.pow(.5,Math.max(0,now-r[0])/30)*(r[5]===2?1.5:r[5]===1?1.2:1), it=[bOf(r[4]/100),r[2],w];
     sec[TOPICS[t].s].push(it); (top[t]=top[t]||[]).push(it); hn[t]=(hn[t]||0)+1; hc[t]=(hc[t]||0)+r[2]; }
   // answers from before history was kept: count them at the topic's typical difficulty
   for(const t in S.stats){ const st=S.stats[t], nl=Math.max(0,st.n-(hn[t]||0)); if(!nl) continue;
@@ -4115,8 +4171,221 @@ function spark(){
   return `<div class="spark"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
     <div class="row between mini muted"><span>${ks[0].slice(5)}: ${v[0]}</span><span>Today: ${v[v.length-1]}</span></div></div>`;
 }
+/* ---------- test-day simulation: 1,000 virtual digital SATs (and ACTs) ---------- */
+const SAT_DOM={
+  E:[{k:"cs",n:"Craft &amp; Structure",q:7,t:{wic:.7,read:.3}},{k:"ii",n:"Information &amp; Ideas",q:7,t:{read:.5,evid:.5}},
+     {k:"sec",n:"Standard English Conventions",q:7,t:{punc:.35,sva:.15,pron:.1,mod:.15,para:.1,tense:.15}},{k:"eoi",n:"Expression of Ideas",q:6,t:{trans:.5,synth:.35,conc:.15}}],
+  M:[{k:"alg",n:"Algebra",q:7,t:{lin:.6,sys:.4}},{k:"adv",n:"Advanced Math",q:7,t:{quad:.3,func:.25,expo:.2,poly:.25}},
+     {k:"psda",n:"Problem-Solving &amp; Data Analysis",q:4,t:{pct:.35,stat:.3,prob:.2,word:.15}},{k:"geo",n:"Geometry &amp; Trigonometry",q:4,t:{geo:.6,trig:.4}}]};
+const ACT_SEC={E:{n:"English",q:50,mu:-.1,sd:1,tight:TIGHT.E,p:"E",d:[[20,{punc:.35,sva:.15,pron:.1,mod:.15,para:.1,tense:.15}],[20,{trans:.45,synth:.3,read:.25}],[10,{conc:.5,wic:.5}]]},
+  M:{n:"Math",q:45,mu:.15,sd:1.1,tight:TIGHT.M,p:"M",d:[[5,{pct:1}],[8,{lin:.5,sys:.2,poly:.3}],[8,{func:.4,quad:.35,expo:.25}],[8,{geo:.65,trig:.35}],[6,{stat:.55,prob:.45}],[10,{word:.4,pct:.3,geo:.3}]]},
+  R:{n:"Reading",q:36,mu:0,sd:1,tight:TIGHT.R,p:"E",d:[[36,{read:.5,evid:.3,wic:.2}]]}};
+const ACT_T=[[0,1],[.2,9],[.3,12],[.4,15],[.48,17],[.56,19],[.64,21],[.72,24],[.8,27],[.88,30],[.93,32],[.97,34],[1,36]];
+function actScale(p){ for(let i=1;i<ACT_T.length;i++) if(p<=ACT_T[i][0]){ const [a,x]=ACT_T[i-1],[b,y]=ACT_T[i]; return x+(y-x)*(p-a)/(b-a); } return 36; }
+function rng(seed){ let a=(seed>>>0)||1; return ()=>{ a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function gauss(R){ let u=0; while(!u) u=R(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*R()); }
+function qtile(sorted,p){ return sorted[Math.min(sorted.length-1,Math.max(0,Math.round(p*(sorted.length-1))))]; }
+function tDelta(pr,t){ const r=pr.res[t]; return {mu:clamp(r.r*3.2,-1.5,1.5),sd:.45/Math.sqrt(1+r.w/5)}; }
+function simSAT(pr,N,opt){
+  opt=opt||{}; const R=rng(opt.seed||pr.seed), bo=opt.boost||{}, out={tot:[],E:[],M:[],hard:{E:0,M:0},m1:{E:[],M:[]},dom:{}};
+  for(const s of ["E","M"]) for(const d of SAT_DOM[s]) out.dom[d.k]={c:0,n:0};
+  for(let i=0;i<N;i++){ let total=0;
+    for(const s of ["E","M"]){
+      const th0=pr.th[s].th+gauss(R)*pr.th[s].se+gauss(R)*.12+(opt.all||0), dth={};
+      for(const d of SAT_DOM[s]){ let x=th0; for(const t in d.t){ const z=tDelta(pr,t); x+=d.t[t]*(z.mu+gauss(R)*z.sd); } dth[d.k]=x+(bo[d.k]||0); }
+      const pace=(opt.pace&&opt.pace[s])||pr.pace[s].r, reach=pace>.92?.92/pace:1, nm=s==="E"?27:22, items=[];
+      let m1c=0, hard=true;
+      for(const mod of [1,2]){
+        let mu=.1, sd=1; if(mod===2){ hard=m1c/nm>=.6; mu=hard?.9:-.6; sd=.85; if(hard) out.hard[s]++; }
+        for(const d of SAT_DOM[s]) for(let j=0;j<d.q;j++){ const b=mu+gauss(R)*sd, p=R()<reach?pCorr(dth[d.k],b):.25, ok=R()<p?1:0;
+          items.push([b,ok,1]); if(mod===1) m1c+=ok; out.dom[d.k].c+=ok; out.dom[d.k].n++; }
+        if(mod===1) out.m1[s].push(m1c);
+      }
+      let sc=satSecRaw(estTheta(items,3).th); if(!hard) sc=Math.min(sc,640); sc=r10(sc); out[s].push(sc); total+=sc;
+    }
+    out.tot.push(total);
+  }
+  const sm=a=>{ const s=a.slice().sort((x,y)=>x-y); return {s,med:qtile(s,.5),lo:qtile(s,.1),hi:qtile(s,.9),mean:s.reduce((x,y)=>x+y,0)/s.length}; };
+  out.T=sm(out.tot); out.SE=sm(out.E); out.SM=sm(out.M); out.N=N; return out;
+}
+function simACT(pr,N,opt){
+  opt=opt||{}; const R=rng((opt.seed||pr.seed)+7), out={comp:[],sec:{E:[],M:[],R:[]},un:{E:0,M:0,R:0}};
+  for(let i=0;i<N;i++){ const th={E:pr.th.E.th+gauss(R)*pr.th.E.se+gauss(R)*.12,M:pr.th.M.th+gauss(R)*pr.th.M.se+gauss(R)*.12}, sc={};
+    for(const k of ["E","M","R"]){ const X=ACT_SEC[k], pace=pr.pace[X.p].r*X.tight, reach=pace>.92?.92/pace:1; let c=0, un=0;
+      for(const [q,tw] of X.d){ let x=0; for(const t in tw){ const z=tDelta(pr,t); x+=tw[t]*(th[TOPICS[t].s]+z.mu+gauss(R)*z.sd); }
+        for(let j=0;j<q;j++){ const b=X.mu+gauss(R)*X.sd, reached=R()<reach; if(!reached) un++; if(R()<(reached?pCorr(x,b):.25)) c++; } }
+      sc[k]=clamp(Math.round(actScale(c/X.q)),1,36); out.sec[k].push(sc[k]); out.un[k]+=un; }
+    out.comp.push((sc.E+sc.M+sc.R)/3);
+  }
+  const s=out.comp.slice().sort((a,b)=>a-b), md=a=>qtile(a.slice().sort((x,y)=>x-y),.5);
+  out.med=Math.round(qtile(s,.5)); out.lo=Math.round(qtile(s,.1)); out.hi=Math.round(qtile(s,.9)); out.mean=s.reduce((a,b)=>a+b,0)/N; out.s=s;
+  out.E=md(out.sec.E); out.M=md(out.sec.M); out.R=md(out.sec.R); for(const k in out.un) out.un[k]/=N; return out;
+}
+let MCACHE={key:"",val:null};
+function scoreModel(pr){
+  const H=S.hist||[], last=H[H.length-1]||[], key=[H.length,last.join(","),pr.n,(S.full||[]).length,S.tests.length,JSON.stringify(S.stats).length].join("|");
+  if(MCACHE.key===key){ pr.seed=MCACHE.val.seed; return MCACHE.val; }
+  let seed=7; for(const ch of key) seed=(seed*31+ch.charCodeAt(0))|0; pr.seed=seed;
+  const sat=simSAT(pr,1000), act=simACT(pr,600), W=260, base=simSAT(pr,W).T.mean;
+  const lost={}, gain={};
+  for(const s of ["E","M"]) for(const d of SAT_DOM[s]){ lost[d.k]=Math.max(0,simSAT(pr,W,{boost:{[d.k]:4}}).T.mean-base); gain[d.k]=Math.max(0,simSAT(pr,W,{boost:{[d.k]:.5}}).T.mean-base); }
+  const slow=Math.max(pr.pace.E.r,pr.pace.M.r)>.92, paceGain=slow?Math.max(0,simSAT(pr,W,{pace:{E:Math.min(.85,pr.pace.E.r),M:Math.min(.85,pr.pace.M.r)}}).T.mean-base):0;
+  const val={sat,act,base,lost,gain,paceGain,seed};
+  MCACHE={key,val}; return val;
+}
+
+/* ---------- what the answer history says ---------- */
+function histItems(pr){
+  return (S.hist||[]).filter(h=>TKEYS[h[1]]).map(h=>{ const t=TKEYS[h[1]], s=TOPICS[t].s, b=bOf(h[4]/100);
+    return {day:h[0],t,s,ok:h[2],secs:h[3],src:h[5],d:h[4],b,P:pCorr(pr.th[s].th+clamp(pr.res[t].r*3.2,-1.5,1.5),b)}; });
+}
+function analyze(pr,M){
+  const I=histItems(pr), out=[], pc=x=>Math.round(x*100)+"%", now=dayNum(), PPQ=10;
+  const resid=a=>a.length?a.reduce((s,x)=>s+x.ok-x.P,0)/a.length:0;
+  // careless misses
+  const easy=I.filter(x=>x.P>=.8), em=easy.filter(x=>!x.ok).length, ee=easy.reduce((s,x)=>s+1-x.P,0), am=I.filter(x=>!x.ok).length;
+  if(easy.length>=25&&em>=4&&em>ee*1.35){ const pts=r10(Math.min(120,(em-ee)/easy.length*49*PPQ));
+    out.push({tone:"warn",ic:"target",t:"Careless misses are costing you",pts,b:`You missed <b>${em}</b> questions that were well within your level (for your skill we’d expect about ${Math.round(ee)}). That’s ${pc(em/Math.max(1,am))} of all your misses. Fixing this alone is worth about <b>${pts} points</b>.`,
+      tip:"Before you click, reread the question and check what it actually asks for (x or y? the greater or the lesser?). Underline key words on scratch paper."}); }
+  else if(easy.length>=25&&em<=ee*.8) out.push({tone:"good",ic:"check",t:"You rarely slip on questions you know",b:`On questions within your level you missed only <b>${em}</b> of ${easy.length}, fewer than we’d expect. Your points come from real skill, so the score is dependable.`});
+  // speed of right vs wrong answers
+  for(const s of ["E","M"]){ const P=I.filter(x=>x.s===s&&x.src===0&&x.secs>=3&&x.secs<=300), W=P.filter(x=>!x.ok).map(x=>x.secs), Rt=P.filter(x=>x.ok).map(x=>x.secs);
+    if(W.length>=8&&Rt.length>=8){ const mw=median(W), mr=median(Rt), nm=s==="E"?"Reading &amp; Writing":"Math";
+      if(mw<mr*.75) out.push({tone:"warn",ic:"bolt",t:`You may be rushing in ${nm}`,b:`Your wrong answers take about <b>${Math.round(mw)} seconds</b>, but your right answers take <b>${Math.round(mr)}</b>. Fast misses usually mean jumping to an answer before finishing the problem.`,tip:`You have time: the SAT gives ${s==="E"?71:95} seconds per ${nm} question. Use an extra 10 seconds to double-check.`});
+      else if(mw>mr*1.4) out.push({tone:"info",ic:"test",t:`You get stuck on hard ${nm} questions`,b:`Wrong answers take you about <b>${Math.round(mw)} seconds</b> vs <b>${Math.round(mr)}</b> for right ones. Long struggles on one question steal time from easier ones later.`,tip:"If you’re still stuck after a minute, guess, flag it, and come back at the end. Every question is worth the same."}); } }
+  // timed vs untimed
+  const tm=I.filter(x=>x.src>=1), ut=I.filter(x=>x.src===0);
+  if(tm.length>=20&&ut.length>=20){ const g=resid(tm)-resid(ut);
+    if(g<-.06){ const pts=r10(Math.min(150,-g*98*PPQ)); out.push({tone:"warn",ic:"test",t:"The clock costs you points",pts,b:`Under time pressure your accuracy drops about <b>${Math.round(-g*100)} percentage points</b> compared with untimed practice (adjusted for difficulty). On a full SAT that’s roughly <b>${pts} points</b>.`,tip:"Take more timed tests. The goal is to make the timed pace feel normal."}); }
+    else if(g>.03) out.push({tone:"good",ic:"check",t:"You do well under the clock",b:`Your accuracy on timed tests is ${Math.round(g*100)} points <b>higher</b> than in practice (adjusted for difficulty). Test-day pressure doesn’t seem to hurt you.`}); }
+  // hard questions
+  const hq=I.filter(x=>x.b>=pr.th[x.s].th+.5);
+  if(hq.length>=15){ const r=resid(hq), acc=hq.filter(x=>x.ok).length/hq.length;
+    if(r>.05) out.push({tone:"good",ic:"trophy",t:"You beat the odds on hard questions",b:`On questions above your level you get <b>${pc(acc)}</b> right, more than expected. That’s how students earn the harder Module 2 and the top scores.`});
+    else if(r<-.05) out.push({tone:"warn",ic:"target",t:"Hard questions are your ceiling right now",b:`On questions above your level you get <b>${pc(acc)}</b> right, less than expected. The highest scores come from the harder Module 2, so stretch yourself with tougher topics and full practice tests.`}); }
+  // trend
+  for(const s of ["E","M"]){ const rec=I.filter(x=>x.s===s&&x.day>=now-14), old=I.filter(x=>x.s===s&&x.day<now-14&&x.day>=now-60);
+    if(rec.length>=25&&old.length>=25){ const d=r10(125*(estTheta(rec.map(x=>[x.b,x.ok,1])).th-estTheta(old.map(x=>[x.b,x.ok,1])).th)), nm=s==="E"?"Reading &amp; Writing":"Math";
+      if(d>=20) out.push({tone:"good",ic:"progress",t:`${nm} is climbing`,b:`Your ${nm} skill over the last two weeks is about <b>+${d} points</b> higher than before. Whatever you’re doing is working.`});
+      else if(d<=-20) out.push({tone:"bad",ic:"progress",t:`${nm} has slipped lately`,b:`Your ${nm} skill over the last two weeks is about <b>${d} points</b> lower than before. That can be tiredness or harder questions, but it’s worth a review session.`,tip:"Redo your Review list for this section before new questions."}); } }
+  // consistency
+  const byDay={}; I.filter(x=>x.day>=now-30).forEach(x=>{ (byDay[x.day]=byDay[x.day]||[]).push(x); });
+  const dd=Object.values(byDay).filter(a=>a.length>=10), dr=dd.map(resid), noise=dd.length?dd.reduce((s,a)=>s+a.reduce((t,x)=>t+x.P*(1-x.P),0)/(a.length*a.length),0)/dd.length:0;
+  if(dr.length>=5){ const m=dr.reduce((a,b)=>a+b,0)/dr.length, sd=Math.sqrt(Math.max(0,dr.reduce((a,b)=>a+(b-m)**2,0)/dr.length-noise)), sw=r10(sd*98*PPQ);
+    if(sw>=70) out.push({tone:"info",ic:"flame",t:"Your days swing a lot",b:`From one practice day to the next your results swing by about <b>±${sw} points</b>. On test day, sleep, food, and calm matter more for you than for most students.`,tip:"Practice at the time of day your test starts, after a normal night’s sleep."});
+    else if(sw<=40) out.push({tone:"good",ic:"check",t:"You’re consistent",b:`Your results vary only about ±${sw} points from day to day, so your prediction is reliable.`}); }
+  // habit
+  let days=0; for(let i=0;i<14;i++){ const d=new Date(); d.setDate(d.getDate()-i); if(S.days[dkey(d)]) days++; }
+  if(days<=4) out.push({tone:"warn",ic:"flame",t:"Practice is a bit sporadic",b:`You practiced on <b>${days}</b> of the last 14 days. Short, frequent practice beats occasional long sessions for score gains.`,tip:`Aim for your daily goal of ${goal()} questions on at least 5 days a week.`});
+  else if(days>=10) out.push({tone:"good",ic:"flame",t:"Great practice habit",b:`You practiced on <b>${days}</b> of the last 14 days. That steady work is what raises scores.`});
+  // full-test stamina
+  const lf=(S.full||[]).slice(-1)[0];
+  if(lf&&lf.len==="full"){ const m2=lf.mods.filter(m=>m.no===2), drop=m2.map(m=>{ const m1=lf.mods.find(x=>x.s===m.s&&x.no===1); return m1.c/m1.n-m.c/m.n; });
+    const worst=Math.max(...drop); if(worst>.3) out.push({tone:"info",ic:"full",t:"Watch your stamina in Module 2",b:`On your last full test, your accuracy fell by <b>${Math.round(worst*100)} points</b> from Module 1 to Module 2. Some drop is normal because Module 2 is harder, but this much suggests fatigue.`,tip:"Take full-length practice tests so two hours of focus feels normal."}); }
+  const rank={bad:0,warn:1,info:2,good:3}; return out.sort((a,b)=>rank[a.tone]-rank[b.tone]||(b.pts||0)-(a.pts||0));
+}
+function weakTopic(d,used){ const l=Object.keys(d.t).map(t=>({t,a:smoothAcc([t])})).sort((x,y)=>x.a.p-y.a.p); return (used&&l.find(x=>!used.has(x.t)))||l[0]; }
+function domSkill(pr,s,d){ let x=pr.th[s].th; for(const t in d.t) x+=d.t[t]*tDelta(pr,t).mu; return x; }
+function band(x){ return clamp(Math.round((x+2.6)/5.2*6)+1,1,7); }
+function histSVG(sorted,lo,hi,med,target){
+  let a=qtile(sorted,.01), b=qtile(sorted,.99); if(target){ a=Math.min(a,target); b=Math.max(b,target); } const min=Math.max(400,Math.floor((a-40)/20)*20), max=Math.min(1600,Math.ceil((b+40)/20)*20), nb=Math.max(4,(max-min)/20), cnt=Array(nb).fill(0);
+  sorted.forEach(v=>{ cnt[clamp(Math.floor((v-min)/20),0,nb-1)]++; }); const mx=Math.max(...cnt), W=300, H=74, bw=W/nb, X=v=>(v-min)/(max-min)*W;
+  const bars=cnt.map((c,i)=>{ const v=min+i*20+10, h=Math.max(1.5,c/mx*(H-8)); return `<rect x="${(i*bw+1).toFixed(1)}" y="${(H-h).toFixed(1)}" width="${Math.max(1,bw-2).toFixed(1)}" height="${h.toFixed(1)}" rx="2" class="${v>=lo&&v<=hi+19?"in":"out"}"/>`; }).join("");
+  const tg=target&&target>min&&target<max?`<line x1="${X(target)}" x2="${X(target)}" y1="0" y2="${H}" class="tline"/>`:"";
+  const tp=tg?X(target)/W*100:0;
+  return `<div class="dist">${tg?`<div class="tgrow"><span style="left:${tp}%;transform:translateX(-${tp>85?92:tp<15?8:50}%)">Target ${target}</span></div>`:""}<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${bars}${tg}<line x1="${X(med+10)}" x2="${X(med+10)}" y1="0" y2="${H}" class="mline"/></svg>
+    <div class="distlbl"><span>${min}</span><span>${max}</span></div></div>`;
+}
+function predictorBody(pr,M){
+  const nm=esc(firstName()), sat=M.sat, act=M.act, ins=analyze(pr,M), pcp=x=>x>0&&x<.01?"under 1%":x===0?"under 1%":x>.99?"over 99%":Math.round(x*100)+"%", I=histItems(pr), pj=projection(pr), cl=pr.conf>=70?"High":pr.conf>=40?"Medium":"Low";
+  const tS=targetFor("SAT"), tA=targetFor("ACT"), pS=tS?sat.tot.filter(v=>v>=tS).length/sat.N:null, pA=tA?act.comp.filter(v=>Math.round(v)>=tA).length/act.comp.length:null;
+  const sp=pctile(SAT_PCT,sat.T.med), ap=pctile(ACT_PCT,act.med), pc=x=>Math.round(x*100)+"%";
+  const chk=(ok,txt)=>`<li class="${ok?"ok":""}">${ic(ok?"check":"target",15)}<span>${txt}</span></li>`;
+  // how the score was built
+  const acc={}, lvl={}, naive={}, skill={};
+  for(const s of ["E","M"]){ const t=totals(s), it=I.filter(x=>x.s===s); acc[s]=t.n?t.c/t.n:0; lvl[s]=it.length?Math.round(it.reduce((a,x)=>a+x.d,0)/it.length):null;
+    const q=clamp((acc[s]-.25)/.75,.02,.98); naive[s]=r10(satSecRaw(Math.log(q/(1-q))/IRT_A)); skill[s]=r10(satSecRaw(pr.th[s].th)); }
+  const secName2={E:"Reading &amp; Writing",M:"Math"};
+  const how=`<details class="how" open><summary><h3>How we got your score</h3><span class="muted mini">It’s more than your percent correct</span></summary>
+    <ol class="howsteps">
+      <li><b>Your skill, adjusted for difficulty.</b> ${["E","M"].map(s=>`In ${secName2[s]} you got <b>${pc(acc[s])}</b> right${lvl[s]!=null?` on questions averaging difficulty level <b>${lvl[s]}</b> (a real SAT medium question is about 55)`:""}. Percent correct alone would suggest about ${naive[s]}; adjusting for how hard your questions were puts your skill at about <b>${skill[s]}</b>.`).join(" ")} Recent answers count more, and timed and full tests count extra.</li>
+      <li><b>Topic by topic.</b> Your skill is adjusted up or down in each of the 8 official SAT content areas, depending on how you do in those topics compared with your overall level.</li>
+      <li><b>1,000 simulated test days.</b> We ran ${sat.N.toLocaleString()} virtual digital SATs: ${54} Reading &amp; Writing and ${44} Math questions with the real mix of content, real difficulty spread, and the adaptive Module 2. You reached the harder Module 2 in <b>${pc(sat.hard.E/sat.N)}</b> of runs in R&amp;W and <b>${pc(sat.hard.M/sat.N)}</b> in Math. Each run also allows for your pacing and normal test-day ups and downs.</li>
+      <li><b>Scored like the real SAT.</b> Harder questions count for more, and an easier Module 2 caps a section at about 640. Your predicted score is the <b>middle</b> result (${sat.T.med}). Eight of every ten runs landed between <b>${sat.T.lo}</b> and <b>${sat.T.hi}</b>.</li>
+    </ol></details>`;
+  // points lost per domain
+  const lostRows=s=>SAT_DOM[s].map(d=>{ const x=domSkill(pr,s,d), bd=band(x), dc=sat.dom[d.k], q=d.q*2, ex=dc.c/dc.n*q, L=r5(M.lost[d.k]);
+    return `<div class="domrow"><div class="dn"><b>${d.n}</b><span class="muted mini">about <b>${Math.round(ex)} of ${q}</b> right on test day</span></div>
+      <div class="bands" title="Skill band ${bd} of 7">${[1,2,3,4,5,6,7].map(i=>`<i class="${i<=bd?"on":""}"></i>`).join("")}</div>
+      <div class="lost ${L>=40?"hi":""}">${L?`−${L}`:"0"}</div></div>`; }).join("");
+  const totLost=Object.values(M.lost).reduce((a,b)=>a+b,0);
+  // adaptive routing
+  const need={E:Math.ceil(.6*27),M:Math.ceil(.6*22)}, m1med=s=>qtile(sat.m1[s].slice().sort((a,b)=>a-b),.5);
+  const route=s=>{ const p=sat.hard[s]/sat.N, n=s==="E"?27:22; return `<div class="route"><div class="row between"><b>${secName2[s]}</b><span class="rp ${p>=.7?"g":p>=.4?"":"w"}">${pc(p)}</span></div>
+    <div class="bar"><i class="${p>=.7?"g":p>=.4?"":"w"}" style="width:${Math.round(p*100)}%"></i></div>
+    <p class="muted mini">You need about <b>${need[s]} of ${n}</b> on Module 1. You typically get <b>${m1med(s)}</b>.${p<.5?` The easier Module 2 caps your section near 640.`:""}</p></div>`; };
+  // plan
+  const steps=[], usedT=new Set(), doms=[];
+  for(const s of ["E","M"]) for(const d of SAT_DOM[s]) doms.push(d);
+  doms.sort((a,b)=>M.gain[b.k]-M.gain[a.k]);
+  for(const d of doms){ const g=r5(M.gain[d.k]); if(g>=10){ const w=weakTopic(d,usedT); usedT.add(w.t); steps.push({g,t:`Strengthen ${d.n}`,b:`Focus on <b>${TOPICS[w.t].n}</b> (${w.a.n?pc(w.a.p)+" right":"not started"}). About 50 focused questions should lift this area a full skill step.`,btn:`startPractice('topic','${w.t}')`,bl:"Practice"}); } }
+  if(M.paceGain>=10) steps.push({g:r10(M.paceGain),t:"Speed up to finish on time",b:"At your current pace you’d run out of time before the end of a module. Finishing every question on time is worth these points.",btn:"go('test')",bl:"Timed test"});
+  ins.filter(x=>x.pts>=20&&x.t.startsWith("Careless")).forEach(x=>steps.push({g:x.pts,t:"Cut careless mistakes",b:x.tip,btn:"go('review')",bl:"Review misses"}));
+  steps.sort((a,b)=>b.g-a.g); const top=steps.slice(0,4);
+  let after=null; if(top.length){ const bo={}; top.forEach(st=>{ for(const s of ["E","M"]) for(const d of SAT_DOM[s]) if(st.t===`Strengthen ${d.n}`) bo[d.k]=.5; });
+    const r1=simSAT(pr,300,{boost:bo,pace:M.paceGain>=10?{E:Math.min(.85,pr.pace.E.r),M:Math.min(.85,pr.pace.M.r)}:null}), r0=simSAT(pr,300); let g=Math.max(0,r1.T.med-r0.T.med);
+    const cg=top.find(x=>x.t==="Cut careless mistakes"); if(cg) g+=cg.g; after={med:Math.min(1600,r10(sat.T.med+g)),p:tS?sat.tot.filter(v=>v+g>=tS).length/sat.N:null}; }
+  const cd=countdown(), weeks=cd&&cd>0?Math.max(1,Math.round(cd/7)):null;
+  const tline=tS? (pS>=.7?`You’re on track: a <b>${pcp(pS)}</b> chance of reaching your target of ${tS} right now.`:`To reach your target of <b>${tS}</b> you need about <b>${Math.max(0,tS-sat.T.med)}</b> more points, roughly ${Math.max(1,Math.round((tS-sat.T.med)/10))} more right answers. Today’s chance: <b>${pcp(pS)}</b>.`)
+    : tA? `Your ACT target is <b>${tA}</b>. Today’s chance of reaching it: <b>${pcp(pA)}</b>.` : `<a href="#" onclick="go('settings');return false">Set a target score</a> to see your chances of reaching it.`;
+  // insights html
+  const insH=ins.length?ins.map(x=>`<div class="ins ${x.tone}"><span class="ii">${ic(x.ic,17)}</span><div><b>${x.t}</b><p>${x.b}</p>${x.tip?`<p class="tip">${ic("bolt",13)} ${x.tip}</p>`:""}</div></div>`).join("")
+    :`<p class="muted">Keep practicing. Patterns show up after a few hundred answers, especially with some timed tests.</p>`;
+  return `<div class="pgrid">
+    <section class="panel scard sat"><div class="row between"><span class="tag">SAT</span><span class="muted mini">about the ${ordinal(sp)} percentile</span></div>
+      <div class="big">${sat.T.med}</div><div class="muted">Likely range <b>${sat.T.lo}–${sat.T.hi}</b>${pS!=null?` · <span class="chance">${pcp(pS)} chance of ${tS}+</span>`:""}</div>
+      ${histSVG(sat.T.s,sat.T.lo,sat.T.hi,sat.T.med,tS)}
+      ${secLine("Reading &amp; Writing",sat.SE.med,200,800,"e",`${sat.SE.lo}–${sat.SE.hi}`)}${secLine("Math",sat.SM.med,200,800,"m",`${sat.SM.lo}–${sat.SM.hi}`)}</section>
+    <section class="panel scard act"><div class="row between"><span class="tag m">ACT</span><span class="muted mini">about the ${ordinal(ap)} percentile</span></div>
+      <div class="big">${act.med}</div><div class="muted">Likely range <b>${act.lo}–${act.hi}</b>${pA!=null?` · <span class="chance">${pcp(pA)} chance of ${tA}+</span>`:""}</div>
+      ${scaleBar(act.lo,act.hi,act.med,1,36,tA)}
+      ${secLine("English",act.E,1,36,"e",act.un.E>=1?`~${Math.round(act.un.E)} left to guess (out of time)`:"")}${secLine("Math",act.M,1,36,"m",act.un.M>=1?`~${Math.round(act.un.M)} left to guess (out of time)`:"")}${secLine("Reading",act.R,1,36,"e",act.un.R>=1?`~${Math.round(act.un.R)} left to guess (out of time)`:"")}
+      <p class="muted mini" style="margin:8px 0 0">${act.un.E+act.un.M+act.un.R>=3?`On the ACT’s faster clock you’d likely have to guess on about <b>${Math.round(act.un.E+act.un.M+act.un.R)}</b> questions. `:""}Science is optional and not in the composite.</p></section>
+  </div>
+  <section class="panel">${how}</section>
+  <section class="panel"><div class="ph"><h3>Where your points go</h3><span class="muted mini">Points lost per area</span></div>
+      <p class="muted mini" style="margin-top:-4px">Bars show your skill band (1–7, like the official score report). The number is how many points you’d gain if that area were perfect.</p>
+      <div class="grid2 domgrid"><div><div class="domh">Reading &amp; Writing <span>${sat.SE.med}</span></div>${lostRows("E")}</div><div><div class="domh">Math <span>${sat.SM.med}</span></div>${lostRows("M")}</div></div>
+      ${M.paceGain>=10?`<div class="domrow"><div class="dn"><b>Pacing</b><span class="muted mini">running out of time</span></div><div></div><div class="lost hi">−${r10(M.paceGain)}</div></div>`:""}
+      <p class="muted mini" style="margin-top:10px">In total about <b>${r10(totLost)}</b> points are on the table across all eight areas.</p></section>
+  <div class="grid2">
+    <section class="panel"><h3>Reaching the harder Module 2</h3>
+      <p class="muted mini" style="margin-top:-4px">On the digital SAT, your Module 1 result decides whether Module 2 is harder or easier. Only the harder path unlocks scores above about 640 per section.</p>
+      ${route("E")}${route("M")}</section>
+    <section class="panel"><h3>Your target</h3><p>${tline}</p>${tS?`<div class="tgauge"><div class="row between mini muted"><span>Now ${sat.T.med}</span><span>Target ${tS}</span></div><div class="bar"><i class="${sat.T.med>=tS?"g":""}" style="width:${clamp(Math.round((sat.T.med-400)/(tS-400)*100),2,100)}%"></i></div></div>`:""}
+      <p class="muted mini" style="margin-top:12px">Every right answer is worth roughly 10 points, a bit more on the harder Module 2.</p></section>
+  </div>
+  <section class="panel"><div class="ph"><h3>What we noticed</h3><span class="muted mini">From your last ${I.length.toLocaleString()} answers</span></div><div class="insgrid">${insH}</div></section>
+  <section class="panel"><div class="ph"><h3>Your plan${tS?` to reach ${tS}`:""}</h3>${after?`<span class="muted mini">Do all of this: about <b>${after.med}</b>${after.p!=null?` (${pcp(after.p)} chance of ${tS}+)`:""}</span>`:""}</div>
+    ${top.length?`<div class="plan">${top.map((x,i)=>`<div class="pstep"><span class="pn">${i+1}</span><div><b>${x.t}</b><p class="muted mini">${x.b}</p></div><span class="plus">+${x.g}<small>SAT pts</small></span><button class="btn sm" onclick="${x.btn}">${x.bl}</button></div>`).join("")}</div>`
+      :`<p class="muted">You’re strong everywhere. Keep taking full practice tests to keep your timing sharp.</p>`}
+    ${weeks?`<p class="mini" style="margin-top:12px">${ic("full",14)} You have about <b>${weeks} week${weeks===1?"":"s"}</b> until test day. Plan on <b>${Math.max(1,Math.floor(weeks/2))} full practice test${Math.floor(weeks/2)===1?"":"s"}</b> (one every two weeks) and about <b>${Math.max(goal()*5,Math.ceil(top.length*50/weeks))}</b> practice questions a week.</p>`:""}</section>
+  <div class="grid2">
+    <section class="panel"><div class="ph"><h3>How sure is this?</h3><span class="conf c${cl[0]}">${cl}</span></div>
+      <div class="bar"><i class="${pr.conf>=70?"g":pr.conf>=40?"":"w"}" style="width:${pr.conf}%"></i></div>
+      <ul class="chkl">${chk(pr.n>=400,`<b>${pr.n}</b> questions answered${pr.n<400?` (400+ is best)`:""}`)}${chk(pr.cov>=20,`<b>${pr.cov}</b> of ${TKEYS.length} topics with 5+ answers`)}${chk(pr.nt>=3,`<b>${pr.nt}</b> timed test${pr.nt===1?"":"s"}${pr.nt<3?" (3+ is best)":""}`)}${chk(pr.nf>=1,`<b>${pr.nf}</b> full practice test${pr.nf===1?"":"s"}`)}</ul>
+      <p class="muted mini">More data narrows the range: with ${pr.n} answers your likely range spans ${sat.T.hi-sat.T.lo} points. Treat it as an estimate, not a promise.</p></section>
+    <section class="panel"><h3>${pj?`On test day <span class="muted mini">in ${pj.cd} day${pj.cd===1?"":"s"}</span>`:"Your trend"}</h3>
+      ${pj?`<div class="proj"><div><span class="muted mini">SAT</span><b>${Math.min(1600,sat.T.med+pj.gain)}</b><small class="${pj.gain?"up":""}">${pj.gain?`+${pj.gain}`:"same"}</small></div><div><span class="muted mini">ACT</span><b>${clamp(act.med+(pj.act-pr.act.comp),1,36)}</b><small class="${pj.act>pr.act.comp?"up":""}">${pj.act>pr.act.comp?`+${pj.act-pr.act.comp}`:"same"}</small></div></div>
+        <p class="muted mini">${pj.wk?`If you keep practicing about <b>${pj.wk} questions a week</b>, like the last two weeks.`:`Practice regularly over the next ${pj.cd} days to see your projected gain here.`}</p>`
+        :`<p class="muted mini"><a href="#" onclick="go('settings');return false">Add your test date</a> to see a test-day projection.</p>`}
+      ${spark()||`<p class="muted mini">Come back on different days to see your predicted SAT score over time.</p>`}</section>
+  </div>`;
+}
 function rPredict(){
-  const pr=predict(), locked=pr.n<20, rc=recommend(pr), nm=esc(firstName());
+  const pr=predict(), locked=pr.n<20, nm=esc(firstName());
+  let MOD=null; if(!locked){ MOD=scoreModel(pr); pr.sat.total=MOD.sat.T.med; pr.sat.raw=MOD.sat.T.mean; pr.sat.rw=MOD.sat.SE.med; pr.sat.m=MOD.sat.SM.med; pr.act.comp=MOD.act.med; pr.act.raw=MOD.act.mean; }
+  const rc=recommend(pr);
   let top="";
   if(locked){
     top=`<section class="panel lockp"><div class="resgrid">${ring(pr.n/20,124,11,`${pr.n}<span>/20</span>`,"answered")}
@@ -4125,33 +4394,7 @@ function rPredict(){
       <div class="row" style="margin-top:14px"><button class="btn pri" onclick="startPractice('smart')">${ic("bolt",16)} Start Smart Mix</button><button class="btn" onclick="go('full')">${ic("full",16)} Take a full practice test</button></div></div></div></section>`;
   } else {
     logPred(pr);
-    const sp=pctile(SAT_PCT,pr.sat.total), ap=pctile(ACT_PCT,pr.act.comp), pj=projection(pr), gs=gains(pr), cl=pr.conf>=70?"High":pr.conf>=40?"Medium":"Low";
-    const chk=(ok,txt)=>`<li class="${ok?"ok":""}">${ic(ok?"check":"target",15)}<span>${txt}</span></li>`;
-    top=`<div class="pgrid">
-      <section class="panel scard sat"><div class="row between"><span class="tag">SAT</span><span class="muted mini">about the ${ordinal(sp)} percentile</span></div>
-        <div class="big">${pr.sat.total}</div><div class="muted">Likely range <b>${pr.sat.lo}–${pr.sat.hi}</b></div>
-        ${scaleBar(pr.sat.lo,pr.sat.hi,pr.sat.total,400,1600,targetFor("SAT"))}
-        ${secLine("Reading &amp; Writing",pr.sat.rw,200,800,"e")}${secLine("Math",pr.sat.m,200,800,"m")}</section>
-      <section class="panel scard act"><div class="row between"><span class="tag m">ACT</span><span class="muted mini">about the ${ordinal(ap)} percentile</span></div>
-        <div class="big">${pr.act.comp}</div><div class="muted">Likely range <b>${pr.act.lo}–${pr.act.hi}</b></div>
-        ${scaleBar(pr.act.lo,pr.act.hi,pr.act.comp,1,36,targetFor("ACT"))}
-        ${secLine("English",pr.act.e,1,36,"e")}${secLine("Math",pr.act.m,1,36,"m")}${secLine("Reading",pr.act.r,1,36,"e")}${secLine("Science",pr.act.s,1,36,"s","optional, not in composite")}</section>
-    </div>
-    <div class="grid2">
-      <section class="panel"><div class="ph"><h3>How sure is this?</h3><span class="conf c${cl[0]}">${cl}</span></div>
-        <div class="bar"><i class="${pr.conf>=70?"g":pr.conf>=40?"":"w"}" style="width:${pr.conf}%"></i></div>
-        <ul class="chkl">${chk(pr.n>=400,`<b>${pr.n}</b> questions answered${pr.n<400?` (400+ is best)`:""}`)}${chk(pr.cov>=20,`<b>${pr.cov}</b> of ${TKEYS.length} topics with 5+ answers`)}${chk(pr.nt>=3,`<b>${pr.nt}</b> timed test${pr.nt===1?"":"s"}${pr.nt<3?" (3+ is best)":""}`)}${chk(pr.nf>=1,`<b>${pr.nf}</b> full practice test${pr.nf===1?"":"s"}`)}</ul>
-        <p class="muted mini">Built from how hard each question you answered was, your recent work (counted more), your timing, and your full tests. Treat it as an estimate, not a promise.</p></section>
-      <section class="panel"><h3>${pj?`On test day <span class="muted mini">in ${pj.cd} day${pj.cd===1?"":"s"}</span>`:"Your trend"}</h3>
-        ${pj?`<div class="proj"><div><span class="muted mini">SAT</span><b>${pj.sat}</b><small class="${pj.gain?"up":""}">${pj.gain?`+${pj.gain}`:"same"}</small></div><div><span class="muted mini">ACT</span><b>${pj.act}</b><small class="${pj.act>pr.act.comp?"up":""}">${pj.act>pr.act.comp?`+${pj.act-pr.act.comp}`:"same"}</small></div></div>
-          <p class="muted mini">${pj.wk?`If you keep practicing about <b>${pj.wk} questions a week</b>, like the last two weeks.`:`Practice regularly over the next ${pj.cd} days to see your projected gain here.`}</p>`
-          :`<p class="muted mini"><a href="#" onclick="go('settings');return false">Add your test date</a> to see a test-day projection.</p>`}
-        ${spark()||`<p class="muted mini">Come back on different days to see your predicted SAT score over time.</p>`}</section>
-    </div>
-    <section class="panel"><div class="ph"><h3>Fastest ways to raise your score</h3><span class="muted mini">Based on how much each topic counts</span></div>
-      ${gs.length?`<div class="gains">${gs.map(x=>`<div class="gain"><div><b>${TOPICS[x.t].n}</b><span class="muted mini">${x.a.n?`${Math.round(x.a.p*100)}% now`:"Not started yet"} · about ${Math.round(x.w*100)}% of its SAT section</span></div><span class="plus">+${Math.max(10,r10(x.g))}<small>SAT pts</small></span><button class="btn sm" onclick="startPractice('topic','${x.t}')">Practice</button></div>`).join("")}</div>`
-        :`<p class="muted">You’re strong everywhere. Keep taking full tests to keep your timing sharp.</p>`}
-      <p class="muted mini" style="margin-top:10px">Points are what you could gain by raising that topic to about 90% accuracy.</p></section>`;
+    top=predictorBody(pr,MOD);
   }
   const share=Math.round(rc.share*100), vs=rc.v[0], tr=rc.R.filter(r=>r.side!=="=");
   const best=tr.filter(r=>r.side===vs).slice(0,2).map(r=>r.t.charAt(0).toLowerCase()+r.t.slice(1));
